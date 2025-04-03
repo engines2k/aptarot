@@ -2,22 +2,33 @@
 	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcomeFallback from '$lib/images/svelte-welcome.png';
+	import playingCard from '$lib/images/card.png';
 	import { Motion, useAnimation } from "svelte-motion";
 	let controls = useAnimation();
 	let draggedUp = false;
 	let startY: number = 0;
 
-	function handleDrag(event: PointerEvent) {
-		if (!startY) {
+	let cards = $state([
+		{ id: 0, name: "The Fool", image: "path/to/image1.jpg", active: false },
+		{ id: 1, name: "The Magician", image: "path/to/image2.jpg", active: false },
+		{ id: 2, name: "The High Priestess", image: "path/to/image3.jpg", active: false },
+	]);
+
+	function handleDrag(event: PointerEvent, index: number) {
+		if (!startY || !event.target || !event.target.classList) {
 			// Store the initial Y position when drag starts
 			startY = event.y;
 			return;
 		}
 		// Check if the drag was upwards
 		if (event.y - startY < -100) {
-			draggedUp = true;
+			cards = cards.map((card, i) => i === index ? { ...card, active: true } : card);
+			// event.target.classList.add("red-text");
+			// draggedUp = true;
 		} else {
-			draggedUp = false;
+			cards = cards.map((card, i) => i === index ? { ...card, active: false } : card);
+			// event.target.classList.remove("red-text");
+			// draggedUp = false;
 			controls.start({
 				scale: 2,
 				rotate: 0,
@@ -25,7 +36,6 @@
 			});
 		}
 	}
-
 </script>
 
 <svelte:head>
@@ -42,7 +52,12 @@
 				
 			</picture>
 		</span>
-		<Motion
+		<div class="detail">
+
+		</div>
+		<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+			{#each cards as card, index (card.id)}
+			<Motion
 			let:motion
 			drag={true}
 			dragListener={true}
@@ -54,7 +69,7 @@
 			}}
 			dragTransition={{
 				bounceStiffness: 600,
-				bounceDamping: 20,
+				bounceDamping: 25,
 			}}
 			
 			dragElastic={0.5}
@@ -66,28 +81,27 @@
 				rotate: 5,
 				transition: { duration: 0.2 }
 			}}
-			onDrag={handleDrag}
-			onDragEnd={() => {console.log("HELLO! Drag ended!"); draggedUp=false}}
-			>
-
-	
-			<div
+			onDrag={(event) => { handleDrag(event, index) }}
+			onDragEnd={ (event) => {console.log("HELLO! Drag ended!"); cards = cards.map((card, i) => i === index ? { ...card, active: false } : card); }}
+			>	
+				<div
 				use:motion
-				class="tarot" class:red-text={draggedUp}
-			>
-				to <br />Tarot2k.
-			</div>
-		</Motion>
-	</h1>|
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+				class="tarot"
+				id="{String(card.id)}"
+				
+				>
+					<img class:red-text={card.active} draggable="false" src={playingCard} alt="Playing card" width="100"/>
+				</div>
+			</Motion>
+		{/each}
+		</div>
+	</h1>
 </section>
 
 <style>
+	.detail {
+		min-height: 200px;
+	}
 	section {
 		display: flex;
 		flex-direction: column;
@@ -117,13 +131,19 @@
 	}
 
 	.tarot {
-		max-width:200px;
-		margin:auto;
-		background-color: rgb(228, 105, 105);
+		padding:0;
+		max-width:125px;
+		margin: 0 auto;
 		user-select: none;
 	}
 
+	.tarot img {
+		padding:0;
+		margin:0;
+	}
+
 	.red-text {
+		box-shadow: 6px 10px 89px -10px rgba(255,204,0,1);
 		color: red;
 		font-size: 2rem;
 		font-weight: bold;
