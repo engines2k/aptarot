@@ -1,34 +1,35 @@
 <script lang="ts">
-	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcomeFallback from '$lib/images/svelte-welcome.png';
-	import playingCard from '$lib/images/card.png';
+	import CardInfo from './CardInfo.svelte';
 	import { Motion, useAnimation } from "svelte-motion";
-	let controls = useAnimation();
-	let draggedUp = false;
-	let startY: number = 0;
 
+	const playingCard='/cards/card.png';
+	let controls = useAnimation();
+	let selected = $state(-1);
+	let startY: number = 0;
+	let activeCard = $state({ id: -1, name: "No card selected", image:"/cards/card.png"});
+	
 	let cards = $state([
-		{ id: 0, name: "The Fool", image: "path/to/image1.jpg", active: false },
-		{ id: 1, name: "The Magician", image: "path/to/image2.jpg", active: false },
-		{ id: 2, name: "The High Priestess", image: "path/to/image3.jpg", active: false },
+		{ id: 0, name: "The Fool", image:"/cards/jack-of-hearts.png"},
+		{ id: 1, name: "The Magician", image:"/cards/queen-of-hearts.png"},
+		{ id: 2, name: "The High Priestess", image:"/cards/king-of-hearts.png"},
+		{ id: 3, name: "The High Priestess 2", image:"/cards/king-of-hearts.png"},
+		{ id: 4, name: "The High Priestess 3", image:"/cards/king-of-hearts.png"},
 	]);
 
-	function handleDrag(event: PointerEvent, index: number) {
-		if (!startY || !event.target || !event.target.classList) {
+	function handleDrag(event: PointerEvent | MouseEvent | TouchEvent, index: number) {
+		if (!(event instanceof PointerEvent)) return;
+		if (!startY || !(event.target instanceof HTMLElement) || !event.target.classList) {
 			// Store the initial Y position when drag starts
 			startY = event.y;
 			return;
 		}
 		// Check if the drag was upwards
 		if (event.y - startY < -100) {
-			cards = cards.map((card, i) => i === index ? { ...card, active: true } : card);
-			// event.target.classList.add("red-text");
-			// draggedUp = true;
+			selected = index;
 		} else {
-			cards = cards.map((card, i) => i === index ? { ...card, active: false } : card);
-			// event.target.classList.remove("red-text");
-			// draggedUp = false;
+			selected = -1;
 			controls.start({
 				scale: 2,
 				rotate: 0,
@@ -36,6 +37,16 @@
 			});
 		}
 	}
+
+	function handleDragEnd(event: PointerEvent | MouseEvent | TouchEvent, index:number) {
+		if (event instanceof PointerEvent) {
+			if (event.y - startY < -100) {
+				startY = 0;
+				activeCard = cards[index];
+			}
+		}
+	}
+
 </script>
 
 <svelte:head>
@@ -49,12 +60,9 @@
 			<picture>
 				<source srcset={welcome} type="image/webp" />
 				<img src={welcomeFallback} alt="Welcome" />
-				
 			</picture>
 		</span>
-		<div class="detail">
-
-		</div>
+		<CardInfo card={activeCard}/>
 		<div style="display: flex; flex-wrap: wrap; justify-content: center;">
 			{#each cards as card, index (card.id)}
 			<Motion
@@ -81,27 +89,31 @@
 				rotate: 5,
 				transition: { duration: 0.2 }
 			}}
-			onDrag={(event) => { handleDrag(event, index) }}
-			onDragEnd={ (event) => {console.log("HELLO! Drag ended!"); cards = cards.map((card, i) => i === index ? { ...card, active: false } : card); }}
-			>	
+			onDrag={(event: PointerEvent | MouseEvent | TouchEvent) => { handleDrag(event, index) }}
+			onDragEnd={ (event) => { handleDragEnd(event, index) }}
+			>
 				<div
 				use:motion
 				class="tarot"
 				id="{String(card.id)}"
-				
 				>
-					<img class:red-text={card.active} draggable="false" src={playingCard} alt="Playing card" width="100"/>
+					<img
+					src={playingCard}
+					alt="Playing card"
+					width="100"
+					draggable="false"
+					class:card-active={index == activeCard.id}
+					class:card-selected={index == selected && index !== activeCard.id}
+					/>
 				</div>
 			</Motion>
-		{/each}
+			{/each}
 		</div>
 	</h1>
 </section>
 
 <style>
-	.detail {
-		min-height: 200px;
-	}
+
 	section {
 		display: flex;
 		flex-direction: column;
@@ -138,15 +150,16 @@
 	}
 
 	.tarot img {
+		image-rendering: pixelated;
 		padding:0;
 		margin:0;
 	}
 
-	.red-text {
-		box-shadow: 6px 10px 89px -10px rgba(255,204,0,1);
-		color: red;
-		font-size: 2rem;
-		font-weight: bold;
-		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+	.card-selected {
+		box-shadow: 6px 10px 89px -10px rgba(255,204,0);
+	}
+
+	.card-active {
+		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
 	}
 </style>
