@@ -1,53 +1,45 @@
 <script lang="ts">
-    import { Motion, useAnimation } from 'svelte-motion';
+    let { card } = $props();
+    import { gsap } from "gsap";
     import { onMount } from 'svelte';
 
-    const controls = useAnimation();
-    
-    let { card } = $props();
-    let first = true;
-    let hasMounted = false;
-
     onMount(() => {
-        hasMounted = true;
-        // controls.start(idleAnim);
-    });
+        gsap.to(".card-face", {
+            scale: 1,
+            rotate: 2,
+            ease: "in-out",
+            yoyo: true,
+            repeat: -1,
+            duration: 2
+        })
+    })
 
-    const idleAnim = {
-        rotate: [ -2, 2, -2 ],
-        transition: {
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut"
+    $effect(() => {
+        if (card.id != -1) {
+            gsap.fromTo(".card-face",
+            {
+                scale: 1.1,
+                rotate: 7,
+                ease: "in-out",
+                duration: 0.5
+            }, {
+                scale: 1,
+                rotate: 0,
+                ease: "in-out",
+                duration: 0.5
+            });
         }
-    };
-    const newAnim = {
-        scale: [ 1.1, 1 ],
-        rotate: [ -2, 2 ],
-        transition: {
-            duration: .5,
-            ease: "easeInOut"
-        }
-    };
-    
-    let currentAnim = $state(idleAnim);
-
+    })
 </script>
 
 <div class="grid grid-cols-6 detail">
     <div class="col-span-2">
-        <Motion
-        let:motion
-        animate={idleAnim}
-        >    
-            <img
-            use:motion
-            class="card-face"
-            src={card.image}
-            alt="Tarot card"
-            width=200
-            />
-        </Motion>
+        <img
+        class="card-face"
+        src={card.image}
+        alt="Tarot card"
+        width=200
+        />
     </div>
     <div class="col-span-4">
         <p>{card.name}</p>
