@@ -5,7 +5,6 @@
 	import { gsap } from "gsap";
 	import { Draggable } from "gsap/Draggable";
 	import { onMount } from 'svelte';
-    import { scale } from 'svelte/transition';
 
 	gsap.registerPlugin(Draggable);
 
@@ -55,17 +54,22 @@
 				}
 			}
 		});
-		const spread = 40;
+		const spread = 30;
 		const tarotEls = document.querySelectorAll(".tarot-card");
 		const total = tarotEls.length;
+		const angleMapper =  gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2);
+		const yMapper = function(index: number) {
+			// MAP ACROSS -(x^2 - 4x)
+			const height = spread*2;
+			let x = index / (total-1);
+			let y = (4*x**2 - 4*x) * height;
+			console.log(`${index} => ${y}`);
+			return y;
+		};
 		tarotEls.forEach((card, i) => {
-			const angle = gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2, i);
 			gsap.set(card, {
-				rotation: angle,
-				xPercent: -50,
-				yPercent: -100,
-				x: "60%",
-				y: angle,
+				rotation: angleMapper(i),
+				y: yMapper(i)
 			});
 			});
 	});
@@ -81,6 +85,13 @@
 		{ id: 2, name: "The High Priestess", image:"/cards/king-of-hearts.png"},
 		{ id: 3, name: "The High Priestess 2", image:"/cards/king-of-hearts.png"},
 		{ id: 4, name: "The High Priestess 3", image:"/cards/king-of-hearts.png"},
+		{ id: 5, name: "The High Priestess 4", image:"/cards/king-of-hearts.png"},
+		{ id: 6, name: "The High Priestess 5", image:"/cards/king-of-hearts.png"},
+		{ id: 7, name: "The High Priestess 6", image:"/cards/king-of-hearts.png"},
+		{ id: 8, name: "The High Priestess 7", image:"/cards/king-of-hearts.png"},
+		{ id: 9, name: "The High Priestess 8", image:"/cards/king-of-hearts.png"},
+		{ id: 10, name: "The High Priestess 9", image:"/cards/king-of-hearts.png"},
+		{ id: 11, name: "The High Priestess 10", image:"/cards/king-of-hearts.png"},
 	]);
 
 	function handleDrag(event: PointerEvent | MouseEvent | TouchEvent, index: number) {
@@ -121,7 +132,7 @@
 			</picture>
 		</span>
 		<CardInfo card={activeCard}/>
-		<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+		<div class="mt-12" style="display: flex; flex-wrap: nowrap; justify-content: center;">
 			{#each cards as card, index (card.id)}
 			<div
 			class="tarot-card"
