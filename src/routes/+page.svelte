@@ -5,6 +5,7 @@
 	import { gsap } from "gsap";
 	import { Draggable } from "gsap/Draggable";
 	import { onMount } from 'svelte';
+	import cardData from '$lib/card-data.json';
 
 	gsap.registerPlugin(Draggable);
 
@@ -50,7 +51,7 @@
 				});
 				if (ogTarot.y - this.y > 100) {
 					startY = 0;
-					activeCard = cards[this.target.id];
+					activeCard = cards[this.target.id] || { id: -1, name: "No card selected", image: "/cards/card.png" };
 				}
 			}
 		});
@@ -59,11 +60,9 @@
 		const total = tarotEls.length;
 		const angleMapper =  gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2);
 		const yMapper = function(index: number) {
-			// MAP ACROSS -(x^2 - 4x)
 			const height = spread*2;
 			let x = index / (total-1);
 			let y = (4*x**2 - 4*x) * height;
-			console.log(`${index} => ${y}`);
 			return y;
 		};
 		tarotEls.forEach((card, i) => {
@@ -77,40 +76,24 @@
 	const playingCard='/cards/card.png';
 	let selected = $state(-1);
 	let startY: number = 0;
-	let activeCard = $state({ id: -1, name: "No card selected", image:"/cards/card.png"});
+	let activeCard = $state({ id: -1, name: "No card selected", image: "/cards/card.png" });
 	
-	let cards = $state([
-		{ id: 0, name: "The Fool", image:"/cards/jack-of-hearts.png"},
-		{ id: 1, name: "The Magician", image:"/cards/queen-of-hearts.png"},
-		{ id: 2, name: "The High Priestess", image:"/cards/king-of-hearts.png"},
-		{ id: 3, name: "The High Priestess 2", image:"/cards/king-of-hearts.png"},
-		{ id: 4, name: "The High Priestess 3", image:"/cards/king-of-hearts.png"},
-		{ id: 5, name: "The High Priestess 4", image:"/cards/king-of-hearts.png"},
-		{ id: 6, name: "The High Priestess 5", image:"/cards/king-of-hearts.png"},
-		{ id: 7, name: "The High Priestess 6", image:"/cards/king-of-hearts.png"},
-		{ id: 8, name: "The High Priestess 7", image:"/cards/king-of-hearts.png"},
-		{ id: 9, name: "The High Priestess 8", image:"/cards/king-of-hearts.png"},
-		{ id: 10, name: "The High Priestess 9", image:"/cards/king-of-hearts.png"},
-		{ id: 11, name: "The High Priestess 10", image:"/cards/king-of-hearts.png"},
-	]);
+	let cards = $state(cardData);
 
 	function handleDrag(event: PointerEvent | MouseEvent | TouchEvent, index: number) {
 		if (!(event instanceof PointerEvent)) return;
 		if (!startY || !(event.target instanceof HTMLElement) || !event.target.classList) {
-			// Store the initial Y position when drag starts
 			startY = event.y;
 			return;
 		}
-		// Check if the drag was upwards
 		if (event.y - startY < -100) {
 			selected = index;
 		} else {
 			selected = -1;
-			// TODO: start wiggling the card
 		}
 	}
 
-	function handleDragEnd(event: PointerEvent | MouseEvent | TouchEvent, index:number) {
+	function handleDragEnd(event: PointerEvent | MouseEvent | TouchEvent, index: number) {
 		if (event instanceof PointerEvent) {
 
 		}
@@ -125,12 +108,6 @@
 
 <section>
 	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcomeFallback} alt="Welcome" />
-			</picture>
-		</span>
 		<CardInfo card={activeCard}/>
 		<div class="mt-12" style="display: flex; flex-wrap: nowrap; justify-content: center;">
 			{#each cards as card, index (card.id)}
