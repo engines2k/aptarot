@@ -7,7 +7,6 @@
 </script>
 
 <div class="app">
-	<Header />
 
 	<main>
 		{@render children()}
@@ -15,7 +14,7 @@
 
 	<footer>
 		<p>
-			visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to learn about SvelteKit
+			by z b / n a
 		</p>
 	</footer>
 </div>

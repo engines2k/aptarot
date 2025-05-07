@@ -46,7 +46,7 @@
 				rotate: ogTarot.rotation,
 				x: Math.round(ogTarot.x), 
 				y: Math.round(ogTarot.y),
-				ease: "elastic.out(1, 0.5)", // Mimics elastic motion
+				ease: "elastic.out(1, 0.3)", // Mimics elastic motion
 				duration: .6 
 				});
 				if (ogTarot.y - this.y > 100) {
@@ -141,22 +141,6 @@
 
 	h1 {
 		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
 	}
 
 	.tarot-card {

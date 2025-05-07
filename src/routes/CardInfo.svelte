@@ -42,18 +42,82 @@
         />
     </div>
     <div class="col-span-4">
-        <p>{card.name}</p>
+        <p class="tarot-title dark:text-gray-100">{card.name}</p>
+        <div class="tarot-info">
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Symbol:</span>
+                {card.symbol}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Qualities:</span>
+                {card.qualities}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Letter:</span>
+                {card.letter}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Letter association::</span>
+                {card["letter association"] || "None found"}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Archetype:</span>
+                {card["achetype"] || "None found"}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Correspondences:</span>
+                {card["archetypal correspondences"] || "None found"}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Tree of life:</span>
+                {card["tree of life"] || "None found"}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Alchemical:</span>
+                {card["alchemical"] || "None found"}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Colloquial / informal labels:</span>
+                {card["colloquial/informal"] || "None found"}
+            </p>
+            <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Meme associations:</span>
+                {card.memes}
+            </p>
+        </div>
     </div>
 </div>
 
 <style>
+    .tarot-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .tarot-info {
+        margin: auto;
+        max-width: 500px;
+        text-align: left;
+    }
+
+    .tarot-info-item {
+        font-size: .8rem;
+        margin-bottom: 7px;
+    }
+
+    .tarot-subheading {
+        font-weight: bold;
+        color: #ffc4b2;
+    }
+
 	.detail {
-		min-height: 200px;
+		min-height: 450px;
         margin:50px;
 	}
 
     .card-face {
-        width: 100%;
+        width: 80%;
         image-rendering: pixelated;
     }
 
