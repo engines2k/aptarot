@@ -1,13 +1,13 @@
 <script lang="ts">
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcomeFallback from '$lib/images/svelte-welcome.png';
-	import CardInfo from './CardInfo.svelte';
-	import { gsap } from "gsap";
-	import { Draggable } from "gsap/Draggable";
-	import { onMount } from 'svelte';
 	import cardData from '$lib/card-data.json';
+	import CardInfo from './CardInfo.svelte';
+	import { onMount } from 'svelte';
+	import { gsap } from "gsap";
+	import { Observer } from 'gsap/all';
+	import { Draggable } from "gsap/Draggable";
 
 	gsap.registerPlugin(Draggable);
+	gsap.registerPlugin(Observer)
 
 	let ogTarot = {
 		x: 0,
@@ -15,11 +15,48 @@
 		scale: 1,
 		rotation: 0
 	}
+	
+	let testOffsets = {
+		x: 0,
+		y: 0
+	}
 
+	const playingCard='/cards/card.png';
+	let selected = $state(-1);
+	let startY: number = 0;
+	let activeCard = $state({ id: -1, name: "No card selected", image: "/cards/card.png" });
+	let cards = $state(cardData);
+	
 	onMount(() => {
+		const spread = 30;
+		const tarotEls = document.querySelectorAll(".tarot-card");
+		const total = tarotEls.length;
+		const angleMapper =  gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2);
+	
+		const yMapper = function(index: number) {
+			const height = spread*2;
+			let x = index / (total-1);
+			let y = (4*x**2 - 4*x) * height;
+			return y;
+		};
+		
+		tarotEls.forEach((card, i) => {
+			gsap.set(card, {
+				rotation: angleMapper(i),
+				y: yMapper(i)
+			});
+		});
+		
+		Observer.create({
+			type: "wheel,touch,scroll",
+			onChangeY({ velocityY }) {
+				testOffsets.x += velocityY * 0.0002;
+			}
+		});
+
 		Draggable.create(".tarot-card", {
 			type: "x,y",
-			onDragStart: function() {
+			onPress: function() {
 				console.log(this)
 				ogTarot = {
 					x: this.x,
@@ -40,11 +77,11 @@
 				else 
 					selected = -1;
 			},
-			onDragEnd: function() {
+			onRelease: function() {
 				gsap.to(this.target, {
 				scale: 1,
 				rotate: ogTarot.rotation,
-				x: Math.round(ogTarot.x), 
+				x: Math.round(ogTarot.x + testOffsets.x), 
 				y: Math.round(ogTarot.y),
 				ease: "elastic.out(1, 0.3)", // Mimics elastic motion
 				duration: .6 
@@ -55,50 +92,7 @@
 				}
 			}
 		});
-		const spread = 30;
-		const tarotEls = document.querySelectorAll(".tarot-card");
-		const total = tarotEls.length;
-		const angleMapper =  gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2);
-		const yMapper = function(index: number) {
-			const height = spread*2;
-			let x = index / (total-1);
-			let y = (4*x**2 - 4*x) * height;
-			return y;
-		};
-		tarotEls.forEach((card, i) => {
-			gsap.set(card, {
-				rotation: angleMapper(i),
-				y: yMapper(i)
-			});
-			});
 	});
-
-	const playingCard='/cards/card.png';
-	let selected = $state(-1);
-	let startY: number = 0;
-	let activeCard = $state({ id: -1, name: "No card selected", image: "/cards/card.png" });
-	
-	let cards = $state(cardData);
-
-	function handleDrag(event: PointerEvent | MouseEvent | TouchEvent, index: number) {
-		if (!(event instanceof PointerEvent)) return;
-		if (!startY || !(event.target instanceof HTMLElement) || !event.target.classList) {
-			startY = event.y;
-			return;
-		}
-		if (event.y - startY < -100) {
-			selected = index;
-		} else {
-			selected = -1;
-		}
-	}
-
-	function handleDragEnd(event: PointerEvent | MouseEvent | TouchEvent, index: number) {
-		if (event instanceof PointerEvent) {
-
-		}
-	}
-
 </script>
 
 <svelte:head>
@@ -163,4 +157,5 @@
 	.card-active {
 		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
 	}
+
 </style>
