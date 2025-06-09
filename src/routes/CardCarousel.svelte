@@ -22,32 +22,52 @@
 		x: 0,
 		y: 0
 	};
-
+    let scrollOffset = 0;
 
     onMount(() => {
 		const spread = 30;
 		const tarotEls = document.querySelectorAll(".tarot-card");
 		const total = tarotEls.length;
-		const angleMapper =  gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2);
+		const angleMapper = gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2);
 	
 		const yMapper = function(index: number) {
 			const height = spread*2;
-			let x = index / (total-1);
-			let y = (4*x**2 - 4*x) * height;
+			let x = (index + scrollOffset/80) / (total-1);
+			if (x < 0 || x > 1) return 0 + (height);
+			let y = (4*x**2 - 4*x) * height + height;
 			return y;
 		};
 		
+		function updateCardPositions() {
+			tarotEls.forEach((card, i) => {
+				const baseX = (i - (total - 1) / 2) * 20; // space cards horizontally
+				gsap.to(card, {
+					x: baseX + scrollOffset,
+					y: yMapper(i),
+					rotation: angleMapper(i),
+					duration: 0.5,
+					ease: "power2.out"
+				});
+			});
+		}
+
 		tarotEls.forEach((card, i) => {
 			gsap.set(card, {
 				rotation: angleMapper(i),
-				y: yMapper(i)
+				y: yMapper(i),
+				x: (i - (total - 1) / 2) * 20
 			});
 		});
 		
 		Observer.create({
 			type: "wheel,touch,scroll",
-			onChangeY({ velocityY }) {
-				testOffsets.x += velocityY * 0.0002;
+			onChangeX({ deltaX }) {
+				scrollOffset += deltaX;
+				updateCardPositions();
+			},
+			onChangeY({ deltaY }) {
+				scrollOffset += deltaY;
+				updateCardPositions();
 			}
 		});
 
@@ -92,7 +112,9 @@
 	});
 </script>
 
-<div class="mt-12" style="display: flex; flex-wrap: nowrap; justify-content: center;">
+<div
+class="mt-12 card-carousel"
+style="display: flex; flex-wrap: nowrap; justify-content: center;">
     {#each cards as card, index (card.id)}
     <div
     class="tarot-card"
@@ -117,5 +139,12 @@
 
 	.card-active {
 		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
+	}
+
+	.card-carousel {
+		min-height:200px;
+		overflow-x: auto;
+		overflow: visible;
+		/* scrollbar-width: none; */
 	}
 </style>
