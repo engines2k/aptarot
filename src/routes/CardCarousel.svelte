@@ -114,7 +114,7 @@
 
 <div
 class="mt-12 card-carousel"
-style="display: flex; flex-wrap: nowrap; justify-content: center;">
+>
     {#each cards as card, index (card.id)}
     <div
     class="tarot-card"
@@ -142,9 +142,25 @@ style="display: flex; flex-wrap: nowrap; justify-content: center;">
 	}
 
 	.card-carousel {
-		min-height:200px;
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: center;
+		min-height: 200px;
 		overflow-x: auto;
 		overflow: visible;
-		/* scrollbar-width: none; */
+	}
+
+	.tarot-card {
+		flex: 0 0 auto;
+		width: 70px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.tarot-card img {
+		width: 70px;
+		height: auto;
+		display: block;
 	}
 </style>
