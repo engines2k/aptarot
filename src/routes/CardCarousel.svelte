@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-	import { gsap } from "gsap";
+	import { gsap,  } from "gsap";
 	import { Observer } from 'gsap/all';
 	import { Draggable } from "gsap/Draggable";
 	gsap.registerPlugin(Draggable);
@@ -22,35 +22,38 @@
 		const spread = 30;
 		const tarotEls = document.querySelectorAll(".tarot-card");
 		const total = tarotEls.length;
-		const angleMapper = gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2);
 		
 		// Calculate initial offset to center the middle card in the viewport
 		const middleCardIndex = Math.floor(total / 2);
 		const viewportWidth = window.innerWidth;
+		const viewportHeight = window.innerHeight;
 		const cardWidth = 70;
 		let scrollOffset = 0;
-		console.log(`scrollOffset: ${scrollOffset} viewportWidth: ${viewportWidth}`);
-	
-		const yMapper = function(index: number) {
+		
+		const angleMapper = gsap.utils.mapRange(0, viewportWidth, -spread / 2, spread / 2);
+		const yMapper = function(x: number) {
 			const height = spread*2;
-			let x = (index + scrollOffset/80) / (total-1);
-			if (x < 0 || x > 1) return 0 + (height);
-			let y = (4*x**2 - 4*x) * height + height;
+			// if (x < 0 || x > viewportWidth) return 0 + (height);
+			let normalizedX = gsap.utils.normalize(0, viewportWidth, x);
+			// console.log(normalizedX);
+			let y = (4*normalizedX**2 - 4*normalizedX) * height;
 			return y;
 		};
 		
 		function updateCardPositions() {
 			tarotEls.forEach((card, i) => {
 				const baseX = (i - (total - 1) / 2) * 20; // space cards horizontally
+				const rect = card.getBoundingClientRect();
 				gsap.to(card, {
 					x: baseX + scrollOffset,
-					y: yMapper(i),
-					rotation: angleMapper(i),
+					y: yMapper(rect.x),
+					rotation: angleMapper(rect.x),
 					duration: 0.5,
 					ease: "power2.out"
 				});
 			});
 		}
+		updateCardPositions();
 		
 		const observer = Observer.create({
 			type: "wheel,touch,scroll",
