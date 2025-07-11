@@ -107,12 +107,14 @@
 			},
 			onRelease: function() {
 				isDragging = false;
+				let scale = 1.1
+				if(selected == this.target.id) scale = 1.2;
 				gsap.to(this.target, {
-				scale: 1,
+				scale: scale,
 				rotate: tempPos.rotation,
 				x: Math.round(tempPos.x), 
 				y: Math.round(tempPos.y),
-				ease: "elastic.out(1, 0.3)", // Mimics elastic motion
+				ease: "elastic.out(.5, 0.2)", // Mimics elastic motion
 				duration: .6 
 				});
 				if (tempPos.y - this.y > 100) {
