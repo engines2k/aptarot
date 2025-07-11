@@ -1,34 +1,35 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-
-    const playingCard='/cards/card.png';
+	import { gsap } from "gsap";
+	import { Observer } from 'gsap/all';
+	import { Draggable } from "gsap/Draggable";
+	gsap.registerPlugin(Draggable);
+	gsap.registerPlugin(Observer);
+	
+    const playingCardImg='/cards/card.png';
     let { cards, activeCard, selected, changeCard } = $props();
-    let startY: number = 0;
-	let ogTarot = {
+	let startY: number = 0;
+	let scrollOffset = 0;
+	let tempPos = {
 		x: 0,
 		y: 0,
 		scale: 1,
 		rotation: 0
 	};
-    import { gsap } from "gsap";
-    import { Observer } from 'gsap/all';
-    import { Draggable } from "gsap/Draggable";
-
-    gsap.registerPlugin(Draggable);
-    gsap.registerPlugin(Observer);
-
-    // For testing purposes
-	let testOffsets = {
-		x: 0,
-		y: 0
-	};
-    let scrollOffset = 0;
+	let isDragging = false;
 
     onMount(() => {
 		const spread = 30;
 		const tarotEls = document.querySelectorAll(".tarot-card");
 		const total = tarotEls.length;
 		const angleMapper = gsap.utils.mapRange(0, total - 1, -spread / 2, spread / 2);
+		
+		// Calculate initial offset to center the middle card in the viewport
+		const middleCardIndex = Math.floor(total / 2);
+		const viewportWidth = window.innerWidth;
+		const cardWidth = 70;
+		let scrollOffset = 0;
+		console.log(`scrollOffset: ${scrollOffset} viewportWidth: ${viewportWidth}`);
 	
 		const yMapper = function(index: number) {
 			const height = spread*2;
@@ -50,32 +51,38 @@
 				});
 			});
 		}
+		
+		const observer = Observer.create({
+			type: "wheel,touch,scroll",
+			onChangeX({ deltaX }) {
+				if (!isDragging) {
+					scrollOffset += deltaX;
+					updateCardPositions();
+				}
+			},
+			onChangeY({ deltaY }) {
+				if (!isDragging) {
+					scrollOffset += deltaY;
+					updateCardPositions();
+				}
+			}
+		});
 
 		tarotEls.forEach((card, i) => {
 			gsap.set(card, {
 				rotation: angleMapper(i),
 				y: yMapper(i),
-				x: (i - (total - 1) / 2) * 20
+				x: (i - (total - 1) / 2) * 20 + scrollOffset
 			});
 		});
 		
-		Observer.create({
-			type: "wheel,touch,scroll",
-			onChangeX({ deltaX }) {
-				scrollOffset += deltaX;
-				updateCardPositions();
-			},
-			onChangeY({ deltaY }) {
-				scrollOffset += deltaY;
-				updateCardPositions();
-			}
-		});
 
 		Draggable.create(".tarot-card", {
 			type: "x,y",
 			onPress: function() {
+				isDragging = true;
 				console.log(this)
-				ogTarot = {
+				tempPos = {
 					x: this.x,
 					y: this.y,
 					scale: this.scale,
@@ -89,21 +96,22 @@
 				});
 			},
 			onDrag: function() {
-				if (ogTarot.y - this.y > 100)
+				if (tempPos.y - this.y > 100)
 					selected = this.target.id;
 				else 
 					selected = -1;
 			},
 			onRelease: function() {
+				isDragging = false;
 				gsap.to(this.target, {
 				scale: 1,
-				rotate: ogTarot.rotation,
-				x: Math.round(ogTarot.x + testOffsets.x), 
-				y: Math.round(ogTarot.y),
+				rotate: tempPos.rotation,
+				x: Math.round(tempPos.x), 
+				y: Math.round(tempPos.y),
 				ease: "elastic.out(1, 0.3)", // Mimics elastic motion
 				duration: .6 
 				});
-				if (ogTarot.y - this.y > 100) {
+				if (tempPos.y - this.y > 100) {
 					startY = 0;
 					changeCard(cards[this.target.id] || { id: -1, name: "No card selected", image: "/cards/card.png" });
 				}
@@ -121,7 +129,7 @@ class="mt-12 card-carousel"
     id="{String(card.id)}"
     >
         <img
-        src={playingCard}
+        src={playingCardImg}
         alt="Playing card"
         width="100"
         draggable="false"
@@ -145,9 +153,13 @@ class="mt-12 card-carousel"
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: center;
-		min-height: 200px;
-		overflow-x: auto;
-		overflow: visible;
+		height: 100vw;
+		padding-top: 60vh;
+		padding-bottom: 20vh;
+		width: 100vw;
+		overflow: hidden;
+		position: absolute;
+		top: 0;
 	}
 
 	.tarot-card {
@@ -162,5 +174,6 @@ class="mt-12 card-carousel"
 		width: 70px;
 		height: auto;
 		display: block;
+		image-rendering: pixelated;
 	}
 </style>

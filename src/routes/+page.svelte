@@ -1,5 +1,5 @@
 <script lang="ts">
-	import cardData from '$lib/card-data.json';
+	import cardData from '$lib/card-data-full.json';
 	import CardInfo from './CardInfo.svelte';
 	import CardCarousel from './CardCarousel.svelte';
 
@@ -19,32 +19,13 @@
 </svelte:head>
 
 <section>
-	<h1>
-		<CardInfo card={activeCard}/>
-		<!-- <div class="mt-12" style="display: flex; flex-wrap: nowrap; justify-content: center;">
-			{#each cards as card, index (card.id)}
-			<div
-			class="tarot-card"
-			id="{String(card.id)}"
-			>
-				<img
-				src={playingCard}
-				alt="Playing card"
-				width="100"
-				draggable="false"
-				class:card-active={index == activeCard.id}
-				class:card-selected={index == selected && index !== activeCard.id}
-				/>
-			</div>
-			{/each}
-		</div> -->
-		<CardCarousel 
-		{cards}
-		{activeCard}
-		{selected}
-		{changeCard}
-		/>
-	</h1>
+	<CardInfo card={activeCard}/>
+	<CardCarousel 
+	{cards}
+	{activeCard}
+	{selected}
+	{changeCard}
+	/>
 </section>
 
 <style>
@@ -53,10 +34,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
 		width: 100%;
+		height: 90vh;
 	}
 </style>

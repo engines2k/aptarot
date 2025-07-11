@@ -93,6 +93,7 @@
         font-size: 2rem;
         font-weight: bold;
         margin-bottom: 10px;
+        color: #f3f4f6;
     }
 
     .tarot-info {
@@ -104,6 +105,7 @@
     .tarot-info-item {
         font-size: .8rem;
         margin-bottom: 7px;
+        color: #e5e7eb;
     }
 
     .tarot-subheading {
