@@ -48,6 +48,7 @@
 					x: baseX + scrollOffset,
 					y: yMapper(rect.x),
 					rotation: angleMapper(rect.x),
+					scale: 1.1,
 					duration: 0.5,
 					ease: "power2.out"
 				});
@@ -132,7 +133,7 @@ class="mt-12 card-carousel"
     id="{String(card.id)}"
     >
         <img
-        src={playingCardImg}
+        src={card.image}
         alt="Playing card"
         width="100"
         draggable="false"
