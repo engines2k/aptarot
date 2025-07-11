@@ -159,13 +159,13 @@ class="mt-12 card-carousel"
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: center;
-		height: 100vw;
+		height: 90vh;
 		padding-top: 60vh;
-		padding-bottom: 20vh;
+		padding-bottom:10vh;
 		width: 100vw;
 		overflow: hidden;
 		position: absolute;
-		top: 0;
+		bottom: 0;
 	}
 
 	.tarot-card {
