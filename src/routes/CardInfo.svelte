@@ -49,15 +49,11 @@
                 {card.symbol}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
-                <span class="tarot-subheading">Qualities:</span>
-                {card.qualities}
-            </p>
-            <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Letter:</span>
                 {card.letter}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
-                <span class="tarot-subheading">Letter association::</span>
+                <span class="tarot-subheading">Sphere:</span>
                 {card["letter association"] || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
@@ -81,9 +77,13 @@
                 {card["colloquial/informal"] || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Qualities:</span>
+                {card.qualities}
+            </p>
+            <!-- <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Meme associations:</span>
                 {card.memes}
-            </p>
+            </p> -->
         </div>
     </div>
 </div>

@@ -39,3 +39,21 @@ You can preview the production build with `npm run preview`.
 
 ## cool shit
 [anime.js advanced staggering demo](https://codepen.io/juliangarnier/details/wVzvbg)
+
+## NOTES
+
+- Add 'pick random card' button
+
+ - symbol
+ - qualities
+ - letter
+M - letter association
+ - archetype
+ - correspondences
+ - tree of life
+ - alchemical
+ - colloqual / informal labell
+ - meme associations
+
+- Add info page for symbols
+- Font family wittgenstein
