@@ -14,8 +14,6 @@
         return "?";
     }
 
-    function
-
     onMount(() => {
         gsap.to(".card-face", {
             scale: 1,
