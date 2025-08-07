@@ -1,7 +1,20 @@
 <script lang="ts">
+    import elementSymbols from '$lib/element-symbols.json';
     let { card } = $props();
     import { gsap } from "gsap";
     import { onMount } from 'svelte';
+
+    function getElementSymbol() {
+        if (card.symbol && card.symbol.length > 0) {
+            if (card.symbol.length > 1) {
+                return card.symbol.map(s => elementSymbols[s.trim().toLowerCase()] || "?").join("");
+            }
+            return elementSymbols[card.symbol?.[0]?.toLowerCase()] || "?";
+        }
+        return "?";
+    }
+
+    function
 
     onMount(() => {
         gsap.to(".card-face", {
@@ -46,18 +59,18 @@
         <div class="tarot-info">
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Symbol:</span>
-                {card.symbol}
-            </p>
-            <p class="tarot-info-item dark:text-gray-100">
-                <span class="tarot-subheading">Qualities:</span>
-                {card.qualities}
+                <span class="text-2xl">
+                    {getElementSymbol(card.symbol)}
+                    {card.symbol}
+                </span>
             </p>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Letter:</span>
-                {card.letter}
+                <span class="text-2xl">
+                    {card.letter}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
-                <span class="tarot-subheading">Letter association::</span>
+                <span class="tarot-subheading">Sphere:</span>
                 {card["letter association"] || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
@@ -81,9 +94,13 @@
                 {card["colloquial/informal"] || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
+                <span class="tarot-subheading">Qualities:</span>
+                {card.qualities}
+            </p>
+            <!-- <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Meme associations:</span>
                 {card.memes}
-            </p>
+            </p> -->
         </div>
     </div>
 </div>
