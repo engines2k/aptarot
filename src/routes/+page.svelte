@@ -7,9 +7,9 @@
 	let activeCard = $state({ id: -1, name: "No card selected", image: "/cards/card.png" });
 	let cards = $state(cardData);
 	
-	function changeCard(card: { id: number, name: string, image: string }) {
-		activeCard = card;
-		selected = card.id;
+	function changeCard(card: { name: string, image: string }, index: number) {
+		activeCard = { ...card, id: index };
+		selected = index;
 	}
 </script>
 

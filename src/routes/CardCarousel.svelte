@@ -6,58 +6,28 @@
 	gsap.registerPlugin(Draggable);
 	gsap.registerPlugin(Observer);
 	
-    const playingCardImg='/cards/card.png';
+	const cardSpread = 30;
     let { cards, activeCard, selected, changeCard } = $props();
-	let startY: number = 0;
-	let scrollOffset = 0;
-	let tempPos = {
-		x: 0,
-		y: 0,
-		scale: 1,
-		rotation: 0
-	};
+	let tempPos = { x: 0, y: 0, scale: 1, rotation: 0 };
 	let isDragging = false;
-
+	
     onMount(() => {
-		const spread = 30;
-		const tarotEls = document.querySelectorAll(".tarot-card");
-		const total = tarotEls.length;
-		
-		// Calculate initial offset to center the middle card in the viewport
-		const middleCardIndex = Math.floor(total / 2);
+		const tarotCards = document.querySelectorAll(".tarot-card");
+		const totalCards = tarotCards.length;	
 		const viewportWidth = window.innerWidth;
 		const viewportHeight = window.innerHeight;
-		const cardWidth = 70;
-		let scrollOffset = 0;
-		
-		const angleMapper = gsap.utils.mapRange(0, viewportWidth, -spread / 2, spread / 2);
+		const angleMapper = gsap.utils.mapRange(0, viewportWidth, -cardSpread / 2, cardSpread / 2);
 		const yMapper = function(x: number) {
-			const height = spread*2;
-			// if (x < 0 || x > viewportWidth) return 0 + (height);
+			const height = cardSpread*viewportHeight/300;
 			let normalizedX = gsap.utils.normalize(0, viewportWidth, x);
-			// console.log(normalizedX);
 			let y = (4*normalizedX**2 - 4*normalizedX) * height;
 			return y;
 		};
 		
-		function updateCardPositions() {
-			tarotEls.forEach((card, i) => {
-				const baseX = (i - (total - 1) / 2) * 20; // space cards horizontally
-				const rect = card.getBoundingClientRect();
-				gsap.to(card, {
-					x: baseX + scrollOffset,
-					y: yMapper(rect.x),
-					rotation: angleMapper(rect.x),
-					scale: 1.1,
-					duration: 0.5,
-					ease: "power2.out"
-				});
-			});
-		}
-		updateCardPositions();
+		let scrollOffset = 0;
 		
-		const observer = Observer.create({
-			type: "wheel,touch,scroll",
+		const scrollObserver = Observer.create({
+			type: "wheel,touch, scroll",
 			onChangeX({ deltaX }) {
 				if (!isDragging) {
 					scrollOffset += deltaX;
@@ -72,14 +42,33 @@
 			}
 		});
 
-		tarotEls.forEach((card, i) => {
-			gsap.set(card, {
-				rotation: angleMapper(i),
-				y: yMapper(i),
-				x: (i - (total - 1) / 2) * 20 + scrollOffset
+
+		function updateCardPositions() {
+			tarotCards.forEach((card, i) => {
+				let logging = i == 39;
+				const xSpread = (i - ((totalCards - 1) / 2)) * 20; // space cards horizontally
+				const rect = card.getBoundingClientRect();
+				let translateX = xSpread+scrollOffset; // x position of the card from the center of the carousel, NOT edge of the screen
+				if(logging) console.log(`${card.id} ${xSpread + scrollOffset} ${rect.x}`);
+				// WIP: Calculate the center of each card on screen , stop animating if it's off screen 
+				// let theoreticalX = xSpread + scrollOffset + (viewportWidth / 2) - 35;
+				// if(logging) console.log(`theoreticalX: ${theoreticalX}`);
+				// if(theoreticalX < 0 || theoreticalX > viewportWidth*1.1) {
+				// 	if(logging) console.log(`${xSpread + scrollOffset}`)
+				// 	return;
+				// }
+				gsap.to(card, {
+					x: translateX,
+					y: yMapper(rect.x),
+					rotation: angleMapper(rect.x),
+					scale: 1.1,
+					duration: 0.5,
+					ease: "power2.out"
+				});
 			});
-		});
+		}
 		
+		updateCardPositions();
 
 		Draggable.create(".tarot-card", {
 			type: "x,y",
@@ -101,7 +90,7 @@
 			},
 			onDrag: function() {
 				if (tempPos.y - this.y > 100)
-					selected = this.target.id;
+					selected = parseInt(this.target.id);
 				else 
 					selected = -1;
 			},
@@ -118,8 +107,8 @@
 				duration: .6 
 				});
 				if (tempPos.y - this.y > 100) {
-					startY = 0;
-					changeCard(cards[this.target.id] || { id: -1, name: "No card selected", image: "/cards/card.png" });
+					const cardIndex = parseInt(this.target.id);
+					changeCard(cards[cardIndex] || { name: "No card selected", image: "/cards/card.png" }, cardIndex);
 				}
 			}
 		});
@@ -129,10 +118,10 @@
 <div
 class="mt-12 card-carousel"
 >
-    {#each cards as card, index (card.id)}
+    {#each cards as card, index (index)}
     <div
     class="tarot-card"
-    id="{String(card.id)}"
+    id="{String(index)}"
     >
         <img
         src={card.image}
