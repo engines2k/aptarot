@@ -56,25 +56,35 @@
 		});
 	}
 	
-	function updateCardPosition(card: Element, index: number) {
-		const spread = (index - ((numCards - 1) / 2)) * 20; 
-		const rect = card.getBoundingClientRect();
-		let translateX = scrollOffset+spread;
+	function updateCardPosition(card: Element, cardIndex: number) {
+		const cardRect = card.getBoundingClientRect();
+		const spread = (cardIndex - ((numCards - 1) / 2)) * 20; 
+		const translateX = scrollOffset+spread;
+		if (cardOutOfView(cardIndex, cardRect, translateX)) return;
 		gsap.to(card, {
 			x: translateX,
-			y: yMapper(rect.x),
-			rotation: calculateAngle(rect.x),
+			y: calculateHeight(cardRect.x),
+			rotation: calculateAngle(cardRect.x),
 			scale: 1.1,
 			duration: 0.5,
 			ease: "power2.out"
 		});
 	}
 
+	function cardOutOfView(cardIndex: number, cardRect: DOMRect, translateX: number) {
+		let leftBound = -100;
+		let rightBound = viewportWidth + 100;
+		let magicIntendedX = cardIndex * 70 + translateX; // The constant 70 is the width of each card in px. This should be made dynamic.
+		return  (cardRect.x < leftBound && magicIntendedX < leftBound) ||
+				(cardRect.x > rightBound && magicIntendedX > rightBound);
+	}
+
+
 	function calculateAngle(x: number) {
 		return angleMapper(x);
 	}
 
-	function yMapper(x: number) {
+	function calculateHeight(x: number) {
 		//TODO Adjust height factor for different screen sizes instead of using a magic number lolol
 		const height = cardSpread * viewportHeight / 200;
 		let normalizedX = gsap.utils.normalize(0, viewportWidth, x);
@@ -180,7 +190,7 @@ class="mt-12 card-carousel"
 	.card-carousel {
 		display: flex;
 		flex-wrap: nowrap;
-		justify-content: center;
+		justify-content: left;
 		height: 90vh;
 		padding-top: 60vh;
 		padding-bottom:10vh;
