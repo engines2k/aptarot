@@ -1,19 +1,10 @@
 <script lang="ts">
-    import elementSymbols from '$lib/element-symbols.json';
-    let { card } = $props();
     import { gsap } from "gsap";
     import { onMount } from 'svelte';
-
-    function getElementSymbol() {
-        if (card.symbol && card.symbol.length > 0) {
-            if (card.symbol.length > 1) {
-                return card.symbol.map(s => elementSymbols[s.trim().toLowerCase()] || "?").join("");
-            }
-            return elementSymbols[card.symbol?.[0]?.toLowerCase()] || "?";
-        }
-        return "?";
-    }
-
+    import CardSymbols from './CardSymbols.svelte';
+    
+    let { card } = $props();
+    
     onMount(() => {
         gsap.to(".card-face", {
             scale: 1,
@@ -55,13 +46,9 @@
     <div class="col-span-4">
         <p class="tarot-title dark:text-gray-100">{card.name}</p>
         <div class="tarot-info">
-            <p class="tarot-info-item dark:text-gray-100">
-                <span class="tarot-subheading">Symbol:</span>
-                <span class="text-2xl">
-                    {getElementSymbol(card.symbol)}
-                    {card.symbol}
-                </span>
-            </p>
+            <div class="tarot-info-item dark:text-gray-100">
+                <CardSymbols {card} />
+            </div>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Letter:</span>
                 <span class="text-2xl">
@@ -69,27 +56,27 @@
             </p>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Sphere:</span>
-                {card["letter association"] || "None found"}
+                {card.letter_association || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Archetype:</span>
-                {card["achetype"] || "None found"}
+                {card.archetype || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Correspondences:</span>
-                {card["archetypal correspondences"] || "None found"}
+                {card.archetypal_correspondences || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Tree of life:</span>
-                {card["tree of life"] || "None found"}
+                {card.tree_of_life || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Alchemical:</span>
-                {card["alchemical"] || "None found"}
+                {card.alchemical || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Colloquial / informal labels:</span>
-                {card["colloquial/informal"] || "None found"}
+                {card.colloquial_informal || "None found"}
             </p>
             <p class="tarot-info-item dark:text-gray-100">
                 <span class="tarot-subheading">Qualities:</span>
@@ -103,39 +90,3 @@
     </div>
 </div>
 
-<style>
-    .tarot-title {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #f3f4f6;
-    }
-
-    .tarot-info {
-        margin: auto;
-        max-width: 500px;
-        text-align: left;
-    }
-
-    .tarot-info-item {
-        font-size: .8rem;
-        margin-bottom: 7px;
-        color: #e5e7eb;
-    }
-
-    .tarot-subheading {
-        font-weight: bold;
-        color: #ffc4b2;
-    }
-
-	.detail {
-		min-height: 450px;
-        margin:50px;
-	}
-
-    .card-face {
-        width: 80%;
-        image-rendering: pixelated;
-    }
-
-</style>

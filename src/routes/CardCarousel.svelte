@@ -157,11 +157,10 @@
 		
 
 </script>
-
 <div
 class="mt-12 card-carousel"
 >
-    {#each cards as card, index (index)}
+{#each cards as card, index (index)}
     <div
     class="tarot-card"
     id="{String(index)}"
@@ -188,24 +187,29 @@ class="mt-12 card-carousel"
 	}
 
 	.card-carousel {
+		pointer-events: none;
 		display: flex;
 		flex-wrap: nowrap;
+		align-items:flex-end;
 		justify-content: left;
-		height: 90vh;
-		padding-top: 60vh;
-		padding-bottom:10vh;
+		height: 100vh;
 		width: 100vw;
+		padding-top: 60vh;
+		padding-bottom: 5vh;
 		overflow: hidden;
 		position: absolute;
 		bottom: 0;
 	}
 
 	.tarot-card {
+		pointer-events: auto;
+		z-index: 100;
 		flex: 0 0 auto;
 		width: 70px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		height:max-content;
 	}
 
 	.tarot-card img {
