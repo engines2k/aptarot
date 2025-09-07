@@ -1,36 +1,38 @@
 export interface Card {
-    id: number;
-    image: string;
     name: string;
+    image?: string;
     meaning: string;
-    symbol: Symbol;
-    letter: string;
+    original_title: string;
+    attribution: Attribution;
+    dates: string;
+    hebrew_letter: string;
     letter_association: string;
-    tree_of_life: string;
-    archetype: string;
-    alchemical: string;
-    archetypal_correspondences: string;
-    colloquial_informal: string;
-    memes: string;
+    part_of_soul: string;
+    suit_element: string;
+    division_of_creation: string;
+    tree_of_life_path: string;
+    tree_of_life_sefira: string;
+    birthday_examples: string[];
 }
 
-interface Symbol {
+interface Attribution {
     primary: string;
     secondary?: string;
 }
 
 export const createCard = (data: any): Card => ({
-    id: data.id,
-    image: data.image,
     name: data.name,
+    image: data.image,
     meaning: data.meaning,
-    symbol: data.symbol,
-    letter: data.letter,
+    original_title: data.original_title,
+    attribution: data.attribution,
+    dates: data.dates,
+    hebrew_letter: data.hebrew_letter,
     letter_association: data.letter_association,
-    tree_of_life: data.tree_of_life,
-    archetype: data.archetype,
-    alchemical: data.alchemical,
-    archetypal_correspondences: data.archetypal_correspondences,
-    colloquial_informal: data.colloquial_informal,
-    memes: data.memes
+    part_of_soul: data.part_of_soul,
+    suit_element: data.suit_element,
+    division_of_creation: data.division_of_creation,
+    tree_of_life_path: data.tree_of_life_path,
+    tree_of_life_sefira: data.tree_of_life_sefira,
+    birthday_examples: data.birthday_examples
 });

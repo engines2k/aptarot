@@ -28,6 +28,7 @@
 		updateAllCardPositions();
 	});
 
+
 	function setUpMountDependentVars() {
 		tarotCards = document.querySelectorAll(".tarot-card");
 		numCards = tarotCards.length;
@@ -86,7 +87,7 @@
 
 	function calculateHeight(x: number) {
 		//TODO Adjust height factor for different screen sizes instead of using a magic number lolol
-		const height = cardSpread * viewportHeight / 200;
+		const height = cardSpread * viewportHeight / 300;
 		let normalizedX = gsap.utils.normalize(0, viewportWidth, x);
 		// Create an arc using a parabolic formula 4x^2 - 4x.
 		let y = (4 * normalizedX ** 2 - 4 * normalizedX) * height;
