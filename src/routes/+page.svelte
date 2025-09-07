@@ -1,11 +1,11 @@
 <script lang="ts">
 	import cardData from '$lib/card-data-2.json';
 	import cardImagePaths from '$lib/card-image-paths.json';
-	import CardInfo from './CardInfo.svelte';
-	import CardCarousel from './CardCarousel.svelte';
-    import { createCard } from '$lib/types';
-	import type { Card } from '$lib/types';
-	import "$/routes/cards.css";
+	import CardInfo from '$/components/CardInfo.svelte';
+	import CardCarousel from '$/components/CardCarousel.svelte';
+    import { createCard } from '$lib/Cards';
+	import type { Card } from '$lib/Cards';
+	import "$/cards.css";
 
 
 	let selected = $state(-1);

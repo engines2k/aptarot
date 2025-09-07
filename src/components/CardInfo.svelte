@@ -1,8 +1,8 @@
 <script lang="ts">
     import { gsap } from "gsap";
     import { onMount } from "svelte";
-    import CardAttribution from "./CardAttribution.svelte";
-    import CardDetail from "./CardDetail.svelte";
+    import CardAttribution from "$/components/CardAttribution.svelte";
+    import CardDetail from "$/components/CardDetail.svelte";
 
     let { card } = $props();
 

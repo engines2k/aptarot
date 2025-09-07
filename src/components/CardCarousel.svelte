@@ -28,7 +28,7 @@
 		updateAllCardPositions();
 	});
 
-
+	
 	function setUpMountDependentVars() {
 		tarotCards = document.querySelectorAll(".tarot-card");
 		numCards = tarotCards.length;
