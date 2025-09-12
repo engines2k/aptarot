@@ -7,14 +7,14 @@
 	import type { Card } from '$lib/Cards';
 	import "$/cards.css";
 
-
+	let noCard = $state(createCard({ id: -1, name: "No card selected", image: "/cards/card.png" }));
 	let selected = $state(-1);
-	let activeCard = $state({ id: -1, name: "No card selected", image: "/cards/card.png" });
+	let activeCard = $state(noCard);
 	let cardList = cardData.map(importCardData);
 	let cards = $state(cardList);
 	
-	function changeCard(card: { name: string, image: string }, index: number) {
-		activeCard = { ...card, id: index };
+	function changeCard(card: Card, index: number) {
+		activeCard = card;
 		selected = index;
 	}
 

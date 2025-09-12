@@ -39,13 +39,26 @@ export const createCard = (cardData: any): Card => {
     return createBaseCard(cardData);
 };
 
-const createBaseCard = (cardData: any): Card => ({
-    name: cardData.name,
-    image: cardData.image,
-    meaning: cardData.meaning,
-    original_title: cardData.original_title,
-    attribution: cardData.attribution
-});
+
+const createBaseCard = (cardData: any): Card => {
+    if (!cardData) {
+        return {
+            name: "No card selected",
+            image: "/cards/card.png",
+            meaning: "",
+            original_title: "",
+            attribution: { primary: "" }
+        };
+    }
+    
+    return {
+        name: cardData.name,
+        image: cardData.image,
+        meaning: cardData.meaning,
+        original_title: cardData.original_title,
+        attribution: cardData.attribution
+    };
+};
 
 const createMajorArcanaCard = (cardData: any): MajorArcanaCard => ({
     ...createBaseCard(cardData),

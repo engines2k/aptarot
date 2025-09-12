@@ -4,7 +4,9 @@
     import CardAttribution from "$/components/CardAttribution.svelte";
     import CardDetail from "$/components/CardDetail.svelte";
 
+    const defaultCard = { name: "No card selected", image: "/cards/card.png" };
     let { card } = $props();
+    card = card || defaultCard;
 
     onMount(() => {
         gsap.to(".card-face", {
