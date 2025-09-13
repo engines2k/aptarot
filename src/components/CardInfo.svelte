@@ -1,45 +1,22 @@
 <script lang="ts">
-    import { gsap } from "gsap";
     import { onMount } from "svelte";
     import CardAttribution from "$/components/CardAttribution.svelte";
     import CardDetail from "$/components/CardDetail.svelte";
+    import animations from "$/lib/animations";
 
     const defaultCard = { name: "No card selected", image: "/cards/card.png" };
     let { card } = $props();
     card = card || defaultCard;
 
     onMount(() => {
-        gsap.to(".card-face", {
-            scale: 1,
-            rotate: 2,
-            ease: "in-out",
-            yoyo: true,
-            repeat: -1,
-            duration: 2,
-        });
+       animations.jiggle(".card-face");
     });
 
     $effect(() => {
-        if (card.id != -1) {
-            gsap.fromTo(
-                ".card-face",
-                {
-                    scale: 1.1,
-                    rotate: 7,
-                    ease: "in-out",
-                    duration: 0.5,
-                },
-                {
-                    scale: 1,
-                    rotate: 0,
-                    ease: "in-out",
-                    duration: 0.5,
-                },
-            );
-        }
+        if (card.id != -1)
+            animations.popIn(".card-face");
     });
 
-    $inspect(card);
 </script>
 
 <div id="tarot-info" class="tarot-info grid grid-cols-12 detail">

@@ -21,25 +21,6 @@
     text-align: left;
 }
 
-.detail-item {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #e5e7eb;
-}
-
-.detail-value {
-    /* text-align:center; */
-    font-size: 1.2rem;
-    margin-bottom: 2px;
-    color: #e5e7eb;
-}
-
-.detail-label {
-    font-size:.9rem;
-    /* text-align: center; */
-    font-weight: bold;
-    color: #ffc4b2;
-}
 .card-face-container {
     min-width:350px;
     width: 100%;

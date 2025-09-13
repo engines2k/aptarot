@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Carousel as Carousel } from '$lib/carousel';
+	import { Carousel } from '$/lib/types/Carousel';
 	
     let { cards, activeCard, selected, changeCard } = $props();
 

@@ -3,8 +3,8 @@
 	import cardImagePaths from '$lib/card-image-paths.json';
 	import CardInfo from '$/components/CardInfo.svelte';
 	import CardCarousel from '$/components/CardCarousel.svelte';
-    import { createCard } from '$lib/Cards';
-	import type { Card } from '$lib/Cards';
+    import { createCard } from '$/lib/types/Card';
+	import type { Card } from '$/lib/types/Card';
 	import "$/cards.css";
 
 	let noCard = $state(createCard({ id: -1, name: "No card selected", image: "/cards/card.png" }));
