@@ -1,5 +1,6 @@
 export interface Card {
     name: string;
+    type: string;
     image?: string;
     meaning: string;
     original_title: string;
@@ -44,6 +45,7 @@ const createBaseCard = (cardData: any): Card => {
     if (!cardData) {
         return {
             name: "No card selected",
+            type: "unknown",
             image: "/cards/card.png",
             meaning: "",
             original_title: "",
@@ -53,6 +55,7 @@ const createBaseCard = (cardData: any): Card => {
     
     return {
         name: cardData.name,
+        type: cardData.type,
         image: cardData.image,
         meaning: cardData.meaning,
         original_title: cardData.original_title,

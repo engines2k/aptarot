@@ -5,35 +5,37 @@
     let { cards, activeCard, selected, changeCard } = $props();
 
 	onMount(() => {
-		const controller = new Carousel("card-carousel", window, cards, selected, changeCard);
+		const controller = new Carousel("card-carousel", changeCard);
 	});
-
 
 </script>
 <div
 class="mt-12"
 id="card-carousel"
 >
-{#each cards as card, index (index)}
+<div class="carousel-item">
+	<span> hello there </span>
+</div>
+{#each cards as card, index}
     <div
-    class="tarot-card"
-    id="{String(index)}"
+    class="carousel-item"
 	data-carousel-item-type="card"
+	data-card={JSON.stringify(card)}
+    id="{String(index)}"
+	class:card-active={index == activeCard.id}
     >
         <img 
         src={card.image}
         alt="Playing card"
         width="100"
         draggable="false"
-        class:card-active={index == activeCard.id}
-        class:card-selected={index == selected && index !== activeCard.id}
         />
     </div>
     {/each}
 </div>
 
 <style>
-	.card-selected {
+	:global(.card-selected) {
 		box-shadow: 6px 10px 89px -10px rgba(255,204,0);
 	}
 
@@ -56,7 +58,7 @@ id="card-carousel"
 		bottom: 0;
 	}
 
-	.tarot-card {
+	#card-carousel .carousel-item {
 		pointer-events: auto;
 		z-index: 100;
 		flex: 0 0 auto;
@@ -67,7 +69,7 @@ id="card-carousel"
 		height:max-content;
 	}
 
-	.tarot-card img {
+	.carousel-item img {
 		width: 70px;
 		height: auto;
 		display: block;

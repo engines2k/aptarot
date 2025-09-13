@@ -38,6 +38,8 @@
             );
         }
     });
+
+    $inspect(card);
 </script>
 
 <div id="tarot-info" class="tarot-info grid grid-cols-12 detail">

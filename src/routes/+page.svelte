@@ -13,21 +13,21 @@
 	let cardList = cardData.map(importCardData);
 	let cards = $state(cardList);
 	
-	function changeCard(card: Card, index: number) {
-		activeCard = card;
-		selected = index;
-	}
-
 	function importCardData(cardData: any) {
 		let card = createCard(cardData);
 		addCardImage(card);
 		return card;
 	}
-
+	
 	function addCardImage(card: Card) {
 		if(!card.image)
 			card.image = (cardImagePaths as Record<string, string>)[card.name] || "/cards/card.png";
 		return card
+	}
+
+	function changeCard(card: Card, index: number) {
+		activeCard = card;
+		selected = index;
 	}
 </script>
 

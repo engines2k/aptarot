@@ -13,50 +13,70 @@ export class Carousel {
     cards: Array<Card> = [];
     state: CarouselState;
     settings: CarouselSettings;
-    changeCard: (card: Card, index: number) => void;
+    emitFunc: (card: Card, index: number) => void;
 
     constructor(targetId: string, changeCard: (card: Card, index: number) => void) {
         this.rootElement = document.getElementById(targetId)!;
         this.state = new CarouselState(window, this.items.length);
         this.setItems();
         this.settings = createDefaultCarouselSettings(this.state);
-        this.changeCard = changeCard;
+        this.emitFunc = changeCard;
         this.initializeItemDraggables();
         this.initializeScrollObserver();
     }
     
     setItems() {
-        this.items = Array.from(this.rootElement.children).map((el, i) => new CarouselItem(el, i, this.state));
-       
+        let rootElements = Array.from(this.rootElement.children)
+        for (let i=0; i < rootElements.length; i++) {
+            this.push(rootElements[i], i);
+        }
     }
     
+    push(element: Element, index: number) {
+        let item: CarouselItem;
+        if (element.attributes.getNamedItem("data-carousel-item-type")?.value == "card")
+            item = new CarouselCardItem(element, index, this.state);
+        else
+            item = new CarouselItem(element, index, this.state);
+        this.items.push(item);
+    }
+
     initializeItemDraggables() {
-        this.items.forEach(item => this.initializeItemDraggable(item));
+        this.items.forEach(item => {
+            this.initializeItemDraggable(item)
+        });
     }
 
     initializeItemDraggable(item: CarouselItem) {
         let self = this;
         Draggable.create(item.element, {
             type: "x,y",
-            onDrag: function() { self.handleItemDrag(item, this) },
             onPress: function() { self.handleItemPress(item, this) },
-            onRelease: function() { self.handleItemRelease(item, this) },
+            onDrag: function() { self.handleItemDrag(item, this) },
+            onRelease: function() { self.handleItemDragRelease(item, this) },
         });
         const draggable = Draggable.get(item.element);
         item.startPos = item.savePos(draggable);
-
     }
 
-    private handleItemDrag(item: CarouselItem, vars: Draggable.Vars) {
-        item.handleDrag(vars);
+    private handleItemDrag(item: CarouselItem, dragEvent: Draggable.Vars) {
+        item.handleDrag(dragEvent);
     }
     
-    private handleItemPress(item: CarouselItem, vars: Draggable.Vars) {
-        item.handlePress(vars);
+    private handleItemPress(item: CarouselItem, dragEvent: Draggable.Vars) {
+        item.handlePress(dragEvent);
     }
     
-    private handleItemRelease(item: CarouselItem, vars: Draggable.Vars) {
-        item.handleRelease(vars);
+    private handleItemDragRelease(item: CarouselItem, dragEvent: Draggable.Vars) {
+        item.handleDragRelease(dragEvent);
+        if (item instanceof CarouselCardItem)
+            this.handleCardRelease(item, dragEvent);
+    }
+
+    handleCardRelease(item: CarouselCardItem, dragEvent: Draggable.Vars) {
+        if (item.isDraggedUp(dragEvent))
+            item.makeActive();
+        this.emitFunc(item.cardData, item.index);
     }
     
     private initializeScrollObserver() {
@@ -78,16 +98,30 @@ export class Carousel {
     }
 
     private updateItemPosition(item: CarouselItem) {
-        let translateX = this.calculateXTranslation(item);
-        if (this.itemOutOfView(item)) return;
-        return gsap.to(item.element, {
-            x: translateX,
+        let newX = this.calculateXTranslation(item);
+        if (this.itemOutOfView(item))
+            return;
+        gsap.to(item.element, {
+            x: newX,
             y: this.calculateItemHeight(item),
             rotation: this.calculateItemAngle(item),
             scale: 1.1,
             duration: 0.5,
             ease: "power2.out"
         });
+    }
+
+    private calculateXTranslation(item: CarouselItem) {
+        const spread = (item.index - ((this.length - 1) / 2)) * this.settings.spreadFactor;
+        return this.state.scrollPos + spread;
+    }
+    
+    private itemOutOfView(item: CarouselItem) {
+        let leftBound = -125;
+        let rightBound = this.state.viewportWidth + 125;
+        let magicIntendedX = item.index * 70 + this.calculateXTranslation(item);
+        return (item.x < leftBound && magicIntendedX < leftBound) ||
+        (item.x > rightBound && magicIntendedX > rightBound);
     }
 
     private calculateItemHeight(item: CarouselItem) {
@@ -98,19 +132,6 @@ export class Carousel {
     private calculateItemAngle(item: CarouselItem) {
         let position = item.element.getBoundingClientRect();
         return this.settings.angleMapper(item, this.state);
-    }
-
-    private itemOutOfView(item: CarouselItem) {
-        let leftBound = -100;
-        let rightBound = this.state.viewportWidth + 100;
-        let magicIntendedX = item.index * 70 + this.calculateXTranslation(item);
-        return  (item.x < leftBound && magicIntendedX < leftBound) ||
-        (item.x > rightBound && magicIntendedX > rightBound);
-    }
-
-    private calculateXTranslation(item: CarouselItem) {
-        const spread = (item.index - ((this.length - 1) / 2)) * this.settings.spreadFactor;
-        return this.state.scrollPos + spread;
     }
 
     get length() {
@@ -139,22 +160,48 @@ class CarouselItem {
         return this.element.getBoundingClientRect().x;
     }
 
-    savePos(vars: Draggable.Vars) {
+    savePos(dragEvent: Draggable.Vars) {
         return {
-            x: vars.x,
-            y: vars.y,
-            scale: vars.scale,
-            rotation: gsap.getProperty(vars.target, "rotation") as number
+            x: dragEvent.x,
+            y: dragEvent.y,
+            scale: dragEvent.scale,
+            rotation: gsap.getProperty(dragEvent.target, "rotation") as number
         }
     }
     
-    handleDrag(vars: Draggable.Vars) {
-        if (this.itemIsDraggedUp(vars) && vars.target && vars.target.id)
-            this.state.selected = parseInt(vars.target.id);
-        else this.state.selected = -1;
+    handleDrag(dragEvent: Draggable.Vars) {}
+
+    handlePress(dragEvent: Draggable.Vars) {}
+
+    handleDragRelease(dragEvent: Draggable.Vars) {}
+    
+    putMeBack(dragEvent: Draggable.Vars) {
+        let itemId = dragEvent.target.id
+        let scale = this.state.selected == itemId ? 1.1 : 1;
+        gsap.to(dragEvent.target, {
+            scale: scale,
+            rotate: this.startPos.rotation,
+            x: Math.round(this.startPos.x), 
+            y: Math.round(this.startPos.y),
+            ease: "elastic.out(.5, 0.2)",
+            duration: .6 
+        });
+    }
+    
+}
+
+class CarouselCardItem extends CarouselItem {
+    cardData: Card;
+    constructor(element: Element, index: number, state: CarouselState) {
+        super(element, index, state);
+        let cardData = element.getAttribute("data-card");
+        if (cardData)
+            this.cardData = createCard(JSON.parse(cardData));
+        else
+            this.cardData = createCard(null);
     }
 
-    handlePress(vars: Draggable.Vars) {
+    handlePress(vars: Draggable.Vars): void {
         this.state.dragging = true;
         this.startPos = this.savePos(vars);
         gsap.to(vars.target, {
@@ -165,32 +212,40 @@ class CarouselItem {
         });
     }
 
-    itemIsDraggedUp(vars: Draggable.Vars) {
-        return this.startPos.y - vars.y > 100;
+    handleDrag(dragEvent: Draggable.Vars) {
+        if (this.isDraggedUp(dragEvent))
+            this.makeSelected();
+        else
+            this.makeUnselected();
     }
 
-    handleRelease(vars: Draggable.Vars) {
+    makeSelected() {
+        this.element.classList.add("card-selected");
+    }
+
+    makeUnselected() {
+        this.element.classList.remove("card-selected");
+    }
+
+    makeActive() {
+        this.element.classList.add("card-active");
+    }
+
+    makeInactive() {
+        this.element.classList.remove("card-active");
+    }
+
+    isDraggedUp(vars: Draggable.Vars) {
+        return this.startPos.y - vars.y > 100;
+    }
+    
+    handleDragRelease(dragEvent: Draggable.Vars) {
         this.state.dragging = false;
-        if (this.itemIsDraggedUp(vars)) {
-            const itemIndex = parseInt(vars.target.id || "-1");
-            this.state.selected = 1;
-        }
-        this.putMeBack(vars)
+        if (this.isDraggedUp(dragEvent)) 
+            this.makeActive();
+        this.makeUnselected();
+        this.putMeBack(dragEvent)
     }
-    
-    putMeBack(vars: Draggable.Vars) {
-        let itemId = vars.target.id
-        let scale = this.state.selected == itemId ? 1.1 : 1;
-        gsap.to(vars.target, {
-            scale: scale,
-            rotate: this.startPos.rotation,
-            x: Math.round(this.startPos.x), 
-            y: Math.round(this.startPos.y),
-            ease: "elastic.out(.5, 0.2)",
-            duration: .6 
-        });
-    }
-    
 }
 
 class Position {
