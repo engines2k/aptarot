@@ -1,0 +1,1 @@
+aws s3 sync ./build s3://tarot-app-022365389144-us-west-2 --profile engines2k

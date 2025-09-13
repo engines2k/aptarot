@@ -1,0 +1,54 @@
+#tarot-info {
+    min-height: 450px;
+    margin: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.card-heading {
+    margin-bottom: 40px;
+}
+
+.tarot-card-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f3f4f6;
+}
+
+.tarot-detail {
+    margin: auto;
+    max-width: 800px;
+    text-align: left;
+}
+
+.detail-item {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #e5e7eb;
+}
+
+.detail-value {
+    /* text-align:center; */
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+    color: #e5e7eb;
+}
+
+.detail-label {
+    font-size:.9rem;
+    /* text-align: center; */
+    font-weight: bold;
+    color: #ffc4b2;
+}
+.card-face-container {
+    min-width:350px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-face {
+    image-rendering: pixelated;
+}

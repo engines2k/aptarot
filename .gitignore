@@ -1,3 +1,7 @@
+# AWS
+.aws-sam
+.aws
+
 node_modules
 
 # Output

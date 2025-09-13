@@ -1,7 +1,4 @@
 <script lang="ts">
-	import Header from './Header.svelte';
-	import '../app.css';
-
 	let { children } = $props();
 	import "../app.css";
 </script>
@@ -44,6 +41,10 @@
 		align-items: center;
 		padding: 12px;
 	}
+
+	/* footer a {
+		font-weight: bold;
+	} */
 
 	@media (min-width: 480px) {
 		footer {
