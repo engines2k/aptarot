@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { CarouselController } from '$lib/carousel';
+	import { Carousel as Carousel } from '$lib/carousel';
 	
     let { cards, activeCard, selected, changeCard } = $props();
 
 	onMount(() => {
-		const controller = new CarouselController("card-carousel", window, cards, selected, changeCard);
+		const controller = new Carousel("card-carousel", window, cards, selected, changeCard);
 	});
 
 
