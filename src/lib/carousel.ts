@@ -127,17 +127,13 @@ class CarouselItem {
     startPos: Position;
     state: CarouselState;
     
-    // Uses: element, index, type, controller, angleMapper, spreadFactor, startPos
     constructor(element: Element, index: number, state: CarouselState) {
         this.element = element;
         this.index = index;
         this.type = element.getAttribute("data-carousel-item-type") || "unknown";
         this.state = state;
-        
-        // Initialize with default position
         this.startPos = new Position(0, 0, 1, 0);
     }
-    
 
     get x() {
         return this.element.getBoundingClientRect().x;
