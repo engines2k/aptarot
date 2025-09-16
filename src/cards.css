@@ -14,14 +14,6 @@
     text-align: left;
 }
 
-.card-face-container {
-    min-width:350px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
 
 .card-face {
     image-rendering: pixelated;
