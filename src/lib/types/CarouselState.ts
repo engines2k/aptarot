@@ -1,7 +1,8 @@
 export class CarouselState {
     dragging: boolean;
     scrollPos: number;
-    selected: number;
+    selectedIndex: number;
+    activeIndex: number;
     window: Window;
     numItems: number;
     get viewportWidth() { return this.window.innerWidth; }
@@ -11,7 +12,8 @@ export class CarouselState {
         this.window = window;
         this.dragging = false;
         this.scrollPos = 0;
-        this.selected = -1;
+        this.selectedIndex = -1;
+        this.activeIndex = -1
         this.numItems = numItems;
     }
 }

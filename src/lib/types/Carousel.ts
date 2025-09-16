@@ -4,15 +4,14 @@ import { Draggable } from "gsap/Draggable";
 import { type Card } from "$/lib/types/Card";
 import { CarouselState } from "$lib/types/CarouselState";
 import { CarouselItem, DraggableCarouselItem, CarouselCardItem } from "$lib/types/CarouselItem";
+import { Position, PositionFactory } from "$lib/types/Position";
 
 gsap.registerPlugin(Draggable);
 gsap.registerPlugin(Observer);
 
-
 export class Carousel {
     rootElement: HTMLElement;
     items: Array<CarouselItem> = [];
-    cards: Array<Card> = [];
     state: CarouselState;
     settings: CarouselSettings;
     emitFunc: (card: Card, index: number) => void;
@@ -33,7 +32,47 @@ export class Carousel {
             this.push(rootElements[i], i);
         }
     }
-    
+
+    goToRandom() {
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * this.length);
+        } while (!this.isSelectableIndex(randomIndex));
+        this.goToIndex(randomIndex);
+    }
+
+    goToPrevious() {
+        let prev = 1;
+        while(!this.isSelectableIndex(this.state.selectedIndex - prev)
+            && this.state.selectedIndex - prev >= 0)
+            prev++;
+        this.goToIndex(this.state.selectedIndex - prev);
+    }
+
+    goToNext() {
+        let next = 1;
+        while(!this.isSelectableIndex(this.state.selectedIndex + next)
+            && this.state.selectedIndex + next < this.length)
+            next++;
+        this.goToIndex(this.state.selectedIndex + next);
+    }
+
+    isSelectableIndex(index: number) {
+        return this.items[index] instanceof CarouselCardItem;
+    }
+
+    goToIndex(index: number) {
+        if (index < 0 || index >= this.length) return;
+        let targetItem = this.items[index];
+        const spread = (targetItem.index - ((this.length - 1) / 2)) * targetItem.margin;
+        this.state.scrollPos = (this.state.viewportWidth / 2) - targetItem.getOriginalPos().x - spread;
+        this.updateAllItemPositions();
+        this.state.selectedIndex = index;
+        if (targetItem instanceof CarouselCardItem) {
+            this.makeActiveItem(targetItem);
+        }
+    }
+
     push(element: Element, index: number) {
         let item: CarouselItem;
         let itemType = element.attributes.getNamedItem("data-carousel-item-type")?.value;
@@ -60,7 +99,7 @@ export class Carousel {
             onRelease: function() { self.handleItemDragRelease(item, this) },
         });
         const draggable = Draggable.get(item.element);
-        item.startPos = item.savePos(draggable);
+        item.setPos(item.savePos(draggable));
     }
 
     private handleItemDrag(item: CarouselItem, dragEvent: Draggable.Vars) {
@@ -79,10 +118,18 @@ export class Carousel {
 
     handleCardRelease(item: CarouselCardItem, dragEvent: Draggable.Vars) {
         if (item.isDraggedUp(dragEvent))
-            item.makeActive();
-        this.emitFunc(item.cardData, item.index);
+            this.makeActiveItem(item)
     }
     
+    makeActiveItem(item: CarouselCardItem) {
+        this.emitFunc(item.cardData, item.index);
+        const oldActive = this.items[this.state.activeIndex];
+        if (oldActive instanceof CarouselCardItem)
+            oldActive.makeInactive();
+        item.makeActive();
+        this.state.activeIndex = item.index;
+    }
+
     private initializeScrollObserver() {
         Observer.create({
             type: "wheel, touch, scroll",
@@ -102,13 +149,14 @@ export class Carousel {
     }
 
     private updateItemPosition(item: CarouselItem) {
-        let newX = this.calculateXTranslation(item);
+        let newXOffset = this.calculateXTranslation(item);
         if (this.itemOutOfView(item))
             return;
+        let originalX = item.getOriginalPos().x;
         gsap.to(item.element, {
-            x: newX,
-            y: this.calculateItemHeight(item),
-            rotation: this.calculateItemAngle(item),
+            x: newXOffset,
+            y: this.calculateItemHeight(originalX + newXOffset),
+            rotation: this.calculateItemAngle(originalX + newXOffset),
             scale: 1,
             duration: 0.5,
             ease: "power2.out"
@@ -116,26 +164,24 @@ export class Carousel {
     }
 
     private calculateXTranslation(item: CarouselItem) {
-        const spread = (item.index - ((this.length - 1) / 2)) * this.settings.spreadFactor;
+        const spread = (item.index - ((this.length - 1) / 2)) * item.margin;
         return this.state.scrollPos + spread;
     }
     
     private itemOutOfView(item: CarouselItem) {
         let leftBound = -125;
         let rightBound = this.state.viewportWidth + 125;
-        let magicIntendedX = item.index * 70 + this.calculateXTranslation(item);
-        return (item.x < leftBound && magicIntendedX < leftBound) ||
-        (item.x > rightBound && magicIntendedX > rightBound);
+        let nextX = item.originalPosition.x + this.calculateXTranslation(item);
+        return (item.x < leftBound && nextX < leftBound) ||
+        (item.x > rightBound && nextX > rightBound);
     }
 
-    private calculateItemHeight(item: CarouselItem) {
-        let position = item.element.getBoundingClientRect();
-        return this.settings.heightMapper(item, this.state);
+    private calculateItemHeight(x: number) {
+        return this.settings.heightMapper(x, this.state);
     }
 
-    private calculateItemAngle(item: CarouselItem) {
-        let position = item.element.getBoundingClientRect();
-        return this.settings.angleMapper(item, this.state);
+    private calculateItemAngle(x: number) {
+        return this.settings.angleMapper(x, this.state);
     }
 
     get length() {
@@ -144,23 +190,22 @@ export class Carousel {
 }
 
 
-
 interface CarouselSettings {
     spreadFactor: number;
-    angleMapper: (item: CarouselItem, state: CarouselState) => number;
-    heightMapper: (item: CarouselItem, state: CarouselState) => number;
+    angleMapper: (x: number, state: CarouselState) => number;
+    heightMapper: (x: number, state: CarouselState) => number;
 }
 
 function createDefaultCarouselSettings(state: CarouselState): CarouselSettings {
     return {
         spreadFactor: 20,
-        angleMapper(item: CarouselItem, state: CarouselState) {
-            return gsap.utils.mapRange(0, state.viewportWidth, -this.spreadFactor / 2, this.spreadFactor / 2)(item.x);
+        angleMapper(x: number, state: CarouselState) {
+            return gsap.utils.mapRange(0, state.viewportWidth, -this.spreadFactor / 1, this.spreadFactor / 1)(x);
         },
         //TODO Adjust height factor for different screen sizes instead of using a magic number lolol
-        heightMapper(item: CarouselItem, state: CarouselState) {
+        heightMapper(x: number, state: CarouselState) {
             const heightMult = this.spreadFactor * state.viewportHeight / 300;
-            let normalizedX = gsap.utils.normalize(0, state.viewportWidth, item.x);
+            let normalizedX = gsap.utils.normalize(0, state.viewportWidth, x);
             let y = (4 * normalizedX ** 2 - 4 * normalizedX) * heightMult; // Create an arc using a parabolic formula 4x^2 - 4x.
             return y;
         }

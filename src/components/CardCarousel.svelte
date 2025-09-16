@@ -6,10 +6,11 @@
 	import cardImagePaths from '$lib/card-image-paths.json';
 
 	let cards = prepareCardData(cardData);
-	let { activeCard, changeCard } = $props();
+	let { changeCard } = $props();
+	let carousel: Carousel;
 
 	onMount(() => {
-		const controller = new Carousel("card-carousel", changeCard);
+		carousel = new Carousel("card-carousel", changeCard);
 	});
 
 	function prepareCardData(cardData: any) {
@@ -58,7 +59,20 @@ id="card-carousel"
 {/each}
 </div>
 
+<div class="carousel-controls">
+	<button onclick={() => carousel.goToPrevious()}>Previous</button>
+	<button onclick={() => carousel.goToRandom()}>Random</button>
+	<button onclick={() => carousel.goToNext()}>Next</button>
+</div>
+
 <style>
+	button {
+		padding: 5px 15px;
+		font-size:1em;
+		background-color: rgb(43, 43, 43);
+		border-radius:5px;
+	}
+
 	:global(.card-selected) {
 		box-shadow: 6px 10px 89px -10px rgba(255,204,0);
 	}
@@ -71,7 +85,7 @@ id="card-carousel"
 		pointer-events: none;
 		display: flex;
 		flex-wrap: nowrap;
-		align-items:flex-end;
+		align-items:center;
 		justify-content: left;
 		height: 100vh;
 		width: 100vw;
@@ -80,6 +94,16 @@ id="card-carousel"
 		overflow: hidden;
 		position: absolute;
 		bottom: 0;
+	}
+
+	.carousel-controls {
+		position: absolute;
+		bottom: 5vh;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 10px;
+		z-index: 200;
 	}
 
 	.carousel-item {

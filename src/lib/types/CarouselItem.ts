@@ -2,24 +2,41 @@ import gsap from "gsap";
 
 import { createCard, type Card } from "$/lib/types/Card";
 import { CarouselState } from "$lib/types/CarouselState";
+import { Position, PositionFactory } from "$lib/types/Position";
+
 
 export class CarouselItem {
-    type: string;
+    readonly index: number;
+    readonly type: string;
     element: Element;
-    index: number;
-    startPos: Position;
     state: CarouselState;
+    originalPosition: Position;
+    pos: Position;
+    margin: number = 10;
     
     constructor(element: Element, index: number, state: CarouselState) {
         this.element = element;
         this.index = index;
         this.type = element.getAttribute("data-carousel-item-type") || "unknown";
         this.state = state;
-        this.startPos = new Position(0, 0, 1, 0);
+        this.originalPosition = PositionFactory.fromElement(element);
+        this.pos = new Position(0, 0, 1, 0);
     }
-
+    
     get x() {
         return this.element.getBoundingClientRect().x;
+    }
+
+    getPos() {
+        return this.pos;
+    }
+
+    setPos(pos: Position) {
+        this.pos = pos;
+    }
+
+    getOriginalPos() {
+        return this.originalPosition;
     }
 
     savePos(dragEvent: Draggable.Vars) {
@@ -45,7 +62,7 @@ export class DraggableCarouselItem extends CarouselItem {
 
     handlePress(vars: Draggable.Vars): void {
         this.state.dragging = true;
-        this.startPos = this.savePos(vars);
+        this.pos = this.savePos(vars);
         gsap.to(vars.target, {
             scale: 1.1,
             rotate: 5,
@@ -61,12 +78,12 @@ export class DraggableCarouselItem extends CarouselItem {
     
     putMeBack(dragEvent: Draggable.Vars) {
         let itemId = dragEvent.target.id
-        let scale = this.state.selected == itemId ? 1.1 : 1;
+        let scale = this.state.selectedIndex == itemId ? 1.1 : 1;
         gsap.to(dragEvent.target, {
             scale: scale,
-            rotate: this.startPos.rotation,
-            x: Math.round(this.startPos.x), 
-            y: Math.round(this.startPos.y),
+            rotate: this.pos.rotation,
+            x: Math.round(this.pos.x), 
+            y: Math.round(this.pos.y),
             ease: "elastic.out(.5, 0.2)",
             duration: .6 
         });
@@ -108,27 +125,12 @@ export class CarouselCardItem extends DraggableCarouselItem {
     }
 
     isDraggedUp(vars: Draggable.Vars) {
-        return this.startPos.y - vars.y > 100;
+        return this.pos.y - vars.y > 100;
     }
     
     handleDragRelease(dragEvent: Draggable.Vars) {
         super.handleDragRelease(dragEvent);
-        if (this.isDraggedUp(dragEvent)) 
-            this.makeActive();
+        // Let the Carousel handle making this item active
         this.makeUnselected();
-    }
-}
-
-class Position {
-    x: number;
-    y: number;
-    scale: number;
-    rotation: number;
-    
-    constructor(x: number, y: number, scale: number, rotation: number) {
-        this.x = x;
-        this.y = y;
-        this.scale = scale;
-        this.rotation = rotation;
     }
 }

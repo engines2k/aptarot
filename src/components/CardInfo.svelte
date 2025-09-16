@@ -22,12 +22,12 @@
 </script>
 
 <div id="tarot-info" class="tarot-info grid grid-cols-12 detail">
-    <div class="col-span-5">
+    <div class="col-span-12 md:cols-span-5">
         <div class="card-face-container">
             <img class="card-face" src={card.image} alt="Tarot card" width="200" />
         </div>
     </div>
-    <div class="col-span-7">
+    <div class="col-span-12 md:col-span-12 lg:col-span-7">
         <div class="card-heading">
             <p class="tarot-card-name dark:text-gray-100">{card.name}</p>
             <p class="tarot-ti dark:text-gray-100">{card.original_title}</p>
@@ -50,3 +50,18 @@
         </div>
     </div>
 </div>
+
+<style scoped>
+#tarot-info {
+    margin: 50px;
+}
+
+.card-face-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+</style>
