@@ -30,12 +30,12 @@ export interface CourtCard extends MinorArcanaCard {
     birthday_examples: string[];
 }
 
-export const createCard = (cardData: any): Card => {
-    if (cardData.type === "major") 
+export const createCard = (cardData: any = null): Card => {
+    if (cardData && cardData.type === "Major Arcana") 
         return createMajorArcanaCard(cardData);
-    else if (cardData.type === "court")
+    else if (cardData && cardData.type === "Court Card")
         return createCourtCard(cardData);
-    else if (cardData.type === "minor")
+    else if (cardData && cardData.type === "Minor Arcana")
         return createMinorArcanaCard(cardData);
     return createBaseCard(cardData);
 };

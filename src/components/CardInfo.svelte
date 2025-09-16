@@ -3,10 +3,10 @@
     import CardAttribution from "$/components/CardAttribution.svelte";
     import CardDetail from "$/components/CardDetail.svelte";
     import animations from "$/lib/animations";
+    import { createCard } from "$/lib/types/Card";
 
-    const defaultCard = { name: "No card selected", image: "/cards/card.png" };
     let { card } = $props();
-    card = card || defaultCard;
+    card = card || createCard();
 
     onMount(() => {
        animations.jiggle(".card-face");
@@ -16,6 +16,8 @@
         if (card.id != -1)
             animations.popIn(".card-face");
     });
+
+    $inspect(card);
 
 </script>
 

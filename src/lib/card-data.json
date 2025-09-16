@@ -1,7 +1,7 @@
 [
     {
         "name": "The Fool",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Openness",
         "original_title": "The Spirit of Æthyer",
         "attribution": {"primary":"Air"},
@@ -17,7 +17,7 @@
     },
     {
         "name": "The Magus",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Intelligence",
         "original_title": "The Magus of Power",
         "attribution": {"primary":"Mercury"},
@@ -33,7 +33,7 @@
     },
     {
         "name": "The Priestess",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Mystery",
         "original_title": "The Priestess of the Silver Star",
         "attribution": {"primary":"Luna"},
@@ -49,7 +49,7 @@
     },
     {
         "name": "The Empress",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Beauty",
         "original_title": "The Daughter of the Mighty Ones",
         "attribution": {"primary":"Venus"},
@@ -65,7 +65,7 @@
     },
     {
         "name": "The Emperor",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Action",
         "original_title": "Sun of the Morning, chief among the Mighty",
         "attribution": {"primary":"Aries"},
@@ -81,7 +81,7 @@
     },
     {
         "name": "The Hierophant",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Fixity",
         "original_title": "The Magus of the Eternal",
         "attribution": {"primary":"Taurus"},
@@ -97,7 +97,7 @@
     },
     {
         "name": "The Lovers",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Syzygy",
         "original_title": "The Children of the Voice",
         "attribution": {"primary":"Gemini"},
@@ -113,7 +113,7 @@
     },
     {
         "name": "The Chariot",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Devotion",
         "original_title": "The Lord of the Triumph of Light",
         "attribution": {"primary":"Cancer"},
@@ -129,7 +129,7 @@
     },
     {
         "name": "Justice/Adjustment",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Equilibrium",
         "original_title": "The Daughter of the Lords of Truth",
         "attribution": {"primary":"Libra"},
@@ -145,7 +145,7 @@
     },
     {
         "name": "The Hermit",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Gestation",
         "original_title": "The Prophet of the Eternal",
         "attribution": {"primary":"Virgo"},
@@ -161,7 +161,7 @@
     },
     {
         "name": "Fortune",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Flux",
         "original_title": "The Lord of the Forces of Life",
         "attribution": {"primary":"Jupiter"},
@@ -177,7 +177,7 @@
     },
     {
         "name": "Strength/Lust",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Sublimation",
         "original_title": "The Daughter of the Flaming Sword",
         "attribution": {"primary":"Leo"},
@@ -193,7 +193,7 @@
     },
     {
         "name": "The Hanged Man",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Suspension ",
         "original_title": "The Spirit of the Mighty Waters",
         "attribution": {"primary":"Water"},
@@ -209,7 +209,7 @@
     },
     {
         "name": "Death",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Dissolution",
         "original_title": "The Child of the Great Transformers",
         "attribution": {"primary":"Scorpio"},
@@ -225,7 +225,7 @@
     },
     {
         "name": "Temperance/Art",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Synthesis",
         "original_title": "The Daughter of the Reconcilers",
         "attribution": {"primary":"Sagittarius"},
@@ -241,7 +241,7 @@
     },
     {
         "name": "The Devil",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Materialism",
         "original_title": "The Lord of the Gates of Matter",
         "attribution": {"primary":"Capricorn"},
@@ -257,7 +257,7 @@
     },
     {
         "name": "The Tower",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Destruction",
         "original_title": "The Lord of the Hosts of the Mighty",
         "attribution": {"primary":"Mars"},
@@ -273,7 +273,7 @@
     },
     {
         "name": "The Star",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Transcendence",
         "original_title": "The Daughter of the Firmament",
         "attribution": {"primary":"Aquarius"},
@@ -289,7 +289,7 @@
     },
     {
         "name": "The Moon",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Obscurity",
         "original_title": "The Ruler of the Flux and Reflux",
         "attribution": {"primary":"Pisces"},
@@ -305,7 +305,7 @@
     },
     {
         "name": "The Sun",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Illumination",
         "original_title": "The Lord of the Fire of the World",
         "attribution": {"primary":"Sol"},
@@ -321,7 +321,7 @@
     },
     {
         "name": "Judgment/Aeon",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Awakening",
         "original_title": "The Spirit of Primal Fire",
         "attribution": {"primary":"Fire"},
@@ -337,7 +337,7 @@
     },
     {
         "name": "The World/The Universe",
-        "type": "major",
+        "type": "Major Arcana",
         "meaning": "Completion",
         "original_title": "The Great One of the Night of Time",
         "attribution": {"primary":"Saturn"},
@@ -352,23 +352,8 @@
         "birthday_examples": []
     },
     {
-        "name": "Card Name (Minor Arcana)",
-        "meaning": "",
-        "original_title": "",
-        "attribution": {"primary":""},
-        "dates": "",
-        "hebrew_letter": "",
-        "letter_association": "",
-        "part_of_soul": "",
-        "suit_element": "",
-        "division_of_creation": "",
-        "tree_of_life_path": "",
-        "tree_of_life_sefira": "",
-        "birthday_examples": ""
-    },
-    {
         "name": "Ace of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Will",
         "original_title": "The Root of the Powers of Fire",
         "attribution": {"primary":"(Potential of) Fire"},
@@ -384,7 +369,7 @@
     },
     {
         "name": "Ace of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Love",
         "original_title": "The Root of the Power of the Waters",
         "attribution": {"primary":"(Potential of) Water"},
@@ -400,7 +385,7 @@
     },
     {
         "name": "Ace of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Mind",
         "original_title": "The Root of the Powers of the Air",
         "attribution": {"primary":"(Potential of Air"},
@@ -416,7 +401,7 @@
     },
     {
         "name": "Ace of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Matter",
         "original_title": "The Root of the Powers of the Earth",
         "attribution": {"primary":"(Potential of) Earth"},
@@ -432,7 +417,7 @@
     },
     {
         "name": "2 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Initiative",
         "original_title": "Lord of Dominion",
         "attribution": {"primary":"Mars", "secondary": "Aries"},
@@ -448,7 +433,7 @@
     },
     {
         "name": "2 of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Harmony",
         "original_title": "Lord of Love",
         "attribution": {"primary":"Venus", "secondary": "Cancer"},
@@ -464,7 +449,7 @@
     },
     {
         "name": "2 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Consideration",
         "original_title": "Lord of Peace Restored",
         "attribution": {"primary":"Moon", "secondary": "Libra"},
@@ -480,7 +465,7 @@
     },
     {
         "name": "2 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Change",
         "original_title": "Lord of Harmonious Change",
         "attribution": {"primary":"Jupiter", "secondary": "Capricorn"},
@@ -496,7 +481,7 @@
     },
     {
         "name": "3 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Virtue",
         "original_title": "Lord of Established Strength",
         "attribution": {"primary":"Sol", "secondary": "Aries"},
@@ -512,7 +497,7 @@
     },
     {
         "name": "3 of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Ebullience",
         "original_title": "Lord of Abundance",
         "attribution": {"primary":"Mercury", "secondary": "Cancer"},
@@ -528,7 +513,7 @@
     },
     {
         "name": "3 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Weltzschmerz",
         "original_title": "Lord of Sorrow",
         "attribution": {"primary":"Saturn", "secondary": "Libra"},
@@ -544,7 +529,7 @@
     },
     {
         "name": "3 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Labor",
         "original_title": "Lord of Material Works",
         "attribution": {"primary":"Mars", "secondary": "Capricorn"},
@@ -560,7 +545,7 @@
     },
     {
         "name": "4 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Achievment",
         "original_title": "Lord of Perfected Work",
         "attribution": {"primary":"Venus", "secondary": "Aries"},
@@ -576,7 +561,7 @@
     },
     {
         "name": "4 of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Comfort",
         "original_title": "Lord of Blended Pleasure",
         "attribution": {"primary":"Moon", "secondary": "Cancer"},
@@ -592,7 +577,7 @@
     },
     {
         "name": "4 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Respite",
         "original_title": "Lord of Rest from Strife",
         "attribution": {"primary":"Jupiter", "secondary": "Libra"},
@@ -608,7 +593,7 @@
     },
     {
         "name": "4 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Power",
         "original_title": "Lord of Earthly Power",
         "attribution": {"primary":"Sol", "secondary": "Capricorn"},
@@ -624,7 +609,7 @@
     },
     {
         "name": "5 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Conflict",
         "original_title": "Lord of Strife",
         "attribution": {"primary":"Saturn", "secondary": "Leo"},
@@ -640,7 +625,7 @@
     },
     {
         "name": "5 of Cups ",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Disappointment",
         "original_title": "Lord of Loss", "secondary": "Pleasure",
         "attribution": {"primary":"Mars", "secondary": "Scorpio"},
@@ -656,7 +641,7 @@
     },
     {
         "name": "5 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Defeat",
         "original_title": "Lord of Defeat",
         "attribution": {"primary":"Venus", "secondary": "Aquarius"},
@@ -672,7 +657,7 @@
     },
     {
         "name": "5 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Strain ",
         "original_title": "Lord of Material Trouble",
         "attribution": {"primary":"Mercury", "secondary": "Taurus"},
@@ -688,7 +673,7 @@
     },
     {
         "name": "6 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Victory",
         "original_title": "Lord of Victory",
         "attribution": {"primary":"Jupiter", "secondary": "Leo"},
@@ -704,7 +689,7 @@
     },
     {
         "name": "6 of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Pleasure",
         "original_title": "Lord of Pleasure",
         "attribution": {"primary":"Sol", "secondary": "Scorpio"},
@@ -720,7 +705,7 @@
     },
     {
         "name": "6 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Reason",
         "original_title": "Lord of Earned Success",
         "attribution": {"primary":"Mercury", "secondary": "Aquarius"},
@@ -736,7 +721,7 @@
     },
     {
         "name": "6 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Prosperity",
         "original_title": "Lord of Material Success",
         "attribution": {"primary":"Moon", "secondary": "Taurus"},
@@ -752,7 +737,7 @@
     },
     {
         "name": "7 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Audacity",
         "original_title": "Lord of Valour",
         "attribution": {"primary":"Mars", "secondary": "Leo"},
@@ -768,7 +753,7 @@
     },
     {
         "name": "7 of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Debauchery",
         "original_title": "Lord of Illusionary Success",
         "attribution": {"primary":"Venus", "secondary": "Scorpio"},
@@ -784,7 +769,7 @@
     },
     {
         "name": "7 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Subterfuge",
         "original_title": "Lord of Unstable Effort",
         "attribution": {"primary":"Moon", "secondary": "Aquarius"},
@@ -800,7 +785,7 @@
     },
     {
         "name": "7 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Failure",
         "original_title": "Lord of Success Unfulfilled",
         "attribution": {"primary":"Saturn", "secondary": "Taurus"},
@@ -816,7 +801,7 @@
     },
     {
         "name": "8 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Acceleration",
         "original_title": "Lord of Swiftness",
         "attribution": {"primary":"Mercury", "secondary": "Sagittarius"},
@@ -832,7 +817,7 @@
     },
     {
         "name": "8 of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Abnegation",
         "original_title": "Lord of Abandoned Success",
         "attribution": {"primary":"Saturn", "secondary": "Pisces"},
@@ -848,7 +833,7 @@
     },
     {
         "name": "8 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Interference",
         "original_title": "Lord of Shortened Force",
         "attribution": {"primary":"Jupiter", "secondary": "Gemini"},
@@ -864,7 +849,7 @@
     },
     {
         "name": "8 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Prudence",
         "original_title": "Lord of Prudence",
         "attribution": {"primary":"Sol", "secondary": "Virgo"},
@@ -880,7 +865,7 @@
     },
     {
         "name": "9 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Resilience",
         "original_title": "Lord of Great Strength",
         "attribution": {"primary":"Moon", "secondary": "Sagittarius"},
@@ -896,7 +881,7 @@
     },
     {
         "name": "9 of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Happiness",
         "original_title": "Lord of Material Happiness",
         "attribution": {"primary":"Jupiter", "secondary": "Pisces"},
@@ -912,7 +897,7 @@
     },
     {
         "name": "9 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Agitation",
         "original_title": "Lord of Despair and Cruelty",
         "attribution": {"primary":"Mars", "secondary": "Gemini"},
@@ -928,7 +913,7 @@
     },
     {
         "name": "9 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Gain",
         "original_title": "Lord of Material Gain",
         "attribution": {"primary":"Venus", "secondary": "Virgo"},
@@ -944,7 +929,7 @@
     },
     {
         "name": "10 of Wands",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Burden",
         "original_title": "Lord of Oppression",
         "attribution": {"primary":"Saturn", "secondary": "Sagittarius"},
@@ -960,7 +945,7 @@
     },
     {
         "name": "10 of Cups",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Satisfaction",
         "original_title": "Lord of Perfected Happiness",
         "attribution": {"primary":"Mars", "secondary": "Pisces"},
@@ -976,7 +961,7 @@
     },
     {
         "name": "10 of Swords",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Nullification",
         "original_title": "Lord of Ruin",
         "attribution": {"primary":"Sol", "secondary": "Gemini"},
@@ -992,7 +977,7 @@
     },
     {
         "name": "10 of Disks",
-        "type": "minor",
+        "type": "Minor Arcana",
         "meaning": "Wealth",
         "original_title": "Lord of Wealth",
         "attribution": {"primary":"Mercury", "secondary": "Virgo"},
@@ -1007,23 +992,8 @@
         "birthday_examples": []
     },
     {
-        "name": "Card Name (Court)",
-        "meaning": "",
-        "original_title": "",
-        "attribution": {"primary":""},
-        "dates": "",
-        "hebrew_letter": "",
-        "letter_association": "NA",
-        "part_of_soul": "",
-        "suit_element": "",
-        "division_of_creation": "",
-        "tree_of_life_path": "",
-        "tree_of_life_sefira": "",
-        "birthday_examples": ""
-    },
-    {
         "name": "Knight of Wands",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Zeal",
         "original_title": "Lord of the Flame and the Lightning",
         "attribution": {"primary":"Fire", "secondary": "Fire"},
@@ -1039,7 +1009,7 @@
     },
     {
         "name": "Knight of Cups",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Reverie",
         "original_title": "Lord of the Waves and Waters",
         "attribution": {"primary":"Fire", "secondary": "Water"},
@@ -1055,7 +1025,7 @@
     },
     {
         "name": "Knight of Swords",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Provocation",
         "original_title": "Lord of the Winds and Breezes",
         "attribution": {"primary":"Fire", "secondary": "Air"},
@@ -1071,7 +1041,7 @@
     },
     {
         "name": "Knight of Disks",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Dedication",
         "original_title": "Lord of the Wild and Fertile Land",
         "attribution": {"primary":"Fire", "secondary": "Earth"},
@@ -1087,7 +1057,7 @@
     },
     {
         "name": "Queen of Wands",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Fervor",
         "original_title": "Queen of the Thrones of Flame",
         "attribution": {"primary":"Water", "secondary": "Fire"},
@@ -1103,7 +1073,7 @@
     },
     {
         "name": "Queen of Cups",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Empathy",
         "original_title": "Queen of the Thrones of Water",
         "attribution": {"primary":"Water", "secondary": "Water"},
@@ -1119,7 +1089,7 @@
     },
     {
         "name": "Queen of Swords",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Insight",
         "original_title": "Queen of the Thrones of Air",
         "attribution": {"primary":"Water", "secondary": "Air"},
@@ -1135,7 +1105,7 @@
     },
     {
         "name": "Queen of Disks",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Nourishment",
         "original_title": "Queen of the Thrones of Earth",
         "attribution": {"primary":"Water", "secondary": "Earth"},
@@ -1151,7 +1121,7 @@
     },
     {
         "name": "Prince/King of Wands",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Radiance",
         "original_title": "The Prince of the Chariot of Fire",
         "attribution": {"primary":"Air", "secondary": "Fire"},
@@ -1167,7 +1137,7 @@
     },
     {
         "name": "Prince/King of Cups",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Romanticism",
         "original_title": "The Prince of the Chariot of Waters",
         "attribution": {"primary":"Air", "secondary": "Water"},
@@ -1183,7 +1153,7 @@
     },
     {
         "name": "Prince/King of Swords",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Cogitation",
         "original_title": "The Prince of the Chariot of the Winds",
         "attribution": {"primary":"Air", "secondary": "Air"},
@@ -1199,7 +1169,7 @@
     },
     {
         "name": "Prince/King of Disks",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Practicality",
         "original_title": "The Prince of the Chariot of Earth",
         "attribution": {"primary":"Air", "secondary": "Earth"},
@@ -1215,7 +1185,7 @@
     },
     {
         "name": "Princess/Page of Wands",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Desire",
         "original_title": "The Princess of the Shining Flame",
         "attribution": {"primary":"Earth", "secondary": "Fire"},
@@ -1231,7 +1201,7 @@
     },
     {
         "name": "Princess/Page of Cups",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Sensitivity",
         "original_title": "The Princess of the Waters",
         "attribution": {"primary":"Earth", "secondary": "Water"},
@@ -1247,7 +1217,7 @@
     },
     {
         "name": "Princess/Page of Swords",
-        "type": "court",
+        "type": "Court Card",
         "meaning": "Interest",
         "original_title": "The Princess of the Rushing Winds",
         "attribution": {"primary":"Earth", "secondary": "Air"},

@@ -1,37 +1,61 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Carousel } from '$/lib/types/Carousel';
-	
-    let { cards, activeCard, selected, changeCard } = $props();
+	import { createCard, type Card } from '$/lib/types/Card';
+	import cardData from '$/lib/card-data.json';
+	import cardImagePaths from '$lib/card-image-paths.json';
+
+	let cards = prepareCardData(cardData);
+	let { activeCard, changeCard } = $props();
 
 	onMount(() => {
 		const controller = new Carousel("card-carousel", changeCard);
 	});
+
+	function prepareCardData(cardData: any) {
+		let result: { [key: string]: Card[] } = {};
+		for (let i=0; i < cardData.length; i++) {
+			let card = createCard(cardData[i]);
+			addCardImage(card);
+			result[card.type] = result[card.type] || [];
+			result[card.type].push(card);
+		}
+		return result;
+	}
+	
+	function addCardImage(card: Card) {
+		if(!card.image)
+			card.image = (cardImagePaths as Record<string, string>)[card.name] || "/cards/card.png";
+		return card
+	}
 
 </script>
 <div
 class="mt-12"
 id="card-carousel"
 >
-<div class="carousel-item">
-	<span> hello there </span>
-</div>
-{#each cards as card, index}
-    <div
-    class="carousel-item"
-	data-carousel-item-type="card"
-	data-card={JSON.stringify(card)}
-    id="{String(index)}"
-	class:card-active={index == activeCard.id}
-    >
-        <img 
-        src={card.image}
-        alt="Playing card"
-        width="100"
-        draggable="false"
-        />
-    </div>
-    {/each}
+{#each Object.entries(cards) as [typeName, typeCards], typeIndex}
+	<div class="carousel-item carousel-divider">
+	</div>
+	<div class="carousel-item">
+		<span>{typeName}</span>
+	</div>
+	{#each typeCards as card, index}
+		<div
+		class="carousel-item carousel-card"
+		data-carousel-item-type="card"
+		data-card={JSON.stringify(card)}
+		id="{String(index)}"
+		>
+			<img 
+			src={card.image}
+			alt="Playing card"
+			width="100"
+			draggable="false"
+			/>
+		</div>
+	{/each}
+{/each}
 </div>
 
 <style>
@@ -39,7 +63,7 @@ id="card-carousel"
 		box-shadow: 6px 10px 89px -10px rgba(255,204,0);
 	}
 
-	.card-active {
+	:global(.card-active) {
 		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
 	}
 
@@ -58,21 +82,30 @@ id="card-carousel"
 		bottom: 0;
 	}
 
-	#card-carousel .carousel-item {
+	.carousel-item {
 		pointer-events: auto;
 		z-index: 100;
 		flex: 0 0 auto;
-		width: 70px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height:max-content;
 	}
-
-	.carousel-item img {
+	
+	.carousel-card img {
 		width: 70px;
 		height: auto;
 		display: block;
 		image-rendering: pixelated;
+	}
+	
+	.carousel-card {
+		width: 70px;
+	}
+
+	.carousel-divider {
+		height:100%;
+		max-height:150px;
+		border-right: 10px solid white;
+		width:0;
 	}
 </style>

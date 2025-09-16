@@ -1,33 +1,13 @@
 <script lang="ts">
-	import cardData from '$lib/card-data-2.json';
-	import cardImagePaths from '$lib/card-image-paths.json';
 	import CardInfo from '$/components/CardInfo.svelte';
 	import CardCarousel from '$/components/CardCarousel.svelte';
-    import { createCard } from '$/lib/types/Card';
-	import type { Card } from '$/lib/types/Card';
 	import "$/cards.css";
+	import { createCard, type Card } from '$/lib/types/Card';
 
-	let noCard = $state(createCard({ id: -1, name: "No card selected", image: "/cards/card.png" }));
-	let selected = $state(-1);
-	let activeCard = $state(noCard);
-	let cardList = cardData.map(importCardData);
-	let cards = $state(cardList);
-	
-	function importCardData(cardData: any) {
-		let card = createCard(cardData);
-		addCardImage(card);
-		return card;
-	}
-	
-	function addCardImage(card: Card) {
-		if(!card.image)
-			card.image = (cardImagePaths as Record<string, string>)[card.name] || "/cards/card.png";
-		return card
-	}
+	let activeCard = $state(createCard());
 
 	function changeCard(card: Card, index: number) {
 		activeCard = card;
-		selected = index;
 	}
 </script>
 
@@ -38,12 +18,7 @@
 
 <section>
 	<CardInfo card={activeCard}/>
-	<CardCarousel 
-	{cards}
-	{activeCard}
-	{selected}
-	{changeCard}
-	/>
+	<CardCarousel {activeCard} {changeCard} />
 </section>
 
 <style>
