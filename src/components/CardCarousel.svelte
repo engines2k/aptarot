@@ -39,9 +39,6 @@ id="card-carousel"
 {#each Object.entries(cards) as [typeName, typeCards], typeIndex}
 	<div class="carousel-item carousel-divider">
 	</div>
-	<div class="carousel-item">
-		<span>{typeName}</span>
-	</div>
 	{#each typeCards as card, index}
 		<div
 		class="carousel-item carousel-card"
@@ -58,6 +55,7 @@ id="card-carousel"
 		</div>
 	{/each}
 {/each}
+<div class="carousel-item carousel-divider"></div>
 </div>
 
 <div class="carousel-controls">
@@ -136,7 +134,8 @@ id="card-carousel"
 	.carousel-divider {
 		height:100%;
 		max-height:150px;
-		border-right: 10px solid white;
+		border-right: 5px solid white;
 		width:0;
+		margin-bottom: -15px;
 	}
 </style>

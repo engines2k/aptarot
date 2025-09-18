@@ -1,7 +1,6 @@
 export class CarouselState {
     dragging: boolean;
     scrollPos: number;
-    selectedIndex: number;
     activeIndex: number;
     window: Window;
     numItems: number;
@@ -12,7 +11,7 @@ export class CarouselState {
         this.window = window;
         this.dragging = false;
         this.scrollPos = 0;
-        this.selectedIndex = -1;
+        this.activeIndex = -1;
         this.activeIndex = -1
         this.numItems = numItems;
     }

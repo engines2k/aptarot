@@ -53,18 +53,18 @@ export class Carousel {
 
     goToPrevious() {
         let prev = 1;
-        while(!this.isSelectableIndex(this.state.selectedIndex - prev)
-            && this.state.selectedIndex - prev >= 0)
+        while(!this.isSelectableIndex(this.state.activeIndex - prev)
+            && this.state.activeIndex - prev >= 0)
             prev++;
-        this.goToIndex(this.state.selectedIndex - prev);
+        this.goToIndex(this.state.activeIndex - prev);
     }
 
     goToNext() {
         let next = 1;
-        while(!this.isSelectableIndex(this.state.selectedIndex + next)
-            && this.state.selectedIndex + next < this.length)
+        while(!this.isSelectableIndex(this.state.activeIndex + next)
+            && this.state.activeIndex + next < this.length)
             next++;
-        this.goToIndex(this.state.selectedIndex + next);
+        this.goToIndex(this.state.activeIndex + next);
     }
 
     isSelectableIndex(index: number) {
@@ -77,7 +77,6 @@ export class Carousel {
         const spread = (targetItem.index - ((this.length - 1) / 2)) * targetItem.margin;
         this.state.scrollPos = (this.state.viewportWidth / 2) - targetItem.getOriginalPos().x - spread;
         this.updateAllItemPositions();
-        this.state.selectedIndex = index;
         if (targetItem instanceof CarouselCardItem) {
             this.makeActiveItem(targetItem);
         }
@@ -158,19 +157,30 @@ export class Carousel {
             y: this.calculateItemHeight(originalX + newXOffset),
             rotation: this.calculateItemAngle(originalX + newXOffset),
             scale: 1,
-            duration: 0.5,
-            ease: "power2.out"
+            duration: 0.4,
+            ease: "power3.out"
         });
+    }
+
+    private calculateNewXPosition(item: CarouselItem) {
+        let originalX = item.getOriginalPos().x;
+        let newX = originalX + this.calculateXTranslation(item);
+        if (newX < this.settings.leftBound)
+            newX = this.settings.leftBound;
+        else if (newX > this.settings.rightBound)
+            newX = this.settings.rightBound;
+        return newX;
     }
 
     private calculateXTranslation(item: CarouselItem) {
         const spread = (item.index - ((this.length - 1) / 2)) * item.margin;
-        return this.state.scrollPos + spread;
+        let x = this.state.scrollPos + spread;
+        return x;
     }
     
     private itemOutOfView(item: CarouselItem) {
-        let leftBound = -125;
-        let rightBound = this.state.viewportWidth + 125;
+        let leftBound = this.settings.leftBound;
+        let rightBound = this.settings.rightBound;
         let nextX = item.originalPosition.x + this.calculateXTranslation(item);
         return (item.x < leftBound && nextX < leftBound) ||
         (item.x > rightBound && nextX > rightBound);
@@ -192,6 +202,8 @@ export class Carousel {
 
 interface CarouselSettings {
     spreadFactor: number;
+    leftBound: number;
+    rightBound: number;
     angleMapper: (x: number, state: CarouselState) => number;
     heightMapper: (x: number, state: CarouselState) => number;
 }
@@ -199,8 +211,10 @@ interface CarouselSettings {
 function createDefaultCarouselSettings(state: CarouselState): CarouselSettings {
     return {
         spreadFactor: 20,
+        leftBound: -125,
+        rightBound: state.viewportWidth + 125,
         angleMapper(x: number, state: CarouselState) {
-            return gsap.utils.mapRange(0, state.viewportWidth, -this.spreadFactor / 1, this.spreadFactor / 1)(x);
+            return gsap.utils.mapRange(0, state.viewportWidth, -this.spreadFactor / 2, this.spreadFactor / 2)(x);
         },
         //TODO Adjust height factor for different screen sizes instead of using a magic number lolol
         heightMapper(x: number, state: CarouselState) {

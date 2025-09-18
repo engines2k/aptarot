@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import CardAttribution from "$/components/CardAttribution.svelte";
+    import BirthdayExamples from "./BirthdayExamples.svelte";
     import CardDetail from "$/components/CardDetail.svelte";
     import animations from "$/lib/animations";
     import { createCard,
@@ -33,38 +34,39 @@
         <div class="card-heading">
             <p class="tarot-card-name dark:text-gray-100">{card.name}</p>
             <p class="tarot-ti dark:text-gray-100">{card.original_title}</p>
+            
             <CardAttribution attribution={card.attribution} />
             <div class="divider"></div>
             <p class="tarot-ti dark:text-gray-100 text-sm">{card.type}</p>
         </div>
         <div class="grid grid-cols-2 tarot-detail">
             <div class="col-span-1 pr-4">
-                {#if card.type === "Major Arcana"}
-                    <CardDetail label="Tree of life (Path)" value={card.tree_of_life_path} />
-                {/if}
-                    {#if card.type === "Major Arcana"}
-                    <CardDetail label="Hebrew Letter" value={card.hebrew_letter} />
-                {/if}
-                {#if card.type === "Major Arcana" || card.type === "Court Cards"}
-                    <CardDetail label="Letter Association" value={card.letter_association} />
-                {/if}
-                {#if card.type === "Minor Arcana" || card.type === "Court Cards"}
-                    <CardDetail label="Part of Soul" value={card.part_of_soul} />
-                {/if}
-                {#if card.type === "Court Card"}
-                    <CardDetail label="Birthday Examples" value={card.birthday_examples} />
-                {/if}
-                    <CardDetail label="Meaning" value={card.meaning} />
-            </div>
-            <div class="col-span-1">
+                <CardDetail label="Meaning" value={card.meaning} />
                 {#if card.type === "Minor Arcana" || card.type === "Court Cards"}
                     <CardDetail label="Tree of life (Sephira)" value={card.tree_of_life_sefira} />
                 {/if}
                 {#if card.type === "Minor Arcana" || card.type === "Court Cards"}
                     <CardDetail label="Suit Element" value={card.suit_element} />
                 {/if}
+                {#if card.type === "Major Arcana"}
+                    <CardDetail label="Tree of life (Path)" value={card.tree_of_life_path} />
+                {#if card.type === "Court Card"}
+                    <BirthdayExamples value={card.birthday_examples} />
+                {/if}
+                {/if}
+            </div>
+            <div class="col-span-1">
                 {#if card.type === "Minor Arcana" || card.type === "Court Cards"}
-                    <CardDetail label="Division of Creation" value={card.division_of_creation} />
+                <CardDetail label="Division of Creation" value={card.division_of_creation} />
+                {/if}
+                {#if card.type === "Minor Arcana" || card.type === "Court Cards"}
+                <CardDetail label="Part of Soul" value={card.part_of_soul} />
+                {/if}
+                {#if card.type === "Major Arcana"}
+                    <CardDetail label="Hebrew Letter" value={card.hebrew_letter} />
+                {/if}
+                {#if card.type === "Major Arcana" || card.type === "Court Cards"}
+                    <CardDetail label="Letter Association" value={card.letter_association} />
                 {/if}
                 {#if card.type === "Court Card"}
                     <CardDetail label="Dates" value={card.dates} />
@@ -91,7 +93,6 @@
 .divider {
     max-width:50px;
     border-bottom: 1px solid #ccc;
-    margin: 10px 0 4px 0;
+    margin: 3px 0 3px 0;
 }
-
 </style>

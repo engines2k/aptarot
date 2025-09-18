@@ -79,7 +79,7 @@ export class DraggableCarouselItem extends CarouselItem {
     
     putMeBack(dragEvent: Draggable.Vars) {
         let itemId = dragEvent.target.id
-        let scale = this.state.selectedIndex == itemId ? 1.1 : 1;
+        let scale = this.state.activeIndex == itemId ? 1.1 : 1;
         gsap.to(dragEvent.target, {
             scale: scale,
             rotate: this.pos.rotation,
