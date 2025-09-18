@@ -138,4 +138,15 @@ id="card-carousel"
 		width:0;
 		margin-bottom: -15px;
 	}
+
+
+	@media (max-width: 40rem) {
+		.carousel-card {
+			width: 50px;
+		}
+
+		.carousel-divider {
+			max-height: 100px;
+		}
+	}
 </style>

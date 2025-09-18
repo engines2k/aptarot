@@ -47,5 +47,21 @@ function hover(target: GSAPTweenTarget) {
     );
 }
 
-export default { jiggle, popIn, hover };
+function fadeIn(target: GSAPTweenTarget) {
+    gsap.fromTo(
+        target,
+        {
+            opacity: 0,
+            y: 20,
+        },
+        {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+        }
+    );
+}
+
+export default { jiggle, popIn, hover, fadeIn };
 

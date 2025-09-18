@@ -4,7 +4,6 @@ import { Draggable } from "gsap/Draggable";
 import { type Card } from "$/lib/types/Card";
 import { CarouselState } from "$lib/types/CarouselState";
 import { CarouselItem, DraggableCarouselItem, CarouselCardItem } from "$lib/types/CarouselItem";
-import { Position, PositionFactory } from "$lib/types/Position";
 
 gsap.registerPlugin(Draggable);
 gsap.registerPlugin(Observer);
@@ -20,20 +19,33 @@ export class Carousel {
         this.rootElement = document.getElementById(targetId)!;
         this.state = new CarouselState(window, this.items.length);
         this.setItems();
-        this.settings = createDefaultCarouselSettings(this.state);
+        this.settings = createCarouselSettings(this.state);
         this.emitFunc = changeCard;
         this.initializeItemDraggables();
         this.initializeScrollObserver();
+        this.initializeResizeObserver();
     }
     
-    setItems() {
+    private initializeResizeObserver() {
+        const mediaQuery = window.matchMedia("(max-width: 40rem)");
+        mediaQuery.addEventListener("change", this.handleWindowResize.bind(this));
+    }
+
+    private handleWindowResize(e: MediaQueryListEvent) {
+        if(e.matches) {
+            this.setItems();
+        }
+    }
+
+    private setItems() {
+        this.items = [];
         let rootElements = Array.from(this.rootElement.children)
         for (let i=0; i < rootElements.length; i++) {
             this.push(rootElements[i], i);
         }
     }
     
-    push(element: Element, index: number) {
+    private push(element: Element, index: number) {
         let item: CarouselItem;
         let itemType = element.attributes.getNamedItem("data-carousel-item-type")?.value;
         if (itemType == "card")
@@ -162,15 +174,6 @@ export class Carousel {
         });
     }
 
-    private calculateNewXPosition(item: CarouselItem) {
-        let originalX = item.getOriginalPos().x;
-        let newX = originalX + this.calculateXTranslation(item);
-        if (newX < this.settings.leftBound)
-            newX = this.settings.leftBound;
-        else if (newX > this.settings.rightBound)
-            newX = this.settings.rightBound;
-        return newX;
-    }
 
     private calculateXTranslation(item: CarouselItem) {
         const spread = (item.index - ((this.length - 1) / 2)) * item.margin;
@@ -179,8 +182,8 @@ export class Carousel {
     }
     
     private itemOutOfView(item: CarouselItem) {
-        let leftBound = this.settings.leftBound;
-        let rightBound = this.settings.rightBound;
+        let leftBound = this.settings.leftBound();
+        let rightBound = this.settings.rightBound();
         let nextX = item.originalPosition.x + this.calculateXTranslation(item);
         return (item.x < leftBound && nextX < leftBound) ||
         (item.x > rightBound && nextX > rightBound);
@@ -202,17 +205,21 @@ export class Carousel {
 
 interface CarouselSettings {
     spreadFactor: number;
-    leftBound: number;
-    rightBound: number;
+    leftBound: () => number;
+    rightBound: () => number;
     angleMapper: (x: number, state: CarouselState) => number;
     heightMapper: (x: number, state: CarouselState) => number;
 }
 
-function createDefaultCarouselSettings(state: CarouselState): CarouselSettings {
+function createCarouselSettings(state: CarouselState): CarouselSettings {
     return {
         spreadFactor: 20,
-        leftBound: -125,
-        rightBound: state.viewportWidth + 125,
+        leftBound() {
+            return -125;
+        },
+        rightBound() {
+            return state.viewportWidth + 125;
+        },
         angleMapper(x: number, state: CarouselState) {
             return gsap.utils.mapRange(0, state.viewportWidth, -this.spreadFactor / 2, this.spreadFactor / 2)(x);
         },
