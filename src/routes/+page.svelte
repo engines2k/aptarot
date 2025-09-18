@@ -12,13 +12,13 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Aptarot</title>
+	<meta name="description" content="Tarot card information" />
 </svelte:head>
 
 <section>
 	<CardInfo card={activeCard}/>
-	<CardCarousel {activeCard} {changeCard} />
+	<CardCarousel {changeCard} />
 </section>
 
 <style>

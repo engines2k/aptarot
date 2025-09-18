@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { createCard, type Card } from "$/lib/types/Card";
 import { CarouselState } from "$lib/types/CarouselState";
 import { Position, PositionFactory } from "$lib/types/Position";
+import animations from "$lib/animations";
 
 
 export class CarouselItem {

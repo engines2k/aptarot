@@ -31,6 +31,7 @@
 	}
 
 </script>
+<div class="carousel-spacer"></div>
 <div
 class="mt-12"
 id="card-carousel"
@@ -81,23 +82,29 @@ id="card-carousel"
 		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
 	}
 
+	.carousel-spacer {
+		position: relative;
+		height:10vh;
+	}
+
 	#card-carousel {
 		pointer-events: none;
 		display: flex;
 		flex-wrap: nowrap;
-		align-items:center;
+		align-items:flex-end;
 		justify-content: left;
 		height: 100vh;
 		width: 100vw;
-		padding-top: 60vh;
-		padding-bottom: 5vh;
+		/* padding-top: 60vh; */
+		padding-bottom: 10vh;
 		overflow: hidden;
-		position: absolute;
+		position: fixed;
 		bottom: 0;
+		left: 0;
 	}
 
 	.carousel-controls {
-		position: absolute;
+		position: fixed;
 		bottom: 5vh;
 		left: 50%;
 		transform: translateX(-50%);

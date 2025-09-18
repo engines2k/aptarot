@@ -18,7 +18,7 @@ function popIn(target: GSAPTweenTarget) {
     gsap.fromTo(
         ".card-face",
         {
-            scale: 1.1,
+            scale: "1.1",
             rotate: 7,
             ease: "in-out",
             duration: 0.5,
@@ -32,5 +32,20 @@ function popIn(target: GSAPTweenTarget) {
     );
 }
 
-export default { jiggle, popIn };
+function hover(target: GSAPTweenTarget) {
+    gsap.to(
+        target,
+        {
+            rotate: .1,
+            // scale: 1.1,
+            ease: "in-out",
+            yoyo: true,
+            repeat: -1,
+            duration: 2,
+            y: -50,
+        }
+    );
+}
+
+export default { jiggle, popIn, hover };
 

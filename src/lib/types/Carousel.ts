@@ -32,7 +32,17 @@ export class Carousel {
             this.push(rootElements[i], i);
         }
     }
-
+    
+    push(element: Element, index: number) {
+        let item: CarouselItem;
+        let itemType = element.attributes.getNamedItem("data-carousel-item-type")?.value;
+        if (itemType == "card")
+            item = new CarouselCardItem(element, index, this.state);
+        else
+            item = new CarouselItem(element, index, this.state);
+        this.items.push(item);
+    }
+    
     goToRandom() {
         let randomIndex;
         do {
@@ -73,14 +83,13 @@ export class Carousel {
         }
     }
 
-    push(element: Element, index: number) {
-        let item: CarouselItem;
-        let itemType = element.attributes.getNamedItem("data-carousel-item-type")?.value;
-        if (itemType == "card")
-            item = new CarouselCardItem(element, index, this.state);
-        else
-            item = new CarouselItem(element, index, this.state);
-        this.items.push(item);
+    makeActiveItem(item: CarouselCardItem) {
+        this.emitFunc(item.cardData, item.index);
+        const oldActive = this.items[this.state.activeIndex];
+        if (oldActive instanceof CarouselCardItem)
+            oldActive.makeInactive();
+        item.makeActive();
+        this.state.activeIndex = item.index;
     }
 
     initializeItemDraggables() {
@@ -119,15 +128,6 @@ export class Carousel {
     handleCardRelease(item: CarouselCardItem, dragEvent: Draggable.Vars) {
         if (item.isDraggedUp(dragEvent))
             this.makeActiveItem(item)
-    }
-    
-    makeActiveItem(item: CarouselCardItem) {
-        this.emitFunc(item.cardData, item.index);
-        const oldActive = this.items[this.state.activeIndex];
-        if (oldActive instanceof CarouselCardItem)
-            oldActive.makeInactive();
-        item.makeActive();
-        this.state.activeIndex = item.index;
     }
 
     private initializeScrollObserver() {
@@ -207,6 +207,9 @@ function createDefaultCarouselSettings(state: CarouselState): CarouselSettings {
             const heightMult = this.spreadFactor * state.viewportHeight / 300;
             let normalizedX = gsap.utils.normalize(0, state.viewportWidth, x);
             let y = (4 * normalizedX ** 2 - 4 * normalizedX) * heightMult; // Create an arc using a parabolic formula 4x^2 - 4x.
+            let floor = 15;
+            if (y > floor)
+                y = floor;
             return y;
         }
     }
