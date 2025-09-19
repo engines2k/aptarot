@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
 </script>
 
 <header>
 	<div class="corner">
-		<img src={logo} alt="Aptarot logo" />
+		<img src="/cursor-logo-inverted.png" alt="Aptarot logo" />
 	</div>
 
 	<nav>
@@ -38,14 +37,6 @@
 		height: 3em;
 	}
 
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
 	.corner img {
 		padding: .5em;
 		width: 3em;
@@ -57,16 +48,6 @@
 		display: flex;
 		justify-content: center;
 		/* --background: rgba(255, 255, 255, 0.7); */
-	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
-
-	path {
-		fill: var(--background);
 	}
 
 	ul {

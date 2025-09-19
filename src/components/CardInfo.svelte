@@ -4,7 +4,6 @@
     import CardDetails from "$/components/CardDetails.svelte";
     import animations from "$/lib/animations";
     import { createCard } from "$/lib/types/Card";
-    import CardDetail from "./CardDetail.svelte";
 
     let { card } = $props();
     card = card || createCard();
@@ -32,7 +31,7 @@
             <img class="card-face" src={card.image} alt="Tarot card" width="200" />
         </div>
     </div>
-    <div class="col-span-3 lg:col-span-7 ml-8">
+    <div class="col-span-3 lg:col-span-7 ml-8 mt-2">
         <div class="card-heading">
             <p class="tarot-card-name dark:text-gray-100">{card.name}</p>
             <p class="tarot-ti dark:text-gray-100">{card.original_title}</p>
@@ -44,7 +43,7 @@
             </div>
         </div>        
     </div>
-    <div class="col-span-5 lg:hidden lg:mt-4">
+    <div class="col-span-5 lg:hidden lg:mt-4 md:mx-16">
         <CardDetails {card} />
     </div>
 </div>
@@ -52,7 +51,7 @@
 <style scoped>
 
 .card-face-container {
-    padding-top:2.5vh;
+    /* padding-top:2.5vh; */
     max-width:400px;
     width: 100%;
     display: flex;

@@ -1,59 +1,99 @@
-# sv
+# ApTarot - Digital Tarot Reference
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A comprehensive digital tarot card reference application built with SvelteKit. ApTarot provides detailed information about all 78 cards in a traditional tarot deck, featuring beautiful card imagery, interactive carousel navigation, and extensive esoteric correspondences.
 
-## Creating a project
+[View this code live!](https://aptarot.net)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
+
+- **Complete 78-Card Deck**: All Major Arcana, Minor Arcana, and Court Cards
+- **Interactive Carousel**: Smooth, animated card browsing with GSAP animations
+- **Detailed Card Information**: 
+  - Card meanings and interpretations
+  - Original titles and attributions
+  - Astrological correspondences
+  - Hebrew letter associations (Major Arcana)
+  - Tree of Life pathworking (Major Arcana)
+  - Elemental associations and soul correspondences (Minor Arcana)
+  - Qabalistic world attributions
+  - Notable personalities for Court Cards
+- **Responsive Design**: Optimized for desktop, tablet, and mobile
+- **Modern Web Technologies**: Built with SvelteKit, TypeScript, and Tailwind CSS
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v22 or higher)
+- pnpm (recommended) or npm
+
+### Installation
 
 ```bash
-# create a new project in the current directory
-npx sv create
+# Clone the repository
+git clone https://github.com/engines2k/tarot-app.git
+cd tarot-app
 
-# create a new project in my-app
-npx sv create my-app
+# Install dependencies
+pnpm install
+# or
+npm install
 ```
 
-## Developing
+### Development
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Start the development server:
 
 ```bash
+pnpm dev
+# or
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# Open in browser with:
+pnpm dev --open
 ```
 
-## Building
+### Building
 
-To create a production version of your app:
+Create a production build:
 
 ```bash
+pnpm build
+# or
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Preview the production build:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```bash
+pnpm preview
+# or
+npm run preview
+```
 
-## cool shit
-[anime.js advanced staggering demo](https://codepen.io/juliangarnier/details/wVzvbg)
+## Technology Stack
 
-## NOTES
+- **[SvelteKit](https://kit.svelte.dev/)**
+- **[TypeScript](https://www.typescriptlang.org/)**
+- **[Tailwind CSS](https://tailwindcss.com/)**
+- **[GSAP](https://greensock.com/gsap/)**
+- **[Vite](https://vitejs.dev/)**
 
-- Add 'pick random card' button
 
- - symbol
- - qualities
- - letter
-M - letter association
- - archetype
- - correspondences
- - tree of life
- - alchemical
- - colloqual / informal labell
- - meme associations
+## Deployment
 
-- Add info page for symbols
-- Font family wittgenstein
+### Static Site Generation
+The app is configured for static deployment:
+
+```bash
+pnpm build
+```
+
+Deploy the `build/` directory to any static hosting service.
+
+### AWS SAM (Serverless)
+The project includes AWS SAM configuration and a build / deploy script for serverless deployment:
+
+```bash
+sam build
+sam deploy --guided
+```
