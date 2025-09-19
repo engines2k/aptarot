@@ -47,7 +47,7 @@
     </div>
     <div class="col-span-3 lg:col-span-7 ml-4 lg:ml-8 mt-2">
         <div class="card-heading">
-            <p class="tarot-card-name dark:text-gray-100">{card.name}</p>
+            <p class="tarot-card-name dark:text-gray-100">{card.name || "Welcome to ApTarot"}</p>
             <p class="tarot-ti dark:text-gray-100">{card.original_title}</p>
             <CardAttribution attribution={card.attribution} />
             <div class="divider"></div>

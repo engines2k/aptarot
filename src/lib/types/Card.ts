@@ -44,10 +44,10 @@ export const createCard = (cardData: any = null): Card => {
 const createBaseCard = (cardData: any): Card => {
     if (!cardData) {
         return {
-            name: "No card selected",
-            type: "unknown",
+            name: "",
+            type: "",
             image: "/cards/card.png",
-            meaning: "Select a card to see its meaning.",
+            meaning: "",
             original_title: "",
             attribution: { primary: "" }
         };

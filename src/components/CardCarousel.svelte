@@ -97,6 +97,7 @@ id="card-carousel"
 	button:hover {
 		background-color: rgb(60, 60, 60);
 		cursor: pointer;
+		color: var(--color-theme-1);
 	}
 
 	:global(.card-selected) {
@@ -110,10 +111,6 @@ id="card-carousel"
 	
 	:global(.carousel-controls svg) {
 		max-width: 20px;
-	}
-
-	:global(.carousel-controls svg:hover) {
-		color: var(--color-theme-1);
 	}
 
 	.carousel-spacer {

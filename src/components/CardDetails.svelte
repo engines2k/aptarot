@@ -5,7 +5,7 @@
 </script>
 <div class="tarot-details grid grid-cols-2 gap-4 mt-1">
     <div class="col-span-1 pr-4">
-        <CardDetail label="Meaning" value={card.meaning} />
+        <CardDetail label="Meaning" value={card.meaning || "Select a card (drag up or use buttons) to see its meaning."} />
         {#if card.type === "Minor Arcana"}
             <CardDetail label="Tree of life (Sephira)" value={card.tree_of_life_sefira} />
         {/if}
