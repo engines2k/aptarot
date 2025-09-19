@@ -13,17 +13,23 @@ export class Carousel {
     items: Array<CarouselItem> = [];
     state: CarouselState;
     settings: CarouselSettings;
-    emitFunc: (card: Card, index: number) => void;
+    cardChangeFunc: (card: Card, index: number) => void;
 
-    constructor(targetId: string, changeCard: (card: Card, index: number) => void) {
+    constructor(targetId: string, cardChangeFunc: (card: Card, index: number) => void) {
         this.rootElement = document.getElementById(targetId)!;
         this.state = new CarouselState(window, this.items.length);
         this.setItems();
         this.settings = createCarouselSettings(this.state);
-        this.emitFunc = changeCard;
+        this.cardChangeFunc = cardChangeFunc;
         this.initializeItemDraggables();
         this.initializeScrollObserver();
         this.initializeResizeObserver();
+        this.fadeIn();
+    }
+
+    private fadeIn() {
+        gsap.fromTo(this.rootElement, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 });
+        this.rootElement.classList.remove("hide-until-loaded");
     }
     
     private initializeResizeObserver() {
@@ -86,7 +92,7 @@ export class Carousel {
     goToIndex(index: number) {
         if (index < 0 || index >= this.length) return;
         let targetItem = this.items[index];
-        const spread = (targetItem.index - ((this.length - 1) / 2)) * targetItem.margin;
+        const spread = (targetItem.index - ((this.length - 1) / 2));
         this.state.scrollPos = (this.state.viewportWidth / 2) - targetItem.getOriginalPos().x - spread;
         this.updateAllItemPositions();
         if (targetItem instanceof CarouselCardItem) {
@@ -95,7 +101,7 @@ export class Carousel {
     }
 
     makeActiveItem(item: CarouselCardItem) {
-        this.emitFunc(item.cardData, item.index);
+        this.cardChangeFunc(item.cardData, item.index);
         const oldActive = this.items[this.state.activeIndex];
         if (oldActive instanceof CarouselCardItem)
             oldActive.makeInactive();
@@ -170,13 +176,13 @@ export class Carousel {
             rotation: this.calculateItemAngle(originalX + newXOffset),
             scale: 1,
             duration: 0.4,
-            ease: "power3.out"
+            ease: "expo.out"
         });
     }
 
 
     private calculateXTranslation(item: CarouselItem) {
-        const spread = (item.index - ((this.length - 1) / 2)) * item.margin;
+        const spread = (item.index - ((this.length - 1) / 2));
         let x = this.state.scrollPos + spread;
         return x;
     }

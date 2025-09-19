@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { createCard, type Card } from '$/lib/types/Card';
 	import CardInfo from '$/components/CardInfo.svelte';
 	import CardCarousel from '$/components/CardCarousel.svelte';
+	import animations from '$/lib/animations';
 	import "$/cards.css";
-	import { createCard, type Card } from '$/lib/types/Card';
 
 	let activeCard = $state(createCard());
 
@@ -27,6 +29,6 @@
 		flex-direction: column;
 		align-items: center;
 		width: 100%;
-		height: 90vh;
+		height: calc(90vh - 50px);
 	}
 </style>

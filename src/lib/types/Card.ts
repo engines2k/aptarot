@@ -47,7 +47,7 @@ const createBaseCard = (cardData: any): Card => {
             name: "No card selected",
             type: "unknown",
             image: "/cards/card.png",
-            meaning: "",
+            meaning: "Select a card to see its meaning.",
             original_title: "",
             attribution: { primary: "" }
         };

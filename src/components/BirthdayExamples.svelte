@@ -1,11 +1,13 @@
 <script lang="ts">
-    let { value } = $props();
+    let { card } = $props();
 </script>
 <div class="birthday-item dark:text-gray-100">
     <div class="label">Birthday Examples</div>
-    {#if value }
+    {#if card.birthday_examples }
     <div class="text-sm value">
-        {value}
+        {#each card.birthday_examples as example}
+            <div>{example}</div>
+        {/each}
     </div>
     {/if}
 </div>
@@ -26,5 +28,7 @@
     .value {
         margin-bottom: 2px;
         color: #e5e7eb;
+        max-height:100px;
+        overflow-y:scroll;
     }
 </style>

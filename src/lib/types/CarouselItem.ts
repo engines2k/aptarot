@@ -3,7 +3,6 @@ import gsap from "gsap";
 import { createCard, type Card } from "$/lib/types/Card";
 import { CarouselState } from "$lib/types/CarouselState";
 import { Position, PositionFactory } from "$lib/types/Position";
-import animations from "$lib/animations";
 
 
 export class CarouselItem {
@@ -13,7 +12,7 @@ export class CarouselItem {
     state: CarouselState;
     originalPosition: Position;
     pos: Position;
-    margin: number = 10;
+
     
     constructor(element: Element, index: number, state: CarouselState) {
         this.element = element;

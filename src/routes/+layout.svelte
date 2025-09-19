@@ -1,10 +1,12 @@
 <script lang="ts">
 	let { children } = $props();
 	import "../app.css";
+	import Header from './Header.svelte';
 </script>
 
 <div class="app">
 
+	<Header />
 	<main>
 		{@render children()}
 	</main>

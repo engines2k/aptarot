@@ -33,15 +33,15 @@
 </script>
 <div class="carousel-spacer"></div>
 <div
-class="mt-12"
+class="mt-12 hide-until-loaded"
 id="card-carousel"
 >
 {#each Object.entries(cards) as [typeName, typeCards], typeIndex}
-	<div class="carousel-item carousel-divider">
+	<div class="carousel-item carousel-divider mx-4">
 	</div>
 	{#each typeCards as card, index}
 		<div
-		class="carousel-item carousel-card"
+		class="carousel-item carousel-card mx-1 lg:mx-2"
 		data-carousel-item-type="card"
 		data-card={JSON.stringify(card)}
 		id="{String(index)}"
@@ -55,7 +55,7 @@ id="card-carousel"
 		</div>
 	{/each}
 {/each}
-<div class="carousel-item carousel-divider"></div>
+<div class="carousel-item carousel-divider mx-4"></div>
 </div>
 
 <div class="carousel-controls">
@@ -65,6 +65,10 @@ id="card-carousel"
 </div>
 
 <style>
+	.hide-until-loaded {
+		visibility: hidden;
+	}
+
 	button {
 		padding: 5px 15px;
 		font-size:1em;
@@ -134,7 +138,7 @@ id="card-carousel"
 	.carousel-divider {
 		height:100%;
 		max-height:150px;
-		border-right: 5px solid white;
+		border-right: 1px solid rgb(190, 190, 190);
 		width:0;
 		margin-bottom: -15px;
 	}

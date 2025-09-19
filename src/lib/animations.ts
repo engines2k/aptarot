@@ -36,13 +36,12 @@ function hover(target: GSAPTweenTarget) {
     gsap.to(
         target,
         {
-            rotate: .1,
             // scale: 1.1,
-            ease: "in-out",
+            ease: "power1.inOut",
             yoyo: true,
             repeat: -1,
-            duration: 2,
-            y: -50,
+            duration: 3,
+            y: "-2vh",
         }
     );
 }
