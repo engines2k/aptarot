@@ -13,7 +13,7 @@
 
 	<footer>
 		<p>
-			by z b / n a
+			by <a href="https://github.com/engines2k" target="_blank">z b</a> / n a
 		</p>
 	</footer>
 </div>
