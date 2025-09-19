@@ -1,5 +1,6 @@
 export interface Card {
     name: string;
+    type: string;
     image?: string;
     meaning: string;
     original_title: string;
@@ -29,23 +30,38 @@ export interface CourtCard extends MinorArcanaCard {
     birthday_examples: string[];
 }
 
-export const createCard = (cardData: any): Card => {
-    if (cardData.type === "major") 
+export const createCard = (cardData: any = null): Card => {
+    if (cardData && cardData.type === "Major Arcana") 
         return createMajorArcanaCard(cardData);
-    else if (cardData.type === "court")
+    else if (cardData && cardData.type === "Court Card")
         return createCourtCard(cardData);
-    else if (cardData.type === "minor")
+    else if (cardData && cardData.type === "Minor Arcana")
         return createMinorArcanaCard(cardData);
     return createBaseCard(cardData);
 };
 
-const createBaseCard = (cardData: any): Card => ({
-    name: cardData.name,
-    image: cardData.image,
-    meaning: cardData.meaning,
-    original_title: cardData.original_title,
-    attribution: cardData.attribution
-});
+
+const createBaseCard = (cardData: any): Card => {
+    if (!cardData) {
+        return {
+            name: "No card selected",
+            type: "unknown",
+            image: "/cards/card.png",
+            meaning: "Select a card to see its meaning.",
+            original_title: "",
+            attribution: { primary: "" }
+        };
+    }
+    
+    return {
+        name: cardData.name,
+        type: cardData.type,
+        image: cardData.image,
+        meaning: cardData.meaning,
+        original_title: cardData.original_title,
+        attribution: cardData.attribution
+    };
+};
 
 const createMajorArcanaCard = (cardData: any): MajorArcanaCard => ({
     ...createBaseCard(cardData),

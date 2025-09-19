@@ -1,57 +1,35 @@
 <script lang="ts">
-	import cardData from '$lib/card-data-2.json';
-	import cardImagePaths from '$lib/card-image-paths.json';
+	import { onMount } from 'svelte';
+	import { createCard, type Card } from '$/lib/types/Card';
 	import CardInfo from '$/components/CardInfo.svelte';
 	import CardCarousel from '$/components/CardCarousel.svelte';
-    import { createCard } from '$lib/Cards';
-	import type { Card } from '$lib/Cards';
+	import animations from '$/lib/animations';
 	import "$/cards.css";
 
+	let activeCard = $state(createCard());
 
-	let selected = $state(-1);
-	let activeCard = $state({ id: -1, name: "No card selected", image: "/cards/card.png" });
-	let cardList = cardData.map(importCardData);
-	let cards = $state(cardList);
-	
-	function changeCard(card: { name: string, image: string }, index: number) {
-		activeCard = { ...card, id: index };
-		selected = index;
-	}
-
-	function importCardData(cardData: any) {
-		let card = createCard(cardData);
-		addCardImage(card);
-		return card;
-	}
-
-	function addCardImage(card: Card) {
-		if(!card.image)
-			card.image = (cardImagePaths as Record<string, string>)[card.name] || "/cards/card.png";
-		return card
+	function changeCard(card: Card, index: number) {
+		activeCard = card;
 	}
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>ApTarot</title>
+	<meta name="description" content="A tarot card digital compendium" />
 </svelte:head>
 
-<section>
+<section class="lg:content-center">
 	<CardInfo card={activeCard}/>
-	<CardCarousel 
-	{cards}
-	{activeCard}
-	{selected}
-	{changeCard}
-	/>
+	<CardCarousel {changeCard} />
 </section>
 
 <style>
 	section {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		/* align-items: center; */
 		width: 100%;
-		height: 90vh;
+		height: calc(90vh - 50px);
+		overflow-y: hidden;
 	}
 </style>

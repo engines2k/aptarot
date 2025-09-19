@@ -1,1 +1,1 @@
-aws s3 sync ./build s3://tarot-app-022365389144-us-west-2 --profile engines2k
+pnpm build && aws s3 sync ./build s3://tarot-app-022365389144-us-west-2 --profile engines2k && aws cloudfront create-invalidation --distribution-id="E1K4R45A074P8" --paths / --profile engines2k
