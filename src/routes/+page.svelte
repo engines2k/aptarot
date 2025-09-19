@@ -14,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>Aptarot</title>
+	<title>ApTarot</title>
 	<meta name="description" content="A tarot card digital compendium" />
 </svelte:head>
 
