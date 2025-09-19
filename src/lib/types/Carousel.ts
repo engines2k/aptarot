@@ -22,7 +22,7 @@ export class Carousel {
         this.settings = createCarouselSettings(this.state);
         this.cardChangeFunc = cardChangeFunc;
         this.initializeItemDraggables();
-        this.initializeScrollObserver();
+        this.initializeScrollObservers();
         this.initializeResizeObserver();
         this.fadeIn();
     }
@@ -147,11 +147,15 @@ export class Carousel {
             this.makeActiveItem(item)
     }
 
-    private initializeScrollObserver() {
+    private initializeScrollObservers() {
         Observer.create({
-            type: "wheel, touch, scroll",
+            type: "wheel, scroll",
             onChangeX: ({ deltaX }) => this.handleScrollEvent(deltaX),
             onChangeY: ({ deltaY }) => this.handleScrollEvent(deltaY)
+        });
+        Observer.create({
+            type: "touch",
+            onChangeX: ({ deltaX }) => this.handleScrollEvent(deltaX),
         });
     }
     
