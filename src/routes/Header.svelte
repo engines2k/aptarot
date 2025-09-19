@@ -5,7 +5,7 @@
 
 <header>
 	<div class="corner">
-		<img src="/cursor-logo-inverted.png" alt="Aptarot logo" />
+		<img src="/cursor-logo-inverted.png" alt="" />
 	</div>
 
 	<nav>

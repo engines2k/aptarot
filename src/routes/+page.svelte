@@ -15,7 +15,7 @@
 
 <svelte:head>
 	<title>Aptarot</title>
-	<meta name="description" content="Tarot card information" />
+	<meta name="description" content="A tarot card digital compendium" />
 </svelte:head>
 
 <section class="lg:content-center">
