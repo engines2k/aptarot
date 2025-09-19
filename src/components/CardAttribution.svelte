@@ -1,5 +1,5 @@
 <script lang="ts">
-    import attributionSymbols from '$lib/element-symbols.json';
+    import attributionSymbols from '$lib/elemental-icons.json';
 
     let { attribution } = $props();
     let primaryAttribution = $derived(attribution?.primary);

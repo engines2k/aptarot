@@ -107,6 +107,8 @@ export class Carousel {
             oldActive.makeInactive();
         item.makeActive();
         this.state.activeIndex = item.index;
+        if (this.settings.scrollAfterActiveChange)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     initializeItemDraggables() {
@@ -214,6 +216,7 @@ export class Carousel {
 
 
 interface CarouselSettings {
+    scrollAfterActiveChange: boolean;
     spreadFactor: number;
     leftBound: () => number;
     rightBound: () => number;
@@ -223,6 +226,7 @@ interface CarouselSettings {
 
 function createCarouselSettings(state: CarouselState): CarouselSettings {
     return {
+        scrollAfterActiveChange: true,
         spreadFactor: 20,
         leftBound() {
             return -125;

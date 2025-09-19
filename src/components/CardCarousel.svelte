@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 	import { Carousel } from '$/lib/types/Carousel';
 	import { createCard, type Card } from '$/lib/types/Card';
 	import cardData from '$/lib/card-data.json';
 	import cardImagePaths from '$lib/card-image-paths.json';
 	import { ChevronLeft, Dices, ChevronRight } from 'lucide-svelte';
+    import { goto } from '$app/navigation';
 
 	let cards = prepareCardData(cardData);
 	let { changeCard } = $props();
@@ -13,6 +14,22 @@
 	onMount(() => {
 		carousel = new Carousel("card-carousel", changeCard);
 	});
+
+	function previousCard() {
+		carousel.goToPrevious();
+	}
+
+	function randomCard() {
+		carousel.goToRandom();
+	}
+
+	function nextCard() {
+		carousel.goToNext();
+	}
+
+	function scrollToTop() {
+		window.scrollTo(0, 0);
+	}
 
 	function prepareCardData(cardData: any) {
 		let result: { [key: string]: Card[] } = {};
@@ -60,9 +77,9 @@ id="card-carousel"
 </div>
 
 <div class="carousel-controls">
-	<button onclick={() => carousel.goToPrevious()} title="Previous card"><ChevronLeft /></button>
-	<button onclick={() => carousel.goToRandom()} title="Choose random card"><Dices/></button>
-	<button onclick={() => carousel.goToNext()} title="Next card"><ChevronRight /></button>
+	<button onclick={previousCard} title="Previous card"><ChevronLeft /></button>
+	<button onclick={randomCard} title="Choose random card"><Dices/></button>
+	<button onclick={nextCard} title="Next card"><ChevronRight /></button>
 </div>
 
 <style>
