@@ -2,8 +2,6 @@
 
 A comprehensive digital tarot card reference application built with SvelteKit. ApTarot provides detailed information about all 78 cards in a traditional tarot deck, featuring beautiful card imagery, interactive carousel navigation, and extensive esoteric correspondences.
 
-[View this code live!](https://aptarot.net)
-
 ## Features
 
 - **Complete 78-Card Deck**: All Major Arcana, Minor Arcana, and Court Cards
