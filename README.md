@@ -30,7 +30,7 @@ A comprehensive digital tarot card reference application built with SvelteKit. A
 
 ```bash
 # Clone the repository
-git clone https://github.com/engines2k/tarot-app.git
+git clone https://github.com/engines2k/aptarot.git
 cd tarot-app
 
 # Install dependencies
