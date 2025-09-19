@@ -57,6 +57,9 @@ Resources:
             QueryString: false
             Cookies:
               Forward: none
+          DefaultTTL: 86400
+          MaxTTL: 31536000
+          MinTTL: 0
         ViewerCertificate:
           CloudFrontDefaultCertificate: true
 
@@ -67,4 +70,7 @@ Outputs:
   WebsiteURL:
     Value: !GetAtt DeploymentBucket.WebsiteURL
     Description: URL for website hosted on S3
+  DistributionId:
+    Value: !Ref CloudFrontDistribution
+    Description: CloudFront Distribution ID
       
