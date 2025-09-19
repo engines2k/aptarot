@@ -41,12 +41,13 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding: 12px;
+		padding-bottom: 5px !important;
 	}
 
-	/* footer a {
+	footer a {
 		font-weight: bold;
-	} */
+		font-size: .8em;
+	}
 
 	@media (min-width: 480px) {
 		footer {

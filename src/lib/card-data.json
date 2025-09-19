@@ -128,7 +128,7 @@
         "birthday_examples": []
     },
     {
-        "name": "Justice/Adjustment",
+        "name": "Justice / Adjustment",
         "type": "Major Arcana",
         "meaning": "Equilibrium",
         "original_title": "The Daughter of the Lords of Truth",
@@ -176,7 +176,7 @@
         "birthday_examples": []
     },
     {
-        "name": "Strength/Lust",
+        "name": "Strength / Lust",
         "type": "Major Arcana",
         "meaning": "Sublimation",
         "original_title": "The Daughter of the Flaming Sword",
@@ -224,7 +224,7 @@
         "birthday_examples": []
     },
     {
-        "name": "Temperance/Art",
+        "name": "Temperance / Art",
         "type": "Major Arcana",
         "meaning": "Synthesis",
         "original_title": "The Daughter of the Reconcilers",
@@ -320,7 +320,7 @@
         "birthday_examples": []
     },
     {
-        "name": "Judgment/Aeon",
+        "name": "Judgment / Aeon",
         "type": "Major Arcana",
         "meaning": "Awakening",
         "original_title": "The Spirit of Primal Fire",
@@ -336,7 +336,7 @@
         "birthday_examples": []
     },
     {
-        "name": "The World/The Universe",
+        "name": "The World / The Universe",
         "type": "Major Arcana",
         "meaning": "Completion",
         "original_title": "The Great One of the Night of Time",
@@ -1120,7 +1120,7 @@
         "birthday_examples": ["Henry Miller", "JRR Tolkien", "Joseph Stalin", "Mao Tse-Tung", "Richard Nixon", "Howard Hughes", "Hunter Schafer", "Isaac Newton", "Steven Spielberg", "Ludwig Van Beethoven", "Robin Guthrie", "David Bowie", "Alan Watts", "Hayao Miyazaki", "Nicolas Cage", "Greta Thunberg", "Joseph Smith", "Kim Jong Un"]
     },
     {
-        "name": "Prince/King of Wands",
+        "name": "Prince / King of Wands",
         "type": "Court Card",
         "meaning": "Radiance",
         "original_title": "The Prince of the Chariot of Fire",
@@ -1136,7 +1136,7 @@
         "birthday_examples": ["Nelson Mandela", "Joe Rogan", "Madame Blavatsky", "Mick Jagger", "John Dee", "Julius Caesar", "Tim Hecker", "Ernest Hemigway", "Ian Curtis", "Willem Dafoe", "Carl Jung", "Ingmar Bergman", "JD Vance", "Stanley Kubrick", "Aldous Huxley", "Barack Obama", "Hasan Piker", "Liz Harris", "Nayib Bukele", "Harald Malmgren", "Joe Pera"]
     },
     {
-        "name": "Prince/King of Cups",
+        "name": "Prince / King of Cups",
         "type": "Court Card",
         "meaning": "Romanticism",
         "original_title": "The Prince of the Chariot of Waters",
@@ -1152,7 +1152,7 @@
         "birthday_examples": ["Friedrich Nietzsche", "Tiimothy Leary", "Pablo Picasso", "Martin Luther", "Oscar Wilde", "Jack Kerouac", "Arthur Rimbaud", "Dylan Thomas", "Jeff Mangum", "Ezra Pound", "Nico", "John Gotti", "Gilles Deleuze", "AOC", "Joseph Goebbels", "Sylvia Plath", "Kurt Vonnegut", "Kim Kardashian"]
     },
     {
-        "name": "Prince/King of Swords",
+        "name": "Prince / King of Swords",
         "type": "Court Card",
         "meaning": "Cogitation",
         "original_title": "The Prince of the Chariot of the Winds",
@@ -1168,7 +1168,7 @@
         "birthday_examples": ["Yukio Mishima", "Edward Abbey", "David Lynch", "James Joyce", "Wolfgang Amadeus Mozart", "James Dean", "Edgar Allen Poe", "William S. Burroughs", "Stan Brakhage", "Janis Joplin", "Gertrude Stein", "Al Capone", "Angela Davis", "Jim Carrey", "Simone Weil", "RFK", "Neal Cassady"]
     },
     {
-        "name": "Prince/King of Disks",
+        "name": "Prince / King of Disks",
         "type": "Court Card",
         "meaning": "Practicality",
         "original_title": "The Prince of the Chariot of Earth",
@@ -1184,7 +1184,7 @@
         "birthday_examples": ["Marcus Aurelius", "Gary Cooper", "Sigmund Freud", "Thomas Jefferson", "Nikolai Lenin", "Adolf Hitler", "Catherine the Great", "Roberto Bolano", "Karl Marx", "Vladimir Nabokov", "Joaquin \"El Chapo\" Guzman", "John Waters", "Jacques Lacan", "Don Rickles", "Jerry Seinfeld", "Luigi Mangione", "Sam Hyde", "Emma Vigeland", "Russell Targ", "Pyotr Ilyich Tchaikovsky", "Thomas Pynchon", "Milly Alcock"]
     },
     {
-        "name": "Princess/Page of Wands",
+        "name": "Princess / Page of Wands",
         "type": "Court Card",
         "meaning": "Desire",
         "original_title": "The Princess of the Shining Flame",
@@ -1200,7 +1200,7 @@
         "birthday_examples": []
     },
     {
-        "name": "Princess/Page of Cups",
+        "name": "Princess / Page of Cups",
         "type": "Court Card",
         "meaning": "Sensitivity",
         "original_title": "The Princess of the Waters",
@@ -1216,7 +1216,7 @@
         "birthday_examples": []
     },
     {
-        "name": "Princess/Page of Swords",
+        "name": "Princess / Page of Swords",
         "type": "Court Card",
         "meaning": "Interest",
         "original_title": "The Princess of the Rushing Winds",

@@ -4,6 +4,7 @@
 	import { createCard, type Card } from '$/lib/types/Card';
 	import cardData from '$/lib/card-data.json';
 	import cardImagePaths from '$lib/card-image-paths.json';
+	import { ChevronLeft, Dices, ChevronRight } from 'lucide-svelte';
 
 	let cards = prepareCardData(cardData);
 	let { changeCard } = $props();
@@ -59,9 +60,9 @@ id="card-carousel"
 </div>
 
 <div class="carousel-controls">
-	<button onclick={() => carousel.goToPrevious()}>Previous</button>
-	<button onclick={() => carousel.goToRandom()}>Random</button>
-	<button onclick={() => carousel.goToNext()}>Next</button>
+	<button onclick={() => carousel.goToPrevious()} title="Previous card"><ChevronLeft /></button>
+	<button onclick={() => carousel.goToRandom()} title="Choose random card"><Dices/></button>
+	<button onclick={() => carousel.goToNext()} title="Next card"><ChevronRight /></button>
 </div>
 
 <style>
@@ -76,12 +77,26 @@ id="card-carousel"
 		border-radius:5px;
 	}
 
+	button:hover {
+		background-color: rgb(60, 60, 60);
+		cursor: pointer;
+	}
+
 	:global(.card-selected) {
-		box-shadow: 6px 10px 89px -10px rgba(255,204,0);
+		/* box-shadow: 6px 10px 89px -10px rgba(255,204,0); */
+		box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, #ff8000 0 -10px 20px, red 0 -18px 40px, 5px 5px 15px 5px rgba(0,0,0,0);
 	}
 
 	:global(.card-active) {
 		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
+	}
+	
+	:global(.carousel-controls svg) {
+		max-width: 20px;
+	}
+
+	:global(.carousel-controls svg:hover) {
+		color: var(--color-theme-1);
 	}
 
 	.carousel-spacer {
@@ -113,6 +128,7 @@ id="card-carousel"
 		display: flex;
 		gap: 10px;
 		z-index: 200;
+		
 	}
 
 	.carousel-item {

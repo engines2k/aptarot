@@ -21,7 +21,7 @@
         /* font-size:.8rem; */
         /* text-align: center; */
         font-weight: bold;
-        color: #ffc4b2;
+        color: var(--color-theme-1);
     }
 
     .detail-value {

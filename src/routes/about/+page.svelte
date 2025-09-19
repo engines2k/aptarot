@@ -109,16 +109,6 @@
 		font-weight: 600;
 	}
 
-	a {
-		color: #60a5fa;
-		text-decoration: underline;
-		transition: color 0.2s ease;
-	}
-
-	a:hover {
-		color: #93c5fd;
-	}
-
 	.note {
 		background: rgba(255, 196, 178, 0.1);
 		border: 1px solid #ffc4b2;

@@ -18,7 +18,7 @@
 	<meta name="description" content="A tarot card digital compendium" />
 </svelte:head>
 
-<section class="lg:content-center">
+<section class="lg:items-center justify-center">
 	<CardInfo card={activeCard}/>
 	<CardCarousel {changeCard} />
 </section>
@@ -26,10 +26,17 @@
 <style>
 	section {
 		display: flex;
+		flex-wrap:wrap;
 		flex-direction: column;
 		/* align-items: center; */
 		width: 100%;
 		height: calc(90vh - 50px);
 		overflow-y: hidden;
+	}
+
+	@media (max-width: 40rem) {
+		section {
+			height:95vh;
+		}
 	}
 </style>

@@ -231,7 +231,7 @@ function createCarouselSettings(state: CarouselState): CarouselSettings {
             return state.viewportWidth + 125;
         },
         angleMapper(x: number, state: CarouselState) {
-            return gsap.utils.mapRange(0, state.viewportWidth, -this.spreadFactor / 2, this.spreadFactor / 2)(x);
+            return gsap.utils.mapRange(0, state.viewportWidth, -this.spreadFactor / 1.25, this.spreadFactor / 1.25)(x);
         },
         //TODO Adjust height factor for different screen sizes instead of using a magic number lolol
         heightMapper(x: number, state: CarouselState) {
