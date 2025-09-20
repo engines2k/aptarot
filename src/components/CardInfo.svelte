@@ -96,6 +96,6 @@
     .divider {
         max-width: 50px;
         border-bottom: 1px solid #2c2c2c;
-        margin: 3px 0 3px 0;
+        margin: 5px 0 5px 0;
     }
 </style>

@@ -158,7 +158,7 @@ id="card-carousel"
 		width: 70px;
 		height: auto;
 		display: block;
-		image-rendering: pixelated;
+		image-rendering: smooth;
 	}
 	
 	.carousel-card {
