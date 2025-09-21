@@ -5,7 +5,6 @@
 	import cardData from '$/lib/card-data.json';
 	import cardImagePaths from '$lib/card-image-paths.json';
 	import { ChevronLeft, Dices, ChevronRight } from 'lucide-svelte';
-    import { goto } from '$app/navigation';
 
 	let cards = prepareCardData(cardData);
 	let { changeCard } = $props();
@@ -54,9 +53,8 @@
 class="mt-12 hide-until-loaded"
 id="card-carousel"
 >
+<div class="carousel-item carousel-divider mx-4"></div>
 {#each Object.entries(cards) as [typeName, typeCards], typeIndex}
-	<div class="carousel-item carousel-divider mx-4">
-	</div>
 	{#each typeCards as card, index}
 		<div
 		class="carousel-item carousel-card mx-1 lg:mx-2"
@@ -78,7 +76,7 @@ id="card-carousel"
 
 <div class="carousel-controls">
 	<button onclick={previousCard} title="Previous card"><ChevronLeft /></button>
-	<button onclick={randomCard} title="Choose random card"><Dices/></button>
+	<button onclick={randomCard} title="Random card"><Dices/></button>
 	<button onclick={nextCard} title="Next card"><ChevronRight /></button>
 </div>
 
@@ -158,7 +156,7 @@ id="card-carousel"
 		width: 70px;
 		height: auto;
 		display: block;
-		image-rendering: smooth;
+		image-rendering: pixelated;
 	}
 	
 	.carousel-card {
