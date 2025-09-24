@@ -162,12 +162,27 @@ export class Carousel {
     }
     
     private handleScrollEvent(delta: number) {
-        if (this.state.dragging) return;
+        if (this.ignoreScrollEvent())
+            return;
         this.state.scrollPos += delta;
         this.updateAllItemPositions();
     }
+
+    private ignoreScrollEvent() {
+        if (this.state.dragging || this.cursorHoveringInteractive())
+            return true;
+        return false;
+    }
     
-    private updateAllItemPositions() {
+    private cursorHoveringInteractive() {
+        const valueEls = document.querySelectorAll('.ignore-scroll');
+        for (const el of valueEls)
+            if (el instanceof HTMLElement && el.matches(':hover'))
+                return true;
+        return false;
+    }
+    
+    updateAllItemPositions() {
         this.items.forEach(item => this.updateItemPosition(item));
     }
 

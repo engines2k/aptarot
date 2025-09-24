@@ -13,13 +13,9 @@
     });
 
     $effect(() => {
-        if (card.id != -1) animations.popIn(".card-face");
-    });
-
-    $effect(() => {
-        if (card.id != -1) {
-            animations.fadeIn("#tarot-info");
-        }
+        if (!card) return; else
+        animations.popIn(".card-face");
+        animations.fadeIn("#tarot-info");
     });
 </script>
 

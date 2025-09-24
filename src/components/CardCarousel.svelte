@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Carousel } from '$/lib/types/Carousel';
-	import { createCard, type Card } from '$/lib/types/Card';
-	import cardData from '$/lib/card-data.json';
-	import cardImagePaths from '$lib/card-image-paths.json';
+	import { prepareCardData} from '$/lib/types/Card';
+	import cardData from '$/lib/data/card-data.json';
 	import { ChevronLeft, Dices, ChevronRight } from 'lucide-svelte';
 
 	let cards = prepareCardData(cardData);
@@ -12,41 +11,16 @@
 
 	onMount(() => {
 		carousel = new Carousel("card-carousel", changeCard);
+		carousel.updateAllItemPositions();
 	});
 
-	function previousCard() {
-		carousel.goToPrevious();
-	}
+	function previousCard() { carousel.goToPrevious(); }
+	function randomCard() { carousel.goToRandom(); }
+	function nextCard() { carousel.goToNext(); }
 
-	function randomCard() {
-		carousel.goToRandom();
-	}
-
-	function nextCard() {
-		carousel.goToNext();
-	}
-
-	function scrollToTop() {
-		window.scrollTo(0, 0);
-	}
-
-	function prepareCardData(cardData: any) {
-		const cards: Card[] = [];
-		for (let i = 0; i < cardData.length; i++) {
-			let card = createCard(cardData[i]);
-			addCardImage(card);
-			cards.push(card);
-		}
-		return cards;
-	}
-	
-	function addCardImage(card: Card) {
-		if(!card.image)
-			card.image = (cardImagePaths as Record<string, string>)[card.name];
-		return card
-	}
 
 </script>
+
 <div class="carousel-spacer"></div>
 <div
 class="mt-12 hide-until-loaded"
@@ -70,7 +44,6 @@ id="card-carousel"
 	{/each}
 <div class="carousel-item carousel-divider mx-4"></div>
 </div>
-
 <div class="carousel-controls">
 	<button onclick={previousCard} title="Previous card"><ChevronLeft /></button>
 	<button onclick={randomCard} title="Random card"><Dices/></button>

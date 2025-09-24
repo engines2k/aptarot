@@ -1,3 +1,5 @@
+import cardImagePaths from "$lib/data/card-image-paths.json";
+
 export interface Card {
     name: string;
     type: string;
@@ -28,6 +30,22 @@ export interface MinorArcanaCard extends Card {
 export interface CourtCard extends MinorArcanaCard {
     dates: string;
     birthday_examples: string[];
+}
+
+export function prepareCardData(cardData: any) {
+    const cards: Card[] = [];
+    for (let i = 0; i < cardData.length; i++) {
+        let card = createCard(cardData[i]);
+        addCardImage(card);
+        cards.push(card);
+    }
+    return cards;
+}
+
+function addCardImage(card: Card) {
+    if(!card.image)
+        card.image = (cardImagePaths as Record<string, string>)[card.name];
+    return card
 }
 
 export const createCard = (cardData: any = null): Card => {

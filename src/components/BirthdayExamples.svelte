@@ -1,7 +1,7 @@
 <script lang="ts">
     let { card } = $props();
 </script>
-<div class="birthday-item dark:text-gray-100">
+<div class="ignore-scroll birthday-item dark:text-gray-100">
     <div class="label">Birthday Examples</div>
     {#if card.birthday_examples }
     <div class="text-sm value">
