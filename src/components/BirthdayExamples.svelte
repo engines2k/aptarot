@@ -18,14 +18,15 @@
         margin-bottom: 20px;
         color: #e5e7eb;
     }
-
+    
     .label {
         font-size:.8rem;
         font-weight: bold;
         color: #ffc4b2;
     }
-
+    
     .value {
+        overscroll-behavior: contain;
         margin-bottom: 2px;
         color: #e5e7eb;
         max-height:100px;
