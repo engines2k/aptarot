@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getContext, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { Carousel } from '$/lib/types/Carousel';
 	import { createCard, type Card } from '$/lib/types/Card';
 	import cardData from '$/lib/card-data.json';
@@ -31,19 +31,18 @@
 	}
 
 	function prepareCardData(cardData: any) {
-		let result: { [key: string]: Card[] } = {};
-		for (let i=0; i < cardData.length; i++) {
+		const cards: Card[] = [];
+		for (let i = 0; i < cardData.length; i++) {
 			let card = createCard(cardData[i]);
 			addCardImage(card);
-			result[card.type] = result[card.type] || [];
-			result[card.type].push(card);
+			cards.push(card);
 		}
-		return result;
+		return cards;
 	}
 	
 	function addCardImage(card: Card) {
 		if(!card.image)
-			card.image = (cardImagePaths as Record<string, string>)[card.name] || "/cards/card.png";
+			card.image = (cardImagePaths as Record<string, string>)[card.name];
 		return card
 	}
 
@@ -54,8 +53,7 @@ class="mt-12 hide-until-loaded"
 id="card-carousel"
 >
 <div class="carousel-item carousel-divider mx-4"></div>
-{#each Object.entries(cards) as [typeName, typeCards], typeIndex}
-	{#each typeCards as card, index}
+	{#each cards as card, index}
 		<div
 		class="carousel-item carousel-card mx-1 lg:mx-2"
 		data-carousel-item-type="card"
@@ -63,14 +61,13 @@ id="card-carousel"
 		id="{String(index)}"
 		>
 			<img 
-			src={card.image}
+			src={`/cards/small/${card.image}`}
 			alt="Playing card"
 			width="100"
 			draggable="false"
 			/>
 		</div>
 	{/each}
-{/each}
 <div class="carousel-item carousel-divider mx-4"></div>
 </div>
 

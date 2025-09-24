@@ -39,7 +39,7 @@
         <div class="card-face-container justify-left md:justify-end">
             <img
                 class="card-face"
-                src={card.image}
+                src={`/cards/regular/${card.image}`}
                 alt="Tarot card"
                 width="200"
             />

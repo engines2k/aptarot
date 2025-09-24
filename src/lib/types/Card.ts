@@ -46,7 +46,7 @@ const createBaseCard = (cardData: any): Card => {
         return {
             name: "",
             type: "",
-            image: "/cards/aptarot-card.png",
+            image: "aptarot-card.webp",
             meaning: "",
             original_title: "",
             attribution: { primary: "" }
