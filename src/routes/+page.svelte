@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { createCard, type Card } from '$/lib/types/Card';
 	import CardInfo from '$/components/CardInfo.svelte';
 	import CardCarousel from '$/components/CardCarousel.svelte';
-	import animations from '$/lib/animations';
 	import "$/cards.css";
 
 	let activeCard = $state(createCard());

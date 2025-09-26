@@ -7,18 +7,19 @@
 
 	let cards = prepareCardData(cardData);
 	let { changeCard } = $props();
+	let positionIndicator = $state("");
 	let carousel: Carousel;
 
+	function updatePositionIndicator(pos: string) { positionIndicator = pos; }
+
 	onMount(() => {
-		carousel = new Carousel("card-carousel", changeCard);
+		carousel = new Carousel("card-carousel", changeCard, updatePositionIndicator);
 		carousel.updateAllItemPositions();
 	});
 
 	function previousCard() { carousel.goToPrevious(); }
 	function randomCard() { carousel.goToRandom(); }
 	function nextCard() { carousel.goToNext(); }
-
-
 </script>
 
 <div class="carousel-spacer"></div>
@@ -48,6 +49,7 @@ id="card-carousel"
 	<button onclick={previousCard} title="Previous card"><ChevronLeft /></button>
 	<button onclick={randomCard} title="Random card"><Dices/></button>
 	<button onclick={nextCard} title="Next card"><ChevronRight /></button>
+	<div>{positionIndicator}</div>
 </div>
 
 <style>

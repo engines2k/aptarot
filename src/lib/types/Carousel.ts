@@ -4,6 +4,7 @@ import { Draggable } from "gsap/Draggable";
 import { type Card } from "$/lib/types/Card";
 import { CarouselState } from "$lib/types/CarouselState";
 import { CarouselItem, DraggableCarouselItem, CarouselCardItem } from "$lib/types/CarouselItem";
+import { type CarouselSettings, createCarouselSettings } from "$lib/types/CarouselSettings";
 
 gsap.registerPlugin(Draggable);
 gsap.registerPlugin(Observer);
@@ -14,20 +15,26 @@ export class Carousel {
     state: CarouselState;
     settings: CarouselSettings;
     cardChangeFunc: (card: Card, index: number) => void;
+    updatePositionFunc: (pos: string) => void;
 
-    constructor(targetId: string, cardChangeFunc: (card: Card, index: number) => void) {
+    constructor(targetId: string, cardChangeFunc: (card: Card, index: number) => void, updatePositionFunc: (pos: string) => void) {
         this.rootElement = document.getElementById(targetId)!;
         this.state = new CarouselState(window, this.items.length);
+        this.cardChangeFunc = cardChangeFunc;
+        this.updatePositionFunc = updatePositionFunc;
         this.setItems();
         this.settings = createCarouselSettings(this.state);
-        this.cardChangeFunc = cardChangeFunc;
-        this.initializeItemDraggables();
-        this.initializeScrollObservers();
+        this.initialize();
+    }
+    
+    private initialize() {
+        this.initializeAllItemDraggables();
+        this.initializeAllScrollObservers();
         this.initializeResizeObserver();
-        this.fadeIn();
+        this.fadeInUI();
     }
 
-    private fadeIn() {
+    private fadeInUI() {
         gsap.fromTo(this.rootElement, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 });
         this.rootElement.classList.remove("hide-until-loaded");
     }
@@ -111,7 +118,7 @@ export class Carousel {
             window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    initializeItemDraggables() {
+    initializeAllItemDraggables() {
         this.items.forEach(item => {
             if (item instanceof DraggableCarouselItem)
                 this.initializeItemDraggable(item)
@@ -149,7 +156,7 @@ export class Carousel {
             this.makeActiveItem(item)
     }
 
-    private initializeScrollObservers() {
+    private initializeAllScrollObservers() {
         Observer.create({
             type: "wheel, scroll",
             onChangeX: ({ deltaX }) => this.handleScrollEvent(deltaX),
@@ -162,14 +169,16 @@ export class Carousel {
     }
     
     private handleScrollEvent(delta: number) {
-        if (this.ignoreScrollEvent())
+        if (this.ignoringScrollEvent())
             return;
-        this.state.scrollPos += delta;
+        let boundedDelta = this.bindScrollDeltaToBounds(delta);
+        this.state.scrollPos += boundedDelta;
         this.updateAllItemPositions();
+        this.updatePositionFunc(this.scrollPosAsPercentageStr());
     }
 
-    private ignoreScrollEvent() {
-        if (this.state.dragging || this.cursorHoveringInteractive())
+    private ignoringScrollEvent() {
+        if (this.state.userDraggingItem || this.cursorHoveringInteractive())
             return true;
         return false;
     }
@@ -182,8 +191,45 @@ export class Carousel {
         return false;
     }
     
+    private bindScrollDeltaToBounds(delta: number) {
+        if ((this.leftScrollBoundaryReached() && delta > 0) ||
+            (this.rightScrollBoundaryReached() && delta < 0))
+            return 0;
+        return delta;
+    }
+
+    private leftScrollBoundaryReached() {
+        if (this.state.scrollPos > this.getLeftScrollBoundary())
+            return true;
+        return false;
+    }
+
+    private rightScrollBoundaryReached() {
+        if (this.state.scrollPos < this.getRightScrollBoundary())
+            return true;
+        return false;
+    }
+
+    private getLeftScrollBoundary() {
+        let firstItemXPos = this.items[0].getOriginalPos().x;
+        return (this.state.viewportWidth / 2) - firstItemXPos;
+    }
+    
+    private getRightScrollBoundary() {
+        let lastItemXPos = this.items[this.items.length - 1].getOriginalPos().x;
+        return -(lastItemXPos - (this.state.viewportWidth / 2)) + 20;
+    }
+
     updateAllItemPositions() {
         this.items.forEach(item => this.updateItemPosition(item));
+    }
+
+    scrollPosAsPercentageStr() {
+        let leftBoundary = this.getLeftScrollBoundary();
+        let rightBoundary = this.getRightScrollBoundary();
+        let totalScrollableDistance = rightBoundary - leftBoundary;
+        let currentScrollFromLeft = this.state.scrollPos - leftBoundary;
+        return (currentScrollFromLeft / totalScrollableDistance).toFixed(2);
     }
 
     private updateItemPosition(item: CarouselItem) {
@@ -226,41 +272,5 @@ export class Carousel {
 
     get length() {
         return this.items.length;
-    }
-}
-
-
-interface CarouselSettings {
-    scrollAfterActiveChange: boolean;
-    spreadFactor: number;
-    leftBound: () => number;
-    rightBound: () => number;
-    angleMapper: (x: number, state: CarouselState) => number;
-    heightMapper: (x: number, state: CarouselState) => number;
-}
-
-function createCarouselSettings(state: CarouselState): CarouselSettings {
-    return {
-        scrollAfterActiveChange: true,
-        spreadFactor: 20,
-        leftBound() {
-            return -125;
-        },
-        rightBound() {
-            return state.viewportWidth + 125;
-        },
-        angleMapper(x: number, state: CarouselState) {
-            return gsap.utils.mapRange(0, state.viewportWidth, -this.spreadFactor / 1.25, this.spreadFactor / 1.25)(x);
-        },
-        //TODO Adjust height factor for different screen sizes instead of using a magic number lolol
-        heightMapper(x: number, state: CarouselState) {
-            const heightMult = this.spreadFactor * state.viewportHeight / 300;
-            let normalizedX = gsap.utils.normalize(0, state.viewportWidth, x);
-            let y = (4 * normalizedX ** 2 - 4 * normalizedX) * heightMult; // Create an arc using a parabolic formula 4x^2 - 4x.
-            let floor = 15;
-            if (y > floor)
-                y = floor;
-            return y;
-        }
     }
 }

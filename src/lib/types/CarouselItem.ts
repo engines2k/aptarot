@@ -61,7 +61,7 @@ export class DraggableCarouselItem extends CarouselItem {
     }
 
     handlePress(vars: Draggable.Vars): void {
-        this.state.dragging = true;
+        this.state.userDraggingItem = true;
         this.pos = this.savePos(vars);
         gsap.to(vars.target, {
             scale: 1.1,
@@ -72,7 +72,7 @@ export class DraggableCarouselItem extends CarouselItem {
     }
     
     handleDragRelease(dragEvent: Draggable.Vars) {
-        this.state.dragging = false;
+        this.state.userDraggingItem = false;
         this.putMeBack(dragEvent);
     }
     
