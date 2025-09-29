@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Carousel } from '$/lib/types/Carousel';
-	import { prepareCardData} from '$/lib/types/Card';
+	import { prepareCardData } from '$/lib/types/Card';
 	import cardData from '$/lib/data/card-data.json';
 	import { ChevronLeft, Dices, ChevronRight } from 'lucide-svelte';
+	import CarouselPositionIndicator from './CarouselPositionIndicator.svelte';
 
 	let cards = prepareCardData(cardData);
 	let { changeCard } = $props();
-	let positionIndicator = $state("");
+	let positionIndicator = $state(0);
 	let carousel: Carousel;
 
-	function updatePositionIndicator(pos: string) { positionIndicator = pos; }
+	function updatePositionIndicator(pos: number) { positionIndicator = pos; }
 
 	onMount(() => {
 		carousel = new Carousel("card-carousel", changeCard, updatePositionIndicator);
-		carousel.updateAllItemPositions();
 	});
 
 	function previousCard() { carousel.goToPrevious(); }
@@ -45,11 +45,14 @@ id="card-carousel"
 	{/each}
 <div class="carousel-item carousel-divider mx-4"></div>
 </div>
+
 <div class="carousel-controls">
-	<button onclick={previousCard} title="Previous card"><ChevronLeft /></button>
-	<button onclick={randomCard} title="Random card"><Dices/></button>
-	<button onclick={nextCard} title="Next card"><ChevronRight /></button>
-	<div>{positionIndicator}</div>
+	<div class="controls-buttons">
+		<button onclick={previousCard} title="Previous card"><ChevronLeft /></button>
+		<button onclick={randomCard} title="Random card"><Dices/></button>
+		<button onclick={nextCard} title="Next card"><ChevronRight /></button>
+	</div>
+	<CarouselPositionIndicator pos={positionIndicator} />
 </div>
 
 <style>
@@ -110,9 +113,15 @@ id="card-carousel"
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.controls-buttons {
+		display: flex;
 		gap: 10px;
 		z-index: 200;
-		
+		margin-bottom:5px;
 	}
 
 	.carousel-item {
