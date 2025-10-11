@@ -55,6 +55,14 @@ export class CarouselItem {
     handleDragRelease(dragEvent: Draggable.Vars) {}
 }
 
+export class CarouselSectionMarker extends CarouselItem {
+    label: string;
+    constructor(element: Element, index: number, state: CarouselState) {
+        super(element, index, state);
+        this.label = element.getAttribute("data-carousel-section-label") || "Untitled";
+    }
+}
+    
 export class DraggableCarouselItem extends CarouselItem {
     constructor(element: Element, index: number, state: CarouselState) {
         super(element, index, state);

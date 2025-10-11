@@ -2,7 +2,7 @@ import { type Card } from "$/lib/types/Card";
 import { type CarouselSettings, createCarouselSettings } from "$lib/types/CarouselSettings";
 import { Draggable } from "gsap/Draggable";
 import { CarouselState } from "$lib/types/CarouselState";
-import { CarouselItem, DraggableCarouselItem, CarouselCardItem } from "$lib/types/CarouselItem";
+import { CarouselItem, DraggableCarouselItem, CarouselCardItem, CarouselSectionMarker } from "$lib/types/CarouselItem";
 import { gsap } from "gsap";
 import { Observer } from "gsap/Observer";
 
@@ -40,6 +40,8 @@ export class Carousel {
         let itemType = element.attributes.getNamedItem("data-carousel-item-type")?.value;
         if (itemType == "card")
             item = new CarouselCardItem(element, index, this.state);
+        else if (itemType == "section")
+            item = new CarouselSectionMarker(element, index, this.state);
         else
             item = new CarouselItem(element, index, this.state);
         this.items.push(item);

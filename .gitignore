@@ -1,4 +1,5 @@
 deploy-build.sh
+build-deploy.sh
 
 # AWS
 .aws-sam
