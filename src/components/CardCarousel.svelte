@@ -28,20 +28,23 @@ class="mt-12 hide-until-loaded"
 id="card-carousel"
 >
 <div class="carousel-item carousel-divider mx-4"></div>
-	{#each cards as card, index}
-		<div
-		class="carousel-item carousel-card mx-1 lg:mx-2"
-		data-carousel-item-type="card"
-		data-card={JSON.stringify(card)}
-		id="{String(index)}"
-		>
-			<img 
-			src={`/cards/small/${card.image}`}
-			alt="Playing card"
-			width="100"
-			draggable="false"
-			/>
-		</div>
+	{#each cardSections as section}
+		<div class="carousel-item carousel-section WORK IN PROGRESS">
+		{#each cards as card, index}
+			<div
+			class="carousel-item carousel-card mx-1 lg:mx-2"
+			data-carousel-item-type="card"
+			data-card={JSON.stringify(card)}
+			id="{String(index)}"
+			>
+				<img 
+				src={`/cards/small/${card.image}`}
+				alt="Playing card"
+				width="100"
+				draggable="false"
+				/>
+			</div>
+		{/each}
 	{/each}
 <div class="carousel-item carousel-divider mx-4"></div>
 </div>

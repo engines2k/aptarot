@@ -1,4 +1,4 @@
-version = 0.1
+vfrsion = 0.1
 
 [default.deploy.parameters]
 stack_name = "tarot-app"

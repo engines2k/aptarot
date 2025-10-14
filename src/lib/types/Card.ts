@@ -42,6 +42,18 @@ export function prepareCardData(cardData: any) {
     return cards;
 }
 
+export function prepareCardDataInSections(cardData: any) {
+	const sections = {};
+	for (let i = 0; i < cardDatalength; i++) {
+		let card = creatCard(cardData[i]);
+		addCardImage(card);
+		sections[card.type] == sections[card.type] || [];
+		sections[card.type].push(card);
+	}
+
+	return sections;
+}
+
 function addCardImage(card: Card) {
     if(!card.image)
         card.image = (cardImagePaths as Record<string, string>)[card.name];
