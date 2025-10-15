@@ -658,7 +658,8 @@
         "birthday_examples": []
     },
     {
-        "name": "5 of Cups ",
+        "name": "5 of Cups",
+        "suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Disappointment",
         "original_title": "Lord of Loss", "secondary": "Pleasure",

@@ -161,15 +161,21 @@ export class Carousel {
 	}
 
 	private checkCurrentSection() {
+		if (this.sections.length === 0) return;
+
+		let currentSection = this.sections[0]; // Default to first section
+
 		for (let section of this.sections) {
-			console.log(`${section.originalPosition.x} <- og pos ${section.label}`);
 			const spread = (section.index - ((this.length - 1) / 2));
-			if (section.originalPosition.x - spread > this.state.scrollPos) {
-				this.updateSectionFunc(section.label);
-				console.log(`${section.originalPosition.x} and ${this.state.scrollPos}`);
-				return;
+			const sectionScrollPosition = -section.originalPosition.x - spread + this.state.viewportWidth / 2;
+
+			// If we've scrolled past this section marker, it becomes the current section
+			if (this.state.scrollPos <= sectionScrollPosition) {
+				currentSection = section;
 			}
 		}
+
+		this.updateSectionFunc(currentSection.label);
 	}
 
 	private getNormalizedScrollPos() {
