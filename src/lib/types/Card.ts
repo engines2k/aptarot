@@ -1,53 +1,53 @@
 import cardImagePaths from "$lib/data/card-image-paths.json";
 
 export interface Card {
-    name: string;
-    type: string;
-    image?: string;
-    meaning: string;
-    original_title: string;
-    attribution: Attribution;
+	name: string;
+	type: string;
+	image?: string;
+	meaning: string;
+	original_title: string;
+	attribution: Attribution;
 }
 
 interface Attribution {
-    primary: string;
-    secondary?: string;
+	primary: string;
+	secondary?: string;
 }
 
 export interface MajorArcanaCard extends Card {
-    hebrew_letter: string;
-    letter_association: string;
-    tree_of_life_path: string;
+	hebrew_letter: string;
+	letter_association: string;
+	tree_of_life_path: string;
 }
 
 export interface MinorArcanaCard extends Card {
-    suit_element: string;
-    part_of_soul: string;
-    division_of_creation: string;
-    tree_of_life_sefira: string;
+	suit_element: string;
+	part_of_soul: string;
+	division_of_creation: string;
+	tree_of_life_sefira: string;
 }
 
 export interface CourtCard extends MinorArcanaCard {
-    dates: string;
-    birthday_examples: string[];
+	dates: string;
+	birthday_examples: string[];
 }
 
 export function prepareCardData(cardData: any) {
-    const cards: Card[] = [];
-    for (let i = 0; i < cardData.length; i++) {
-        let card = createCard(cardData[i]);
-        addCardImage(card);
-        cards.push(card);
-    }
-    return cards;
+	const cards: Card[] = [];
+	for (let i = 0; i < cardData.length; i++) {
+		let card = createCard(cardData[i]);
+		addCardImage(card);
+		cards.push(card);
+	}
+	return cards;
 }
 
 export function prepareCardDataInSections(cardData: any) {
-	const sections = {};
-	for (let i = 0; i < cardDatalength; i++) {
-		let card = creatCard(cardData[i]);
+	let sections: Record<string, Array<Card>> = {};
+	for (let i = 0; i < cardData.length; i++) {
+		let card = createCard(cardData[i]);
 		addCardImage(card);
-		sections[card.type] == sections[card.type] || [];
+		sections[card.type] = sections[card.type as keyof typeof sections] || [];
 		sections[card.type].push(card);
 	}
 
@@ -55,62 +55,62 @@ export function prepareCardDataInSections(cardData: any) {
 }
 
 function addCardImage(card: Card) {
-    if(!card.image)
-        card.image = (cardImagePaths as Record<string, string>)[card.name];
-    return card
+	if (!card.image)
+		card.image = (cardImagePaths as Record<string, string>)[card.name];
+	return card
 }
 
 export const createCard = (cardData: any = null): Card => {
-    if (cardData && cardData.type === "Major Arcana") 
-        return createMajorArcanaCard(cardData);
-    else if (cardData && cardData.type === "Court Card")
-        return createCourtCard(cardData);
-    else if (cardData && cardData.type === "Minor Arcana")
-        return createMinorArcanaCard(cardData);
-    return createBaseCard(cardData);
+	if (cardData && cardData.type === "Major Arcana")
+		return createMajorArcanaCard(cardData);
+	else if (cardData && cardData.type === "Court Card")
+		return createCourtCard(cardData);
+	else if (cardData && cardData.type === "Minor Arcana")
+		return createMinorArcanaCard(cardData);
+	return createBaseCard(cardData);
 };
 
 
 const createBaseCard = (cardData: any): Card => {
-    if (!cardData) {
-        return {
-            name: "",
-            type: "",
-            image: "aptarot-card.webp",
-            meaning: "",
-            original_title: "",
-            attribution: { primary: "" }
-        };
-    }
-    
-    return {
-        name: cardData.name,
-        type: cardData.type,
-        image: cardData.image,
-        meaning: cardData.meaning,
-        original_title: cardData.original_title,
-        attribution: cardData.attribution
-    };
+	if (!cardData) {
+		return {
+			name: "",
+			type: "",
+			image: "aptarot-card.webp",
+			meaning: "",
+			original_title: "",
+			attribution: { primary: "" }
+		};
+	}
+
+	return {
+		name: cardData.name,
+		type: cardData.type,
+		image: cardData.image,
+		meaning: cardData.meaning,
+		original_title: cardData.original_title,
+		attribution: cardData.attribution
+	};
 };
 
 const createMajorArcanaCard = (cardData: any): MajorArcanaCard => ({
-    ...createBaseCard(cardData),
-    hebrew_letter: cardData.hebrew_letter,
-    letter_association: cardData.letter_association,
-    tree_of_life_path: cardData.tree_of_life_path
+	...createBaseCard(cardData),
+	hebrew_letter: cardData.hebrew_letter,
+	letter_association: cardData.letter_association,
+	tree_of_life_path: cardData.tree_of_life_path
 });
 
 const createMinorArcanaCard = (cardData: any): MinorArcanaCard => ({
-    ...createBaseCard(cardData),
-    suit_element: cardData.suit_element,
-    part_of_soul: cardData.part_of_soul,
-    division_of_creation: cardData.division_of_creation,
-    tree_of_life_sefira: cardData.tree_of_life_sefira
+	...createBaseCard(cardData),
+	suit_element: cardData.suit_element,
+	part_of_soul: cardData.part_of_soul,
+	division_of_creation: cardData.division_of_creation,
+	tree_of_life_sefira: cardData.tree_of_life_sefira
 });
 
 const createCourtCard = (cardData: any): CourtCard => ({
-    ...createMinorArcanaCard(cardData),
-    tree_of_life_sefira: "",
-    dates: cardData.dates,
-    birthday_examples: cardData.birthday_examples
+	...createMinorArcanaCard(cardData),
+	tree_of_life_sefira: "",
+	dates: cardData.dates,
+	birthday_examples: cardData.birthday_examples
 });
