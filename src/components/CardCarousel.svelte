@@ -13,10 +13,15 @@
 	let cardSections = prepareCardDataInSections(cardData);
 	let { changeCard } = $props();
 	let positionIndicator = $state(0);
+	let sectionIndicator = $state("hello");
 	let carousel: Carousel;
 
 	function updatePositionIndicator(pos: number) {
 		positionIndicator = pos;
+	}
+
+	function updateSectionIndicator(label: string) {
+		sectionIndicator = label;
 	}
 
 	onMount(() => {
@@ -24,6 +29,7 @@
 			"card-carousel",
 			changeCard,
 			updatePositionIndicator,
+			updateSectionIndicator,
 		);
 	});
 
@@ -75,6 +81,7 @@
 		<button onclick={nextCard} title="Next card"><ChevronRight /></button>
 	</div>
 	<CarouselPositionIndicator pos={positionIndicator} />
+	<div><p>{sectionIndicator}</p></div>
 </div>
 
 <style>

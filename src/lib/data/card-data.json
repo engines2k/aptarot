@@ -353,6 +353,7 @@
     },
     {
         "name": "Ace of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Will",
         "original_title": "The Root of the Powers of Fire",
@@ -369,6 +370,7 @@
     },
     {
         "name": "2 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Initiative",
         "original_title": "Lord of Dominion",
@@ -385,6 +387,7 @@
     },
     {
         "name": "3 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Virtue",
         "original_title": "Lord of Established Strength",
@@ -401,6 +404,7 @@
     },
     {
         "name": "4 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Achievment",
         "original_title": "Lord of Perfected Work",
@@ -417,6 +421,7 @@
     },
     {
         "name": "5 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Conflict",
         "original_title": "Lord of Strife",
@@ -433,6 +438,7 @@
     },
     {
         "name": "6 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Victory",
         "original_title": "Lord of Victory",
@@ -449,6 +455,7 @@
     },
     {
         "name": "7 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Audacity",
         "original_title": "Lord of Valour",
@@ -465,6 +472,7 @@
     },
     {
         "name": "8 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Acceleration",
         "original_title": "Lord of Swiftness",
@@ -481,6 +489,7 @@
     },
     {
         "name": "9 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Resilience",
         "original_title": "Lord of Great Strength",
@@ -497,6 +506,7 @@
     },
     {
         "name": "10 of Wands",
+		"suit": "Wands",
         "type": "Minor Arcana",
         "meaning": "Burden",
         "original_title": "Lord of Oppression",
@@ -513,6 +523,7 @@
     },
     {
         "name": "Knight of Wands",
+		"suit": "Wands",
         "type": "Court Card",
         "meaning": "Zeal",
         "original_title": "Lord of the Flame and the Lightning",
@@ -529,6 +540,7 @@
     },
     {
         "name": "Queen of Wands",
+		"suit": "Wands",
         "type": "Court Card",
         "meaning": "Fervor",
         "original_title": "Queen of the Thrones of Flame",
@@ -545,6 +557,7 @@
     },
     {
         "name": "Prince / King of Wands",
+		"suit": "Wands",
         "type": "Court Card",
         "meaning": "Radiance",
         "original_title": "The Prince of the Chariot of Fire",
@@ -561,6 +574,7 @@
     },
     {
         "name": "Princess / Page of Wands",
+		"suit": "Wands",
         "type": "Court Card",
         "meaning": "Desire",
         "original_title": "The Princess of the Shining Flame",
@@ -577,6 +591,7 @@
     },
     {
         "name": "Ace of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Love",
         "original_title": "The Root of the Power of the Waters",
@@ -593,6 +608,7 @@
     },
     {
         "name": "2 of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Harmony",
         "original_title": "Lord of Love",
@@ -609,6 +625,7 @@
     },
     {
         "name": "3 of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Ebullience",
         "original_title": "Lord of Abundance",
@@ -625,6 +642,7 @@
     },
     {
         "name": "4 of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Comfort",
         "original_title": "Lord of Blended Pleasure",
@@ -657,6 +675,7 @@
     },
     {
         "name": "6 of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Pleasure",
         "original_title": "Lord of Pleasure",
@@ -673,6 +692,7 @@
     },
     {
         "name": "7 of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Debauchery",
         "original_title": "Lord of Illusionary Success",
@@ -689,6 +709,7 @@
     },
     {
         "name": "8 of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Abnegation",
         "original_title": "Lord of Abandoned Success",
@@ -705,6 +726,7 @@
     },
     {
         "name": "9 of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Happiness",
         "original_title": "Lord of Material Happiness",
@@ -721,6 +743,7 @@
     },
     {
         "name": "10 of Cups",
+		"suit": "Cups",
         "type": "Minor Arcana",
         "meaning": "Satisfaction",
         "original_title": "Lord of Perfected Happiness",
@@ -737,6 +760,7 @@
     },
     {
         "name": "Knight of Cups",
+		"suit": "Cups",
         "type": "Court Card",
         "meaning": "Reverie",
         "original_title": "Lord of the Waves and Waters",
@@ -753,6 +777,7 @@
     },
     {
         "name": "Queen of Cups",
+		"suit": "Cups",
         "type": "Court Card",
         "meaning": "Empathy",
         "original_title": "Queen of the Thrones of Water",
@@ -769,6 +794,7 @@
     },
     {
         "name": "Prince / King of Cups",
+		"suit": "Cups",
         "type": "Court Card",
         "meaning": "Romanticism",
         "original_title": "The Prince of the Chariot of Waters",
@@ -785,6 +811,7 @@
     },
     {
         "name": "Princess / Page of Cups",
+		"suit": "Cups",
         "type": "Court Card",
         "meaning": "Sensitivity",
         "original_title": "The Princess of the Waters",
@@ -801,6 +828,7 @@
     },
     {
         "name": "Ace of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Mind",
         "original_title": "The Root of the Powers of the Air",
@@ -817,6 +845,7 @@
     },
     {
         "name": "2 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Consideration",
         "original_title": "Lord of Peace Restored",
@@ -833,6 +862,7 @@
     },
     {
         "name": "3 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Weltzschmerz",
         "original_title": "Lord of Sorrow",
@@ -849,6 +879,7 @@
     },
     {
         "name": "4 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Respite",
         "original_title": "Lord of Rest from Strife",
@@ -865,6 +896,7 @@
     },
     {
         "name": "5 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Defeat",
         "original_title": "Lord of Defeat",
@@ -881,6 +913,7 @@
     },
     {
         "name": "6 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Reason",
         "original_title": "Lord of Earned Success",
@@ -897,6 +930,7 @@
     },
     {
         "name": "7 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Subterfuge",
         "original_title": "Lord of Unstable Effort",
@@ -913,6 +947,7 @@
     },
     {
         "name": "8 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Interference",
         "original_title": "Lord of Shortened Force",
@@ -929,6 +964,7 @@
     },
     {
         "name": "9 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Agitation",
         "original_title": "Lord of Despair and Cruelty",
@@ -945,6 +981,7 @@
     },
     {
         "name": "10 of Swords",
+		"suit": "Swords",
         "type": "Minor Arcana",
         "meaning": "Nullification",
         "original_title": "Lord of Ruin",
@@ -961,6 +998,7 @@
     },
     {
         "name": "Knight of Swords",
+		"suit": "Swords",
         "type": "Court Card",
         "meaning": "Provocation",
         "original_title": "Lord of the Winds and Breezes",
@@ -977,6 +1015,7 @@
     },
     {
         "name": "Queen of Swords",
+		"suit": "Swords",
         "type": "Court Card",
         "meaning": "Insight",
         "original_title": "Queen of the Thrones of Air",
@@ -993,6 +1032,7 @@
     },
     {
         "name": "Prince / King of Swords",
+		"suit": "Swords",
         "type": "Court Card",
         "meaning": "Cogitation",
         "original_title": "The Prince of the Chariot of the Winds",
@@ -1009,6 +1049,7 @@
     },
     {
         "name": "Princess / Page of Swords",
+		"suit": "Swords",
         "type": "Court Card",
         "meaning": "Interest",
         "original_title": "The Princess of the Rushing Winds",
@@ -1025,6 +1066,7 @@
     },
     {
         "name": "Ace of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Matter",
         "original_title": "The Root of the Powers of the Earth",
@@ -1041,6 +1083,7 @@
     },
     {
         "name": "2 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Change",
         "original_title": "Lord of Harmonious Change",
@@ -1057,6 +1100,7 @@
     },
     {
         "name": "3 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Labor",
         "original_title": "Lord of Material Works",
@@ -1073,6 +1117,7 @@
     },
     {
         "name": "4 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Power",
         "original_title": "Lord of Earthly Power",
@@ -1089,6 +1134,7 @@
     },
     {
         "name": "5 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Strain ",
         "original_title": "Lord of Material Trouble",
@@ -1105,6 +1151,7 @@
     },
     {
         "name": "6 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Prosperity",
         "original_title": "Lord of Material Success",
@@ -1121,6 +1168,7 @@
     },
     {
         "name": "7 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Failure",
         "original_title": "Lord of Success Unfulfilled",
@@ -1137,6 +1185,7 @@
     },
     {
         "name": "8 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Prudence",
         "original_title": "Lord of Prudence",
@@ -1153,6 +1202,7 @@
     },
     {
         "name": "9 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Gain",
         "original_title": "Lord of Material Gain",
@@ -1169,6 +1219,7 @@
     },
     {
         "name": "10 of Disks",
+		"suit": "Disks",
         "type": "Minor Arcana",
         "meaning": "Wealth",
         "original_title": "Lord of Wealth",
@@ -1185,6 +1236,7 @@
     },
     {
         "name": "Knight of Disks",
+		"suit": "Disks",
         "type": "Court Card",
         "meaning": "Dedication",
         "original_title": "Lord of the Wild and Fertile Land",
@@ -1201,6 +1253,7 @@
     },
     {
         "name": "Queen of Disks",
+		"suit": "Disks",
         "type": "Court Card",
         "meaning": "Nourishment",
         "original_title": "Queen of the Thrones of Earth",
@@ -1217,6 +1270,7 @@
     },
     {
         "name": "Prince / King of Disks",
+		"suit": "Disks",
         "type": "Court Card",
         "meaning": "Practicality",
         "original_title": "The Prince of the Chariot of Earth",

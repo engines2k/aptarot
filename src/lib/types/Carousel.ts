@@ -12,6 +12,7 @@ gsap.registerPlugin(Observer);
 export class Carousel {
 	rootElement: HTMLElement;
 	items: Array<CarouselItem> = [];
+	sections: Array<CarouselSectionMarker> = [];
 	state: CarouselState;
 	settings: CarouselSettings;
 	cardChangeFunc: (card: Card, index: number) => void;
@@ -40,15 +41,18 @@ export class Carousel {
 	private push(element: Element, index: number) {
 		let item: CarouselItem;
 		let itemType = element.attributes.getNamedItem("data-carousel-item-type")?.value;
-		if (itemType == "card")
+		if (itemType == "card") {
 			item = new CarouselCardItem(element, index, this.state);
-		else if (itemType == "section-marker")
-			item = new CarouselSectionMarker(element, index, this.state);
-		else
+			this.items.push(item);
+		} else if (itemType == "section-marker") {
+			let section = new CarouselSectionMarker(element, index, this.state);
+			this.sections.push(section);
+			this.items.push(section);
+		} else {
 			item = new CarouselItem(element, index, this.state);
-		this.items.push(item);
+			this.items.push(item);
+		}
 	}
-
 
 	private initialize() {
 		this.initializeAllItemDraggables();
@@ -138,6 +142,7 @@ export class Carousel {
 	private updateAllItemPositions() {
 		this.items.forEach(item => this.updateItemPosition(item));
 		this.updatePositionFunc(Number(this.getNormalizedScrollPos()));
+		this.checkCurrentSection()
 	}
 
 	private updateItemPosition(item: CarouselItem) {
@@ -155,8 +160,16 @@ export class Carousel {
 		});
 	}
 
-	private currentSection() {
-
+	private checkCurrentSection() {
+		for (let section of this.sections) {
+			console.log(`${section.originalPosition.x} <- og pos ${section.label}`);
+			const spread = (section.index - ((this.length - 1) / 2));
+			if (section.originalPosition.x - spread > this.state.scrollPos) {
+				this.updateSectionFunc(section.label);
+				console.log(`${section.originalPosition.x} and ${this.state.scrollPos}`);
+				return;
+			}
+		}
 	}
 
 	private getNormalizedScrollPos() {

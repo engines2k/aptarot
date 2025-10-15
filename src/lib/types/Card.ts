@@ -21,6 +21,7 @@ export interface MajorArcanaCard extends Card {
 }
 
 export interface MinorArcanaCard extends Card {
+	suit: string;
 	suit_element: string;
 	part_of_soul: string;
 	division_of_creation: string;
@@ -47,11 +48,19 @@ export function prepareCardDataInSections(cardData: any) {
 	for (let i = 0; i < cardData.length; i++) {
 		let card = createCard(cardData[i]);
 		addCardImage(card);
-		sections[card.type] = sections[card.type as keyof typeof sections] || [];
-		sections[card.type].push(card);
+		let section = getSectionLabel(card);
+		sections[section] = sections[section as keyof typeof sections] || [];
+		sections[section].push(card);
 	}
 
 	return sections;
+}
+
+function getSectionLabel(card: any) {
+	if (card.type == 'Major Arcana')
+		return card.type;
+	else
+		return card.suit!;
 }
 
 function addCardImage(card: Card) {
@@ -102,6 +111,7 @@ const createMajorArcanaCard = (cardData: any): MajorArcanaCard => ({
 
 const createMinorArcanaCard = (cardData: any): MinorArcanaCard => ({
 	...createBaseCard(cardData),
+	suit: cardData.suit,
 	suit_element: cardData.suit_element,
 	part_of_soul: cardData.part_of_soul,
 	division_of_creation: cardData.division_of_creation,
