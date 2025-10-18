@@ -65,21 +65,11 @@
 	}
 
 	:global(.card-selected) {
-		/* box-shadow: 6px 10px 89px -10px rgba(255,204,0); */
-		box-shadow:
-			#fff 0 -1px 4px,
-			#ff0 0 -2px 10px,
-			#ff8000 0 -10px 20px,
-			red 0 -18px 40px,
-			5px 5px 15px 5px rgba(0, 0, 0, 0);
+		box-shadow: 6px 10px 89px -10px rgba(255, 204, 0);
 	}
 
 	:global(.card-active) {
 		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
-	}
-
-	:global(.carousel-controls svg) {
-		max-width: 20px;
 	}
 
 	.carousel-spacer {
