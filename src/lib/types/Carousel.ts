@@ -15,16 +15,16 @@ export class Carousel {
 	sections: Array<CarouselSectionMarker> = [];
 	state: CarouselState;
 	settings: CarouselSettings;
-	cardChangeFunc: (card: Card, index: number) => void;
-	updatePositionFunc: (pos: number) => void;
-	updateSectionFunc: (label: string) => void;
+	emitChangeCard: (card: Card, index: number) => void;
+	emitupdatePos: (pos: number) => void;
+	emitUpdateSection: (label: string) => void;
 
-	constructor(targetId: string, cardChangeFunc: (card: Card, index: number) => void, updatePositionFunc: (pos: number) => void, updateSectionFunc: (label: string) => void) {
+	constructor(targetId: string, emitChangeCard: (card: Card, index: number) => void, emitupdatePos: (pos: number) => void, emitUpdateSection: (label: string) => void) {
 		this.rootElement = document.getElementById(targetId)!;
 		this.state = new CarouselState(window, this.items.length);
-		this.cardChangeFunc = cardChangeFunc;
-		this.updatePositionFunc = updatePositionFunc;
-		this.updateSectionFunc = updateSectionFunc;
+		this.emitChangeCard = emitChangeCard;
+		this.emitupdatePos = emitupdatePos;
+		this.emitUpdateSection = emitUpdateSection;
 		this.setItems();
 		this.settings = createCarouselSettings(this.state);
 		this.initialize();
@@ -55,13 +55,16 @@ export class Carousel {
 	}
 
 	private initialize() {
+		this.initializeObservers();
+		this.updateAllItemPositions();
+		this.fadeInUI();
+	}
+
+	private initializeObservers() {
 		this.initializeAllItemDraggables();
 		this.initializeAllScrollObservers();
 		this.initializeResizeObserver();
-		this.fadeInUI();
-		this.updateAllItemPositions();
 	}
-
 	private initializeAllItemDraggables() {
 		this.items.forEach(item => {
 			if (item instanceof DraggableCarouselItem)
@@ -101,7 +104,7 @@ export class Carousel {
 	}
 
 	makeActiveItem(item: CarouselCardItem) {
-		this.cardChangeFunc(item.cardData, item.index);
+		this.emitChangeCard(item.cardData, item.index);
 		const oldActive = this.items[this.state.activeIndex];
 		if (oldActive instanceof CarouselCardItem)
 			oldActive.makeInactive();
@@ -141,15 +144,15 @@ export class Carousel {
 
 	private updateAllItemPositions() {
 		this.items.forEach(item => this.updateItemPosition(item));
-		this.updatePositionFunc(Number(this.getNormalizedScrollPos()));
+		this.emitupdatePos(Number(this.getNormalizedScrollPos()));
 		this.checkCurrentSection()
 	}
 
 	private updateItemPosition(item: CarouselItem) {
-		let newXOffset = this.calculateXTranslation(item);
 		if (this.itemOutOfView(item))
 			return;
 		let originalX = item.getOriginalPos().x;
+		let newXOffset = this.calculateXTranslation(item);
 		gsap.to(item.element, {
 			x: newXOffset,
 			y: this.calculateItemHeight(originalX + newXOffset),
@@ -161,21 +164,19 @@ export class Carousel {
 	}
 
 	private checkCurrentSection() {
-		if (this.sections.length === 0) return;
+		if (this.sections.length == 0)
+			return;
 
-		let currentSection = this.sections[0]; // Default to first section
+		for (let section of this.sections)
+			if (this.state.scrollPos <= this.getItemCenteredScrollPos(section))
+				this.emitUpdateSection(section.label);
+	}
 
-		for (let section of this.sections) {
-			const spread = (section.index - ((this.length - 1) / 2));
-			const sectionScrollPosition = -section.originalPosition.x - spread + this.state.viewportWidth / 2;
+	private getItemCenteredScrollPos(item: CarouselItem) {
+		const spread = item.index - (this.length - 1) / 2;
+		const centerOfScreen = this.state.viewportWidth / 2;
+		return -(item.originalPosition.x + spread) + centerOfScreen;
 
-			// If we've scrolled past this section marker, it becomes the current section
-			if (this.state.scrollPos <= sectionScrollPosition) {
-				currentSection = section;
-			}
-		}
-
-		this.updateSectionFunc(currentSection.label);
 	}
 
 	private getNormalizedScrollPos() {

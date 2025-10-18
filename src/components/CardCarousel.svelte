@@ -1,28 +1,18 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { Carousel } from "$/lib/types/Carousel";
-	import {
-		prepareCardData,
-		prepareCardDataInSections,
-	} from "$/lib/types/Card";
+	import { prepareCardDataInSections } from "$/lib/types/Card";
 	import cardData from "$/lib/data/card-data.json";
-	import { ChevronLeft, Dices, ChevronRight } from "lucide-svelte";
-	import CarouselPositionIndicator from "./CarouselPositionIndicator.svelte";
+	import CarouselCard from "./CarouselCard.svelte";
+	import CarouselControl from "./CarouselControl.svelte";
+	import CarouselSection from "./CarouselSection.svelte";
 
-	let cards = prepareCardData(cardData);
-	let cardSections = prepareCardDataInSections(cardData);
 	let { changeCard } = $props();
+	let cardSections = prepareCardDataInSections(cardData);
 	let positionIndicator = $state(0);
-	let sectionIndicator = $state("hello");
+	let sectionIndicator = $state("");
 	let carousel: Carousel;
-
-	function updatePositionIndicator(pos: number) {
-		positionIndicator = pos;
-	}
-
-	function updateSectionIndicator(label: string) {
-		sectionIndicator = label;
-	}
+	let loading: boolean = true;
 
 	onMount(() => {
 		carousel = new Carousel(
@@ -33,6 +23,12 @@
 		);
 	});
 
+	function updatePositionIndicator(pos: number) {
+		positionIndicator = pos;
+	}
+	function updateSectionIndicator(label: string) {
+		sectionIndicator = label;
+	}
 	function previousCard() {
 		carousel.goToPrevious();
 	}
@@ -48,58 +44,24 @@
 <div class="mt-12 hide-until-loaded" id="card-carousel">
 	<div class="carousel-item carousel-divider mx-4"></div>
 	{#each Object.entries(cardSections) as [sectionLabel, section]}
-		<div
-			class="carousel-item carousel-section"
-			data-carousel-item-type="section-marker"
-			data-carousel-section-label={sectionLabel}
-		></div>
+		<CarouselSection {sectionLabel} />
 		{#each section as card, index}
-			<div
-				class="carousel-item carousel-card mx-1 lg:mx-2"
-				data-carousel-item-type="card"
-				data-card={JSON.stringify(card)}
-				id={String(index)}
-			>
-				<img
-					src={`/cards/small/${card.image}`}
-					alt="Playing card"
-					width="100"
-					draggable="false"
-				/>
-			</div>
+			<CarouselCard {card} {index} />
 		{/each}
 	{/each}
 	<div class="carousel-item carousel-divider mx-4"></div>
 </div>
-
-<div class="carousel-controls">
-	<div class="controls-buttons">
-		<button onclick={previousCard} title="Previous card"
-			><ChevronLeft /></button
-		>
-		<button onclick={randomCard} title="Random card"><Dices /></button>
-		<button onclick={nextCard} title="Next card"><ChevronRight /></button>
-	</div>
-	<CarouselPositionIndicator pos={positionIndicator} />
-	<div><p>{sectionIndicator}</p></div>
-</div>
+<CarouselControl
+	{previousCard}
+	{randomCard}
+	{nextCard}
+	{positionIndicator}
+	{sectionIndicator}
+/>
 
 <style>
 	.hide-until-loaded {
 		visibility: hidden;
-	}
-
-	button {
-		padding: 5px 15px;
-		font-size: 1em;
-		background-color: rgb(43, 43, 43);
-		border-radius: 5px;
-	}
-
-	button:hover {
-		background-color: rgb(60, 60, 60);
-		cursor: pointer;
-		color: var(--color-theme-1);
 	}
 
 	:global(.card-selected) {
@@ -141,41 +103,13 @@
 		left: 0;
 	}
 
-	.carousel-controls {
-		position: fixed;
-		bottom: 5vh;
-		left: 50%;
-		transform: translateX(-50%);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.controls-buttons {
-		display: flex;
-		gap: 10px;
-		z-index: 200;
-		margin-bottom: 5px;
-	}
-
-	.carousel-item {
+	:global(.carousel-item) {
 		pointer-events: auto;
 		z-index: 100;
 		flex: 0 0 auto;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}
-
-	.carousel-card img {
-		width: 70px;
-		height: auto;
-		display: block;
-		image-rendering: pixelated;
-	}
-
-	.carousel-card {
-		width: 70px;
 	}
 
 	.carousel-divider {
@@ -187,10 +121,6 @@
 	}
 
 	@media (max-width: 40rem) {
-		.carousel-card {
-			width: 50px;
-		}
-
 		.carousel-divider {
 			max-height: 100px;
 		}
