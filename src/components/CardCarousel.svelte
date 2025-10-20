@@ -12,7 +12,8 @@
 	let positionIndicator = $state(0);
 	let sectionIndicator = $state("");
 	let carousel: Carousel;
-	let loading: boolean = true;
+	// work on this later
+	// let loading: boolean = true;
 
 	onMount(() => {
 		carousel = new Carousel(
