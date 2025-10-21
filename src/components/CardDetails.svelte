@@ -6,7 +6,7 @@
 </script>
 
 <div class="tarot-details grid grid-cols-2 gap-4 mt-1">
-	<TreeOfLife />
+	<TreeOfLife {card} />
 	<div class="col-span-1 pr-4">
 		<CardDetail
 			label="Meaning"

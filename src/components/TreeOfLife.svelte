@@ -1,23 +1,17 @@
 <script lang="ts">
-	export let size: number | string = 300;
-	export let color: string = "currentColor";
-	export let strokeWidth: number = 2;
-	export let showLabels: boolean = true;
+	let { card } = $props();
+	let size: number | string = 300;
+	let color: string = "currentColor";
+	let strokeWidth: number = 2;
+	let showLabels: boolean = true;
 
-	/*
-	y: 20 |60  120  180
-	   60
-	   110
-	   170
-	   220
-	*/
-	export let sephira: Record<string, number[]> = {
-		Keter: [120, 20],
+	let sephira: Record<string, number[]> = {
+		Kether: [120, 20],
 		Binah: [60, 60],
-		Chokhmah: [180, 60],
-		Gevurah: [60, 110],
+		Chokmah: [180, 60],
+		Geburah: [60, 110],
 		Hod: [60, 160],
-		Tiferet: [120, 140],
+		Tiphareth: [120, 140],
 		Netzach: [180, 160],
 		Chesed: [180, 110],
 		Yesod: [120, 190],
@@ -25,26 +19,48 @@
 	};
 
 	const links = [
-		["Keter", "Binah"],
-		["Keter", "Chokhmah"],
-		["Keter", "Tiferet"],
-		["Binah", "Chokhmah"],
-		["Binah", "Gevurah"],
-		["Binah", "Tiferet"],
-		["Chokhmah", "Tiferet"],
-		["Chokhmah", "Chesed"],
-		["Gevurah", "Chesed"],
-		["Gevurah", "Tiferet"],
-		["Gevurah", "Hod"],
-		["Chesed", "Tiferet"],
+		["Kether", "Binah"],
+		["Kether", "Chokmah"],
+		["Kether", "Tiphareth"],
+		["Binah", "Chokmah"],
+		["Binah", "Geburah"],
+		["Binah", "Tiphareth"],
+		["Chokmah", "Tiphareth"],
+		["Chokmah", "Chesed"],
+		["Geburah", "Chesed"],
+		["Geburah", "Tiphareth"],
+		["Geburah", "Hod"],
+		["Chesed", "Tiphareth"],
 		["Chesed", "Netzach"],
-		["Tiferet", "Hod"],
-		["Tiferet", "Netzach"],
+		["Tiphareth", "Hod"],
+		["Tiphareth", "Netzach"],
+		["Tiphareth", "Yesod"],
 		["Hod", "Netzach"],
 		["Hod", "Yesod"],
+		["Hod", "Malkuth"],
 		["Netzach", "Yesod"],
+		["Netzach", "Malkuth"],
 		["Yesod", "Malkuth"],
 	];
+
+	let activeSephira = $derived(card?.tree_of_life_sefira);
+	
+	// Debug: Log the activeSephira value
+	$effect(() => {
+		console.log("TreeOfLife - activeSephira:", activeSephira);
+		console.log("TreeOfLife - card:", card);
+	});
+	
+	// Test with hardcoded value for debugging
+	let testSephira = "Kether"; // Uncomment to test
+	
+	function getSephiraFilter(sephira: string) {
+		// Use testSephira for testing, fallback to activeSephira
+		const currentSephira = testSephira; // Change to activeSephira for testing
+		const filter = currentSephira && currentSephira !== "NA" && currentSephira === sephira ? "url(#sofGlow)" : "";
+		console.log(`getSephiraFilter(${sephira}) - currentSephira: ${currentSephira}, filter: ${filter}`);
+		return filter;
+	}
 </script>
 
 <svg
@@ -60,13 +76,16 @@
 			.node {
 				fill: white;
 				text-anchor: middle;
+				transition: all 0.3s ease;
 			}
 			.link {
 				fill: none;
+				transition: opacity 0.3s ease;
 			}
 			.label {
 				font: 10px sans-serif;
 				text-anchor: middle;
+				transition: opacity 0.3s ease;
 			}
 		</style>
 		<filter id="sofGlow" height="300%" width="300%" x="-75%" y="-75%">
@@ -104,7 +123,7 @@
 	{/each}
 
 	{#each Object.keys(sephira) as label}
-		<g>
+		<g opacity={activeSephira && activeSephira !== label ? 0.5 : 1}>
 			<circle
 				class="node"
 				stroke={color}
@@ -112,7 +131,7 @@
 				cx={sephira[label][0]}
 				cy={sephira[label][1]}
 				r="12"
-				filter="url(#sofGlow)"
+				filter={getSephiraFilter(label)}
 			/>
 			{#if showLabels}
 				<text
@@ -124,15 +143,4 @@
 			{/if}
 		</g>
 	{/each}
-
-	<line
-		class="link"
-		stroke={color}
-		stroke-width={strokeWidth}
-		x1="120"
-		y1="32"
-		x2="120"
-		y2="200"
-		stroke-dasharray="3 4"
-	/>
 </svg>
