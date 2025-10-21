@@ -1,38 +1,49 @@
 <script lang="ts">
-	export let size: number | string = 280;
+	export let size: number | string = 300;
 	export let color: string = "currentColor";
 	export let strokeWidth: number = 2;
 	export let showLabels: boolean = true;
 
+	/*
+	y: 20 |60  120  180
+	   60
+	   110
+	   170
+	   220
+	*/
 	export let sephira: Record<string, number[]> = {
 		Keter: [120, 20],
 		Binah: [60, 60],
 		Chokhmah: [180, 60],
 		Gevurah: [60, 110],
-		Hod: [180, 110],
-		Tiferet: [120, 120],
+		Hod: [60, 160],
+		Tiferet: [120, 140],
 		Netzach: [180, 160],
-		Chesed: [60, 110],
-		Yesod: [120, 170],
-		Malkuth: [120, 220],
+		Chesed: [180, 110],
+		Yesod: [120, 190],
+		Malkuth: [120, 240],
 	};
 
 	const links = [
-		[sephira["Keter"], sephira["Binah"]],
-		[sephira["Keter"], sephira["Chokhmah"]],
-		[sephira["Binah"], sephira["Chokhmah"]],
-		[sephira["Chokhmah"], sephira["Gewurah"]],
-		[sephira["Chokhmah"], sephira["Tiphereth"]],
-		[sephira["Chokhmah"], sephira["Chesed"]],
-		[sephira["Gevurah"], sephira["Chesed"]],
-		[sephira["Gevurah"], sephira["Tiphereth"]],
-		[sephira["Gevurah"], sephira["Hod"]],
-		[sephira["Chesed"], sephira["Tiphereth"]],
-		[sephira["Tiphereth"], sephira["Hod"]],
-		[sephira["Hod"], sephira["Netzach"]],
-		[sephira["Hod"], sephira["Yesod"]],
-		[sephira["Netzach"], sephira["Jesod"]],
-		[sephira["Jesod"], sephira["Malkuth"]],
+		["Keter", "Binah"],
+		["Keter", "Chokhmah"],
+		["Keter", "Tiferet"],
+		["Binah", "Chokhmah"],
+		["Binah", "Gevurah"],
+		["Binah", "Tiferet"],
+		["Chokhmah", "Tiferet"],
+		["Chokhmah", "Chesed"],
+		["Gevurah", "Chesed"],
+		["Gevurah", "Tiferet"],
+		["Gevurah", "Hod"],
+		["Chesed", "Tiferet"],
+		["Chesed", "Netzach"],
+		["Tiferet", "Hod"],
+		["Tiferet", "Netzach"],
+		["Hod", "Netzach"],
+		["Hod", "Yesod"],
+		["Netzach", "Yesod"],
+		["Yesod", "Malkuth"],
 	];
 </script>
 
@@ -40,7 +51,7 @@
 	xmlns="http://www.w3.org/2000/svg"
 	width={size}
 	height={size}
-	viewBox="0 0 240 240"
+	viewBox="0 0 {size} {size}"
 	aria-label="Tree of Life"
 	role="img"
 >
@@ -58,6 +69,26 @@
 				text-anchor: middle;
 			}
 		</style>
+		<filter id="sofGlow" height="300%" width="300%" x="-75%" y="-75%">
+			<feMorphology
+				operator="dilate"
+				radius="1"
+				in="SourceAlpha"
+				result="thicken"
+			/>
+			<feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+			<feFlood flood-color="rgb(0,186,255)" result="glowColor" />
+			<feComposite
+				in="glowColor"
+				in2="blurred"
+				operator="in"
+				result="softGlow_colored"
+			/>
+			<feMerge>
+				<feMergeNode in="softGlow_colored" />
+				<feMergeNode in="SourceGraphic" />
+			</feMerge>
+		</filter>
 	</defs>
 
 	{#each links as [a, b]}
@@ -72,19 +103,23 @@
 		/>
 	{/each}
 
-	{#each sephira as [x, y], i}
+	{#each Object.keys(sephira) as label}
 		<g>
 			<circle
 				class="node"
 				stroke={color}
 				stroke-width={strokeWidth}
-				cx={x}
-				cy={y}
+				cx={sephira[label][0]}
+				cy={sephira[label][1]}
 				r="12"
+				filter="url(#sofGlow)"
 			/>
 			{#if showLabels}
-				<text class="label" fill={color} {x} y={y + 30}
-					>{labels[i] ?? ""}</text
+				<text
+					class="label"
+					fill={color}
+					x={sephira[label][0]}
+					y={sephira[label][1] + 30}>{label ?? ""}</text
 				>
 			{/if}
 		</g>
