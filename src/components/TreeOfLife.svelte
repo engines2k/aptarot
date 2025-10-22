@@ -1,11 +1,11 @@
 <script lang="ts">
 	let { card } = $props();
-	let canvasWidth: number = 100;
-	let canvasHeight: number = 200;
-	let nodeSize: number = 8;
+	let canvasWidth: number = 40;
+	let canvasHeight: number = 80;
+	let nodeSize: number = 4;
 	let color: string = "currentColor";
-	let strokeWidth: number = 2;
-	let showLabels: boolean = true;
+	let strokeWidth: number = 1;
+	let showLabels: boolean = false;
 
 	let sephira: Record<string, number[]> = {
 		Kether: [canvasWidth * 0.5, canvasHeight * 0.1],

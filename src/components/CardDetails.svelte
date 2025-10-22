@@ -30,7 +30,6 @@
 		{#if card.type === "Court Card"}
 			<BirthdayExamples {card} />
 		{/if}
-		<TreeOfLife {card} />
 	</div>
 	<div class="col-span-1">
 		{#if card.type === "Minor Arcana" || card.type === "Court Card"}
