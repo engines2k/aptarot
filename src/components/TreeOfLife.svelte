@@ -1,21 +1,23 @@
 <script lang="ts">
 	let { card } = $props();
-	let size: number | string = 300;
+	let canvasWidth: number = 100;
+	let canvasHeight: number = 200;
+	let nodeSize: number = 8;
 	let color: string = "currentColor";
 	let strokeWidth: number = 2;
 	let showLabels: boolean = true;
 
 	let sephira: Record<string, number[]> = {
-		Kether: [120, 20],
-		Binah: [60, 60],
-		Chokmah: [180, 60],
-		Geburah: [60, 110],
-		Hod: [60, 160],
-		Tiphareth: [120, 140],
-		Netzach: [180, 160],
-		Chesed: [180, 110],
-		Yesod: [120, 190],
-		Malkuth: [120, 240],
+		Kether: [canvasWidth * 0.5, canvasHeight * 0.1],
+		Binah: [canvasWidth * 0.2, canvasHeight * 0.2],
+		Chokmah: [canvasWidth * 0.8, canvasHeight * 0.2],
+		Geburah: [canvasWidth * 0.2, canvasHeight * 0.4],
+		Hod: [canvasWidth * 0.2, canvasHeight * 0.6],
+		Tiphareth: [canvasWidth * 0.5, canvasHeight * 0.5],
+		Netzach: [canvasWidth * 0.8, canvasHeight * 0.6],
+		Chesed: [canvasWidth * 0.8, canvasHeight * 0.4],
+		Yesod: [canvasWidth * 0.5, canvasHeight * 0.7],
+		Malkuth: [canvasWidth * 0.5, canvasHeight * 0.85],
 	};
 
 	const links = [
@@ -43,31 +45,26 @@
 		["Yesod", "Malkuth"],
 	];
 
-	let activeSephira = $derived(card?.tree_of_life_sefira);
-	
-	// Debug: Log the activeSephira value
+	let activeSephira = $state(card?.tree_of_life_sefira);
+
 	$effect(() => {
-		console.log("TreeOfLife - activeSephira:", activeSephira);
-		console.log("TreeOfLife - card:", card);
+		activeSephira = card?.tree_of_life_sefira;
 	});
-	
-	// Test with hardcoded value for debugging
-	let testSephira = "Kether"; // Uncomment to test
-	
+
 	function getSephiraFilter(sephira: string) {
-		// Use testSephira for testing, fallback to activeSephira
-		const currentSephira = testSephira; // Change to activeSephira for testing
-		const filter = currentSephira && currentSephira !== "NA" && currentSephira === sephira ? "url(#sofGlow)" : "";
-		console.log(`getSephiraFilter(${sephira}) - currentSephira: ${currentSephira}, filter: ${filter}`);
+		const filter =
+			activeSephira && activeSephira !== "NA" && activeSephira === sephira
+				? "url(#sofGlow)"
+				: "";
 		return filter;
 	}
 </script>
 
 <svg
 	xmlns="http://www.w3.org/2000/svg"
-	width={size}
-	height={size}
-	viewBox="0 0 {size} {size}"
+	width={canvasWidth}
+	height={canvasHeight}
+	viewBox="0 0 {canvasWidth} {canvasHeight}"
 	aria-label="Tree of Life"
 	role="img"
 >
@@ -130,7 +127,7 @@
 				stroke-width={strokeWidth}
 				cx={sephira[label][0]}
 				cy={sephira[label][1]}
-				r="12"
+				r={nodeSize}
 				filter={getSephiraFilter(label)}
 			/>
 			{#if showLabels}

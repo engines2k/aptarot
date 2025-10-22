@@ -6,7 +6,6 @@
 </script>
 
 <div class="tarot-details grid grid-cols-2 gap-4 mt-1">
-	<TreeOfLife {card} />
 	<div class="col-span-1 pr-4">
 		<CardDetail
 			label="Meaning"
@@ -31,6 +30,7 @@
 		{#if card.type === "Court Card"}
 			<BirthdayExamples {card} />
 		{/if}
+		<TreeOfLife {card} />
 	</div>
 	<div class="col-span-1">
 		{#if card.type === "Minor Arcana" || card.type === "Court Card"}
