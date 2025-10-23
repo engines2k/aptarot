@@ -48,10 +48,10 @@
 				{card.name || "Welcome to ApTarot"}
 			</p>
 			<div class="grid grid-cols-12">
-				<div class="col-span-1">
+				<div class="col-span-2 md:col-span-1">
 					<TreeOfLife {card} />
 				</div>
-				<div class="col-span-10 pl-4 pt-2">
+				<div class="col-span-10 md:col-span-1 pl-4 pt-2">
 					<p class="tarot-ti dark:text-gray-100">
 						{card.original_title}
 					</p>
