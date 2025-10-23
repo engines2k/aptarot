@@ -1,6 +1,6 @@
-import { gsap } from "gsap";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { MotionPathHelper } from "gsap/MotionPathHelper";
+import { gsap } from "gsap/dist/gsap";
+import { MotionPathPlugin } from "gsap/dist/MotionPathPlugin";
+import { MotionPathHelper } from "gsap/dist/MotionPathHelper";
 
 gsap.registerPlugin(MotionPathPlugin, MotionPathHelper);
 

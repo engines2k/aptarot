@@ -1,5 +1,5 @@
 import { CarouselState } from '$lib/types/CarouselState';
-import { gsap } from 'gsap';
+import { gsap } from 'gsap/dist/gsap';
 
 export interface CarouselSettings {
     scrollAfterActiveChange: boolean;

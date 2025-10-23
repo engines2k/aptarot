@@ -1,4 +1,4 @@
-import gsap from "gsap";
+import { gsap } from "gsap/dist/gsap";
 
 import { createCard, type Card } from "$/lib/types/Card";
 import { CarouselState } from "$lib/types/CarouselState";

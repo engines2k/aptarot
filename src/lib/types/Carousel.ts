@@ -1,10 +1,10 @@
 import { type Card } from "$/lib/types/Card";
 import { type CarouselSettings, createCarouselSettings } from "$lib/types/CarouselSettings";
-import { Draggable } from "gsap/Draggable";
+import { Draggable } from "gsap/dist/Draggable";
 import { CarouselState } from "$lib/types/CarouselState";
 import { CarouselItem, DraggableCarouselItem, CarouselCardItem, CarouselSectionMarker } from "$lib/types/CarouselItem";
-import { gsap } from "gsap";
-import { Observer } from "gsap/Observer";
+import { gsap } from "gsap/dist/gsap";
+import { Observer } from "gsap/dist/Observer";
 
 gsap.registerPlugin(Draggable);
 gsap.registerPlugin(Observer);
