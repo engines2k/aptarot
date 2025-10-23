@@ -1,6 +1,6 @@
 <script lang="ts">
 	let { card } = $props();
-	let canvasWidth: number = 40;
+	let canvasWidth: number = 50;
 	let canvasHeight: number = 80;
 	let nodeSize: number = 4;
 	let color: string = "currentColor";
@@ -17,7 +17,7 @@
 		Netzach: [canvasWidth * 0.8, canvasHeight * 0.6],
 		Chesed: [canvasWidth * 0.8, canvasHeight * 0.4],
 		Yesod: [canvasWidth * 0.5, canvasHeight * 0.7],
-		Malkuth: [canvasWidth * 0.5, canvasHeight * 0.85],
+		Malkuth: [canvasWidth * 0.5, canvasHeight * 0.87],
 	};
 
 	const links = [
@@ -51,7 +51,6 @@
 	$effect(() => {
 		cardSefira = card?.tree_of_life_sefira?.name;
 		cardPath = card?.tree_of_life_path;
-		$inspect(cardPath);
 	});
 
 	function getElementFilter(element: string) {
@@ -61,15 +60,17 @@
 	}
 
 	function isActivePath(sefirot: string[]) {
-		// Check if the card has a path and if both sefirot in the link match the card's path
 		if (!cardPath || !cardPath.sefirot || cardPath.sefirot.length !== 2) {
 			return false;
 		}
-		const [pathStart, pathEnd] = cardPath.sefirot;
-		return (
-			(sefirot[0] === pathStart && sefirot[1] === pathEnd) ||
-			(sefirot[0] === pathEnd && sefirot[1] === pathStart)
+		const [pathStart, pathEnd] = cardPath.sefirot.map((s: string) =>
+			s.trim(),
 		);
+		const [linkStart, linkEnd] = sefirot.map((s) => s.trim());
+		const isActive =
+			(linkStart === pathStart && linkEnd === pathEnd) ||
+			(linkStart === pathEnd && linkEnd === pathStart);
+		return isActive;
 	}
 </script>
 
@@ -90,7 +91,9 @@
 			}
 			.link {
 				fill: none;
-				transition: opacity 0.3s ease;
+				transition:
+					opacity 0.3s ease,
+					stroke-width 0.3s ease;
 			}
 			.label {
 				font: 10px sans-serif;
@@ -98,7 +101,14 @@
 				transition: opacity 0.3s ease;
 			}
 		</style>
-		<filter id="sofGlow" height="200%" width="200%" x="-50%" y="-50%">
+		<filter
+			id="sofGlow"
+			filterUnits="userSpaceOnUse"
+			x="-50%"
+			y="-50%"
+			width="200%"
+			height="200%"
+		>
 			<feMorphology
 				operator="dilate"
 				radius="1"
@@ -106,7 +116,7 @@
 				result="thicken"
 			/>
 			<feGaussianBlur in="thicken" stdDeviation="3" result="blurred" />
-			<feFlood flood-color="rgb(0,186,255)" result="glowColor" />
+			<feFlood flood-color="rgb(255, 204, 0)" result="glowColor" />
 			<feComposite
 				in="glowColor"
 				in2="blurred"
@@ -121,12 +131,13 @@
 	</defs>
 
 	{#each links as [a, b]}
+		{@const pathIsActive = isActivePath([a, b])}
 		<line
-			opacity={isActivePath([a, b]) ? 1 : 0.5}
-			filter={isActivePath([a, b]) ? "url(#sofGlow)" : ""}
+			opacity={pathIsActive ? 1 : 0.5}
+			filter={pathIsActive ? "url(#sofGlow)" : ""}
 			class="link"
 			stroke={color}
-			stroke-width={strokeWidth}
+			stroke-width={pathIsActive ? strokeWidth * 2 : strokeWidth}
 			x1={sephira[a][0]}
 			y1={sephira[a][1]}
 			x2={sephira[b][0]}
