@@ -14,10 +14,20 @@ interface Attribution {
 	secondary?: string;
 }
 
+export interface TreeOfLifePath {
+	id: number;
+	sefirot: string[2];
+}
+
+export interface TreeOfLifeSefira {
+	id: number;
+	name: string;
+}
+
 export interface MajorArcanaCard extends Card {
 	hebrew_letter: string;
 	letter_association: string;
-	tree_of_life_path: string;
+	tree_of_life_path: TreeOfLifePath;
 }
 
 export interface MinorArcanaCard extends Card {
@@ -25,7 +35,7 @@ export interface MinorArcanaCard extends Card {
 	suit_element: string;
 	part_of_soul: string;
 	division_of_creation: string;
-	tree_of_life_sefira: string;
+	tree_of_life_sefira: TreeOfLifeSefira | undefined;
 }
 
 export interface CourtCard extends MinorArcanaCard {
@@ -120,7 +130,6 @@ const createMinorArcanaCard = (cardData: any): MinorArcanaCard => ({
 
 const createCourtCard = (cardData: any): CourtCard => ({
 	...createMinorArcanaCard(cardData),
-	tree_of_life_sefira: "",
 	dates: cardData.dates,
 	birthday_examples: cardData.birthday_examples
 });

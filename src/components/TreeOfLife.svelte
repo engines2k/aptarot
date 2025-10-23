@@ -45,18 +45,31 @@
 		["Yesod", "Malkuth"],
 	];
 
-	let activeSephira = $state(card?.tree_of_life_sefira);
+	let cardSefira = $state(card?.tree_of_life_sefira);
+	let cardPath = $state(card?.tree_of_life_path);
 
 	$effect(() => {
-		activeSephira = card?.tree_of_life_sefira;
+		cardSefira = card?.tree_of_life_sefira?.name;
+		cardPath = card?.tree_of_life_path;
+		$inspect(cardPath);
 	});
 
-	function getSephiraFilter(sephira: string) {
+	function getElementFilter(element: string) {
 		const filter =
-			activeSephira && activeSephira !== "NA" && activeSephira === sephira
-				? "url(#sofGlow)"
-				: "";
+			cardSefira && cardSefira !== "NA" && cardSefira === element;
 		return filter;
+	}
+
+	function isActivePath(sefirot: string[]) {
+		// Check if the card has a path and if both sefirot in the link match the card's path
+		if (!cardPath || !cardPath.sefirot || cardPath.sefirot.length !== 2) {
+			return false;
+		}
+		const [pathStart, pathEnd] = cardPath.sefirot;
+		return (
+			(sefirot[0] === pathStart && sefirot[1] === pathEnd) ||
+			(sefirot[0] === pathEnd && sefirot[1] === pathStart)
+		);
 	}
 </script>
 
@@ -85,14 +98,14 @@
 				transition: opacity 0.3s ease;
 			}
 		</style>
-		<filter id="sofGlow" height="300%" width="300%" x="-75%" y="-75%">
+		<filter id="sofGlow" height="200%" width="200%" x="-50%" y="-50%">
 			<feMorphology
 				operator="dilate"
 				radius="1"
 				in="SourceAlpha"
 				result="thicken"
 			/>
-			<feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+			<feGaussianBlur in="thicken" stdDeviation="3" result="blurred" />
 			<feFlood flood-color="rgb(0,186,255)" result="glowColor" />
 			<feComposite
 				in="glowColor"
@@ -109,6 +122,8 @@
 
 	{#each links as [a, b]}
 		<line
+			opacity={isActivePath([a, b]) ? 1 : 0.5}
+			filter={isActivePath([a, b]) ? "url(#sofGlow)" : ""}
 			class="link"
 			stroke={color}
 			stroke-width={strokeWidth}
@@ -120,7 +135,7 @@
 	{/each}
 
 	{#each Object.keys(sephira) as label}
-		<g opacity={activeSephira && activeSephira !== label ? 0.5 : 1}>
+		<g opacity={cardSefira && cardSefira === label ? 1 : 0.5}>
 			<circle
 				class="node"
 				stroke={color}
@@ -128,7 +143,7 @@
 				cx={sephira[label][0]}
 				cy={sephira[label][1]}
 				r={nodeSize}
-				filter={getSephiraFilter(label)}
+				filter={getElementFilter(label) ? "url(#sofGlow)" : ""}
 			/>
 			{#if showLabels}
 				<text

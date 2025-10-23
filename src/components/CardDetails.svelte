@@ -1,7 +1,6 @@
 <script lang="ts">
 	import CardDetail from "$/components/CardDetail.svelte";
 	import BirthdayExamples from "./BirthdayExamples.svelte";
-	import TreeOfLife from "./TreeOfLife.svelte";
 	let { card } = $props();
 </script>
 
@@ -15,7 +14,7 @@
 		{#if card.type === "Minor Arcana"}
 			<CardDetail
 				label="Tree of life (Sephira)"
-				value={card.tree_of_life_sefira}
+				value={card.tree_of_life_sefira.name}
 			/>
 		{/if}
 		{#if card.type === "Minor Arcana" || card.type === "Court Card"}
@@ -24,7 +23,9 @@
 		{#if card.type === "Major Arcana"}
 			<CardDetail
 				label="Tree of life (Path)"
-				value={card.tree_of_life_path}
+				value={card.tree_of_life_path.sefirot[0] +
+					" to " +
+					card.tree_of_life_path.sefirot[1]}
 			/>
 		{/if}
 		{#if card.type === "Court Card"}
