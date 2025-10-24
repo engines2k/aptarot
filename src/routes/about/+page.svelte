@@ -89,7 +89,6 @@
 	</p>
 	<ul>
 		<li><strong>Card Name</strong></li>
-		<li><strong>Original Golden Dawn Title</strong></li>
 		<li>
 			<strong>Original Esoteric Title:</strong> Title given to the card by
 			the Golden Dawn

@@ -42,16 +42,16 @@
 			/>
 		</div>
 	</div>
-	<div class="col-span-3 lg:col-span-7 ml-4 lg:ml-8 mt-2">
+	<div class="col-span-3 lg:col-span-7 mx-2 lg:ml-8 mt-2">
 		<div class="card-heading">
 			<p class="tarot-card-name dark:text-gray-100">
 				{card.name || "Welcome to ApTarot"}
 			</p>
 			<div class="grid grid-cols-12">
-				<div class="col-span-2 md:col-span-1">
+				<div class="col-span-2 md:col-span-1 tree-of-life-mini">
 					<TreeOfLife {card} />
 				</div>
-				<div class="col-span-10 md:col-span-11 pl-4 pt-2">
+				<div class="col-span-10 md:col-span-11 pl-2 pt-2">
 					<p class="tarot-ti dark:text-gray-100">
 						{card.original_title}
 					</p>
@@ -108,5 +108,9 @@
 		max-width: 50px;
 		border-bottom: 1px solid #2c2c2c;
 		margin: 5px 0 5px 0;
+	}
+
+	.tree-of-life-mini {
+		margin-left: -5px;
 	}
 </style>

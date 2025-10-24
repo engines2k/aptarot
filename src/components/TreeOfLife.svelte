@@ -96,7 +96,7 @@
 					stroke-width 0.3s ease;
 			}
 			.label {
-				font: 10px sans-serif;
+				font: 10px;
 				text-anchor: middle;
 				transition: opacity 0.3s ease;
 			}
