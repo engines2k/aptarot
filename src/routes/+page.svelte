@@ -25,7 +25,7 @@
 </svelte:head>
 
 <section class="lg:items-center justify-center">
-	<div class={loading ? "" : "hidden"}>
+	<div class={loading ? "" : "invisible"}>
 		<LoadingScreen />
 	</div>
 	<div class={loading ? "invisible" : ""}>
