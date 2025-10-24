@@ -1,14 +1,22 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import { createCard, type Card } from "$/lib/types/Card";
+	import LoadingScreen from "$/components/LoadingScreen.svelte";
 	import CardInfo from "$/components/CardInfo.svelte";
 	import CardCarousel from "$/components/CardCarousel.svelte";
 	import "$/cards.css";
 
+	let { data } = $props();
+	let loading = $state(true);
 	let activeCard = $state(createCard());
 
-	function changeCard(card: Card, index: number) {
+	function changeCard(card: Card) {
 		activeCard = card;
 	}
+
+	onMount(() => {
+		loading = false;
+	});
 </script>
 
 <svelte:head>
@@ -17,13 +25,19 @@
 </svelte:head>
 
 <section class="lg:items-center justify-center">
-	<CardInfo card={activeCard} />
-	<CardCarousel {changeCard} />
+	<div class={loading ? "" : "hidden"}>
+		<LoadingScreen />
+	</div>
+	<div class={loading ? "invisible" : ""}>
+		<CardInfo card={activeCard} />
+		<CardCarousel {changeCard} cards={data.cards} />
+	</div>
 </section>
 
 <style>
 	section {
 		display: flex;
+		flex-wrap: wrap;
 		flex-wrap: wrap;
 		flex-direction: column;
 		/* align-items: center; */
@@ -34,7 +48,7 @@
 
 	/*@media (max-width: 40rem) {
 		section {
-			 height:95vh; 
+			height: 95vh;
 		}
 	}*/
 </style>

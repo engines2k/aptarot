@@ -1,29 +1,29 @@
+import { prepareCardData } from '$/lib/types/Card';
+import cardData from '$/lib/data/card-data.json';
+import { browser } from '$app/environment';
+
 export const prerender = true;
 
-import type { PageLoad } from './$types';
+export async function load() {
+	const cards = prepareCardData(cardData);
 
-function loadImage(src: string) {
-	return new Promise((resolve, reject) => {
-		const img = new Image();
-		img.onload = () => resolve({ src, img });
-		img.onerror = reject;
-		img.src = src;
-	});
-}
-
-async function loadAllImagesFromCards(cards) {
-	try {
-		const results = await Promise.all(imageSrcs.map(loadImage));
-
-		// Store in dictionary with src as key
-		results.forEach(({ src, img }) => {
-			images[src] = img;
+	if (browser) {
+		const imagePromises = cards.map((card) => {
+			if (card.image) {
+				return new Promise((resolve, reject) => {
+					const img = new Image();
+					img.onload = () => resolve(card.image);
+					img.onerror = reject;
+					img.src = `/cards/regular/${card.image}`;
+				});
+			}
+			return Promise.resolve();
 		});
 
-		images = images; // Trigger reactivity
-		loading = false;
-	} catch (error) {
-		console.error('Failed to load images:', error);
-		loading = false;
+		await Promise.allSettled(imagePromises);
 	}
+
+	return {
+		cards
+	};
 }

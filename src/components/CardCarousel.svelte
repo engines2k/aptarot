@@ -1,19 +1,16 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { Carousel } from "$/lib/types/Carousel";
-	import { prepareCardDataInSections } from "$/lib/types/Card";
-	import cardData from "$/lib/data/card-data.json";
+	import { prepareCardDataInSections, type Card } from "$/lib/types/Card";
 	import CarouselCard from "./CarouselCard.svelte";
 	import CarouselControl from "./CarouselControl.svelte";
 	import CarouselSection from "./CarouselSection.svelte";
 
-	let { changeCard } = $props();
-	let cardSections = prepareCardDataInSections(cardData);
+	let { changeCard, cards } = $props<{ changeCard: (card: Card) => void; cards: Card[] }>();
+	let cardSections = prepareCardDataInSections(cards);
 	let positionIndicator = $state(0);
 	let sectionIndicator = $state("");
 	let carousel: Carousel;
-	// work on this later
-	// let loading: boolean = true;
 
 	onMount(() => {
 		carousel = new Carousel(
@@ -23,7 +20,6 @@
 			updateSectionIndicator,
 		);
 	});
-
 	function updatePositionIndicator(pos: number) {
 		positionIndicator = pos;
 	}

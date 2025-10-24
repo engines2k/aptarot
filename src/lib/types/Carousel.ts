@@ -15,11 +15,11 @@ export class Carousel {
 	sections: Array<CarouselSectionMarker> = [];
 	state: CarouselState;
 	settings: CarouselSettings;
-	emitChangeCard: (card: Card, index: number) => void;
+	emitChangeCard: (card: Card) => void;
 	emitupdatePos: (pos: number) => void;
 	emitUpdateSection: (label: string) => void;
 
-	constructor(targetId: string, emitChangeCard: (card: Card, index: number) => void, emitupdatePos: (pos: number) => void, emitUpdateSection: (label: string) => void) {
+	constructor(targetId: string, emitChangeCard: (card: Card) => void, emitupdatePos: (pos: number) => void, emitUpdateSection: (label: string) => void) {
 		this.rootElement = document.getElementById(targetId)!;
 		this.state = new CarouselState(window, this.items.length);
 		this.emitChangeCard = emitChangeCard;
