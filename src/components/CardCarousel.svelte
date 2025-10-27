@@ -6,7 +6,10 @@
 	import CarouselControl from "./CarouselControl.svelte";
 	import CarouselSection from "./CarouselSection.svelte";
 
-	let { changeCard, cards } = $props<{ changeCard: (card: Card) => void; cards: Card[] }>();
+	let { changeCard, cards } = $props<{
+		changeCard: (card: Card) => void;
+		cards: Card[];
+	}>();
 	let cardSections = prepareCardDataInSections(cards);
 	let positionIndicator = $state(0);
 	let sectionIndicator = $state("");
@@ -63,10 +66,12 @@
 
 	:global(.card-selected) {
 		box-shadow: 6px 10px 89px -10px rgba(255, 204, 0);
+		transition: box-shadow 0.2s ease;
 	}
 
 	:global(.card-active) {
 		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
+		transition: box-shadow 0.2 ease;
 	}
 
 	.carousel-spacer {

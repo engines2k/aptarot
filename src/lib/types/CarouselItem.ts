@@ -1,4 +1,4 @@
-import { gsap } from "gsap/dist/gsap";
+import { gsap } from "gsap";
 
 import { createCard, type Card } from "$/lib/types/Card";
 import { CarouselState } from "$lib/types/CarouselState";
@@ -6,139 +6,139 @@ import { Position, PositionFactory } from "$lib/types/Position";
 
 
 export class CarouselItem {
-    readonly index: number;
-    readonly type: string;
-    element: Element;
-    state: CarouselState;
-    originalPosition: Position;
-    pos: Position;
+	readonly index: number;
+	readonly type: string;
+	element: Element;
+	state: CarouselState;
+	originalPosition: Position;
+	pos: Position;
 
-    
-    constructor(element: Element, index: number, state: CarouselState) {
-        this.element = element;
-        this.index = index;
-        this.type = element.getAttribute("data-carousel-item-type") || "unknown";
-        this.state = state;
-        this.originalPosition = PositionFactory.fromElement(element);
-        this.pos = new Position(0, 0, 1, 0);
-    }
-    
-    get x() {
-        return this.element.getBoundingClientRect().x;
-    }
 
-    getPos() {
-        return this.pos;
-    }
+	constructor(element: Element, index: number, state: CarouselState) {
+		this.element = element;
+		this.index = index;
+		this.type = element.getAttribute("data-carousel-item-type") || "unknown";
+		this.state = state;
+		this.originalPosition = PositionFactory.fromElement(element);
+		this.pos = new Position(0, 0, 1, 0);
+	}
 
-    setPos(pos: Position) {
-        this.pos = pos;
-    }
+	get x() {
+		return this.element.getBoundingClientRect().x;
+	}
 
-    getOriginalPos() {
-        return this.originalPosition;
-    }
+	getPos() {
+		return this.pos;
+	}
 
-    savePos(dragEvent: Draggable.Vars) {
-        return {
-            x: dragEvent.x,
-            y: dragEvent.y,
-            scale: dragEvent.scale,
-            rotation: gsap.getProperty(dragEvent.target, "rotation") as number
-        }
-    }
-    
-    handleDrag(dragEvent: Draggable.Vars) {}
+	setPos(pos: Position) {
+		this.pos = pos;
+	}
 
-    handlePress(dragEvent: Draggable.Vars) {}
+	getOriginalPos() {
+		return this.originalPosition;
+	}
 
-    handleDragRelease(dragEvent: Draggable.Vars) {}
+	savePos(dragEvent: Draggable.Vars) {
+		return {
+			x: dragEvent.x,
+			y: dragEvent.y,
+			scale: dragEvent.scale,
+			rotation: gsap.getProperty(dragEvent.target, "rotation") as number
+		}
+	}
+
+	handleDrag(dragEvent: Draggable.Vars) { }
+
+	handlePress(dragEvent: Draggable.Vars) { }
+
+	handleDragRelease(dragEvent: Draggable.Vars) { }
 }
 
 export class CarouselSectionMarker extends CarouselItem {
-    label: string;
-    constructor(element: Element, index: number, state: CarouselState) {
-        super(element, index, state);
-        this.label = element.getAttribute("data-carousel-section-label") || "Untitled";
-    }
+	label: string;
+	constructor(element: Element, index: number, state: CarouselState) {
+		super(element, index, state);
+		this.label = element.getAttribute("data-carousel-section-label") || "Untitled";
+	}
 }
-    
-export class DraggableCarouselItem extends CarouselItem {
-    constructor(element: Element, index: number, state: CarouselState) {
-        super(element, index, state);
-    }
 
-    handlePress(vars: Draggable.Vars): void {
-        this.state.userDraggingItem = true;
-        this.pos = this.savePos(vars);
-        gsap.to(vars.target, {
-            scale: 1.1,
-            rotate: 5,
-            ease: "elastic.out(1, 0.5)",
-            duration: .6
-        });
-    }
-    
-    handleDragRelease(dragEvent: Draggable.Vars) {
-        this.state.userDraggingItem = false;
-        this.putMeBack(dragEvent);
-    }
-    
-    putMeBack(dragEvent: Draggable.Vars) {
-        let itemId = dragEvent.target.id
-        let scale = this.state.activeIndex == itemId ? 1.1 : 1;
-        gsap.to(dragEvent.target, {
-            scale: scale,
-            rotate: this.pos.rotation,
-            x: Math.round(this.pos.x), 
-            y: Math.round(this.pos.y),
-            ease: "elastic.out(.5, 0.2)",
-            duration: .6 
-        });
-    }
+export class DraggableCarouselItem extends CarouselItem {
+	constructor(element: Element, index: number, state: CarouselState) {
+		super(element, index, state);
+	}
+
+	handlePress(vars: Draggable.Vars): void {
+		this.state.userDraggingItem = true;
+		this.pos = this.savePos(vars);
+		gsap.to(vars.target, {
+			scale: 1.2,
+			rotate: this.pos.rotation + 5,
+			ease: "elastic.out(1, 0.5)",
+			duration: .6
+		});
+	}
+
+	handleDragRelease(dragEvent: Draggable.Vars) {
+		this.state.userDraggingItem = false;
+		this.putMeBack(dragEvent);
+	}
+
+	putMeBack(dragEvent: Draggable.Vars) {
+		let itemId = dragEvent.target.id
+		let scale = this.state.activeIndex == itemId ? 1.1 : 1;
+		gsap.to(dragEvent.target, {
+			scale: scale,
+			rotate: this.pos.rotation,
+			x: Math.round(this.pos.x),
+			y: Math.round(this.pos.y),
+			ease: "elastic.out(.5, 0.2)",
+			duration: .6
+		});
+	}
 }
 
 export class CarouselCardItem extends DraggableCarouselItem {
-    cardData: Card;
-    constructor(element: Element, index: number, state: CarouselState) {
-        super(element, index, state);
-        let cardData = element.getAttribute("data-card");
-        if (cardData)
-            this.cardData = createCard(JSON.parse(cardData));
-        else
-            this.cardData = createCard(null);
-    }
+	cardData: Card;
+	constructor(element: Element, index: number, state: CarouselState) {
+		super(element, index, state);
+		let cardData = element.getAttribute("data-card");
+		if (cardData)
+			this.cardData = createCard(JSON.parse(cardData));
+		else
+			this.cardData = createCard(null);
+	}
 
-    handleDrag(dragEvent: Draggable.Vars) {
-        if (this.isDraggedUp(dragEvent))
-            this.makeSelected();
-        else
-            this.makeUnselected();
-    }
+	handleDrag(dragEvent: Draggable.Vars) {
+		if (this.isDraggedUp(dragEvent))
+			this.makeSelected();
+		else
+			this.makeUnselected();
+	}
 
-    makeSelected() {
-        this.element.classList.add("card-selected");
-    }
+	makeSelected() {
+		this.element.classList.add("card-selected");
+	}
 
-    makeUnselected() {
-        this.element.classList.remove("card-selected");
-    }
+	makeUnselected() {
+		this.element.classList.remove("card-selected");
+	}
 
-    makeActive() {
-        this.element.classList.add("card-active");
-    }
+	makeActive() {
+		this.element.classList.add("card-active");
+	}
 
-    makeInactive() {
-        this.element.classList.remove("card-active");
-    }
+	makeInactive() {
+		this.element.classList.remove("card-active");
+	}
 
-    isDraggedUp(vars: Draggable.Vars) {
-        return this.pos.y - vars.y > 100;
-    }
-    
-    handleDragRelease(dragEvent: Draggable.Vars) {
-        super.handleDragRelease(dragEvent);
-        // Let the Carousel handle making this item active
-        this.makeUnselected();
-    }
+	isDraggedUp(vars: Draggable.Vars) {
+		return this.pos.y - vars.y > 100;
+	}
+
+	handleDragRelease(dragEvent: Draggable.Vars) {
+		super.handleDragRelease(dragEvent);
+		// Let the Carousel handle making this item active
+		this.makeUnselected();
+	}
 }
