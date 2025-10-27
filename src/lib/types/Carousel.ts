@@ -5,6 +5,7 @@ import { CarouselState } from "$lib/types/CarouselState";
 import { CarouselItem, DraggableCarouselItem, CarouselCardItem, CarouselSectionMarker } from "$lib/types/CarouselItem";
 import { gsap } from "gsap";
 import { Observer } from "gsap/Observer";
+import animations from "$lib/animations"
 
 gsap.registerPlugin(Draggable);
 gsap.registerPlugin(Observer);
@@ -104,7 +105,7 @@ export class Carousel {
 	}
 
 	makeActiveItem(item: CarouselCardItem) {
-		this.emitChangeCard(item.cardData, item.index);
+		this.emitChangeCard(item.cardData);
 		const oldActive = this.items[this.state.activeIndex];
 		if (oldActive instanceof CarouselCardItem)
 			oldActive.makeInactive();
@@ -158,7 +159,7 @@ export class Carousel {
 			y: this.calculateItemHeight(originalX + newXOffset),
 			rotation: this.calculateItemAngle(originalX + newXOffset),
 			scale: 1,
-			duration: 0.4,
+			duration: 0.5,
 			ease: "expo.out"
 		});
 	}
@@ -223,10 +224,23 @@ export class Carousel {
 		}
 	}
 
-
 	private fadeInUI() {
-		gsap.fromTo(this.rootElement, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 });
+		// gsap.fromTo(this.rootElement, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 });
 		this.rootElement.classList.remove("hide-until-loaded");
+		let delay = 0;
+		for (let item of this.items) {
+			if (this.itemOutOfView(item))
+				continue;
+			item.element.classList.add("hide-until-loaded");
+			setTimeout(() => {
+				item.element.classList.remove("hide-until-loaded")
+				animations.swirlFromScreenCenter(item.element);
+			}, delay);
+			delay += 50;
+		}
+		setTimeout(() => {
+			this.updateAllItemPositions();
+		}, delay + 400)
 	}
 
 

@@ -57,7 +57,7 @@
 />
 
 <style>
-	.hide-until-loaded {
+	:global(.hide-until-loaded) {
 		visibility: hidden;
 	}
 

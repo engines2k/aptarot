@@ -1,10 +1,9 @@
 import { gsap } from "gsap";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { MotionPathHelper } from "gsap/MotionPathHelper";
+import { MotionPathPlugin } from "gsap/dist/MotionPathPlugin";
+import { MotionPathHelper } from "gsap/dist/MotionPathHelper";
+import { type Position } from "$/lib/types/Position"
 
 gsap.registerPlugin(MotionPathPlugin, MotionPathHelper);
-
-export default { jiggle, popIn, hover, fadeIn, introSwirl, swirlFromScreenCenter };
 
 function jiggle(target: GSAPTweenTarget) {
 	gsap.to(
@@ -22,7 +21,6 @@ function jiggle(target: GSAPTweenTarget) {
 
 
 function introSwirl(target: GSAPTweenTarget) {
-	// Get the window width and element's bounding rect
 	const el = typeof target === "string" ? document.querySelector(target) : target as Element;
 	if (!el) return;
 	const rect = el.getBoundingClientRect();
@@ -44,7 +42,6 @@ function introSwirl(target: GSAPTweenTarget) {
 			duration: 1.5,
 			ease: "power2.out",
 			onComplete: () => {
-				// Optionally, add a little swirl at the end
 				gsap.to(el, {
 					rotation: 3,
 					duration: 0.3,
@@ -109,27 +106,20 @@ function fadeIn(target: GSAPTweenTarget) {
 }
 
 function swirlFromScreenCenter(target: GSAPTweenTarget) {
-	if (!target || !(target instanceof HTMLElement))
-		throw Error(`Target ${target} invalid for swirlFromScreenCenter function`);
-
-	const box = target.getBoundingClientRect();
-	const currentRotation = gsap.getProperty(target, "rotation") as number;
-
 	gsap.fromTo(
 		target,
 		{
-			x: (window.innerWidth / 2) - (box.x - box.width / 2),
-			y: (window.innerHeight / 2) - (box.y - box.height / 2),
-			rotation: currentRotation - 50,
+			opacity: 0,
+			y: 20,
 		},
 		{
-			x: 0,
+			opacity: 1,
 			y: 0,
-			rotation: currentRotation,
 			duration: 0.7,
 			ease: "power2.out",
 		}
 	);
 }
 
+export default { jiggle, popIn, hover, fadeIn, introSwirl };
 
