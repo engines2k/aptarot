@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { Carousel } from "$/lib/types/Carousel";
+	import { type CarouselEmitters } from "$/lib/types/CarouselEmitters";
 	import { prepareCardDataInSections, type Card } from "$/lib/types/Card";
 	import CarouselCard from "./CarouselCard.svelte";
 	import CarouselControl from "./CarouselControl.svelte";
@@ -16,18 +17,26 @@
 	let carousel: Carousel;
 
 	onMount(() => {
-		carousel = new Carousel(
-			"card-carousel",
-			changeCard,
-			updatePositionIndicator,
-			updateSectionIndicator,
-		);
+		carousel = new Carousel("card-carousel", emitters);
 	});
+
+	const emitters = {
+		emitCardChange: changeCard,
+		emitPosUpdate: updatePositionIndicator,
+		emitSectionChange: updateSectionIndicator,
+	} satisfies CarouselEmitters;
+
 	function updatePositionIndicator(pos: number) {
 		positionIndicator = pos;
 	}
 	function updateSectionIndicator(label: string) {
 		sectionIndicator = label;
+	}
+	function previousSection() {
+		carousel.goToPreviousSection();
+	}
+	function nextSection() {
+		carousel.goToNextSection();
 	}
 	function previousCard() {
 		carousel.goToPrevious();
@@ -52,9 +61,11 @@
 	<div class="carousel-item carousel-divider mx-4"></div>
 </div>
 <CarouselControl
+	{previousSection}
 	{previousCard}
 	{randomCard}
 	{nextCard}
+	{nextSection}
 	{positionIndicator}
 	{sectionIndicator}
 />
@@ -65,12 +76,12 @@
 	}
 
 	:global(.card-selected) {
-		box-shadow: 6px 10px 89px -10px rgba(255, 204, 0);
+		box-shadow: 6px 10px 89px -10px rgb(42, 140, 231);
 		transition: box-shadow 0.2s ease;
 	}
 
 	:global(.card-active) {
-		box-shadow: 6px 10px 89px 0px rgb(42, 140, 231);
+		box-shadow: 6px 10px 89px 0px rgb(255, 204, 0);
 		transition: box-shadow 0.2 ease;
 	}
 

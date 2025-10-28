@@ -1,9 +1,10 @@
-import { type Card } from "$/lib/types/Card";
 import { type CarouselSettings, createCarouselSettings } from "$lib/types/CarouselSettings";
-import { Draggable } from "gsap/dist/Draggable";
 import { CarouselState } from "$lib/types/CarouselState";
+import { type CarouselEmitters } from "./CarouselEmitters";
 import { CarouselItem, DraggableCarouselItem, CarouselCardItem, CarouselSectionMarker } from "$lib/types/CarouselItem";
+
 import { gsap } from "gsap/dist/gsap";
+import { Draggable } from "gsap/dist/Draggable";
 import { Observer } from "gsap/dist/Observer";
 import animations from "$lib/animations"
 
@@ -16,16 +17,12 @@ export class Carousel {
 	sections: Array<CarouselSectionMarker> = [];
 	state: CarouselState;
 	settings: CarouselSettings;
-	emitChangeCard: (card: Card) => void;
-	emitupdatePos: (pos: number) => void;
-	emitUpdateSection: (label: string) => void;
+	emitters: CarouselEmitters;
 
-	constructor(targetId: string, emitChangeCard: (card: Card) => void, emitupdatePos: (pos: number) => void, emitUpdateSection: (label: string) => void) {
+	constructor(targetId: string, emitters: CarouselEmitters) {
 		this.rootElement = document.getElementById(targetId)!;
 		this.state = new CarouselState(window, this.items.length);
-		this.emitChangeCard = emitChangeCard;
-		this.emitupdatePos = emitupdatePos;
-		this.emitUpdateSection = emitUpdateSection;
+		this.emitters = emitters;
 		this.setItems();
 		this.settings = createCarouselSettings(this.state);
 		this.initialize();
@@ -105,7 +102,7 @@ export class Carousel {
 	}
 
 	makeActiveItem(item: CarouselCardItem) {
-		this.emitChangeCard(item.cardData);
+		this.emitters.emitCardChange(item.cardData);
 		const oldActive = this.items[this.state.activeIndex];
 		if (oldActive instanceof CarouselCardItem)
 			oldActive.makeInactive();
@@ -145,7 +142,7 @@ export class Carousel {
 
 	private updateAllItemPositions() {
 		this.items.forEach(item => this.updateItemPosition(item));
-		this.emitupdatePos(Number(this.getNormalizedScrollPos()));
+		this.emitters.emitPosUpdate(Number(this.getNormalizedScrollPos()));
 		this.checkCurrentSection()
 	}
 
@@ -168,9 +165,13 @@ export class Carousel {
 		if (this.sections.length == 0)
 			return;
 
-		for (let section of this.sections)
-			if (this.state.scrollPos <= this.getItemCenteredScrollPos(section))
-				this.emitUpdateSection(section.label);
+		for (let i = this.sections.length - 1; i >= 0; i--) {
+			const section = this.sections[i];
+			if (this.state.scrollPos <= this.getItemCenteredScrollPos(section)) {
+				this.emitters.emitSectionChange(section.label);
+				return section.index;
+			}
+		}
 	}
 
 	private getItemCenteredScrollPos(item: CarouselItem) {
@@ -289,6 +290,31 @@ export class Carousel {
 			&& this.state.activeIndex + next < this.length)
 			next++;
 		this.goToIndex(this.state.activeIndex + next);
+	}
+
+	goToPreviousSection() {
+		const currentSectionArrayIndex = this.getCurrentSectionArrayPos();
+		if (currentSectionArrayIndex === undefined || currentSectionArrayIndex <= 0)
+			return;
+
+		this.goToIndex(this.sections[currentSectionArrayIndex - 1].index + 1);
+	}
+
+	private getCurrentSectionArrayPos(): number | undefined {
+		const currentSectionItemPos = this.checkCurrentSection();
+		if (currentSectionItemPos === undefined)
+			return undefined;
+
+		const arrayIndex = this.sections.findIndex(s => s.index === currentSectionItemPos);
+		return arrayIndex >= 0 ? arrayIndex : undefined;
+	}
+
+	goToNextSection() {
+		const currentSectionArrayPos = this.getCurrentSectionArrayPos();
+		if (currentSectionArrayPos === undefined || currentSectionArrayPos + 1 >= this.sections.length)
+			return;
+
+		this.goToIndex(this.sections[currentSectionArrayPos + 1].index + 1);
 	}
 
 	isSelectableIndex(index: number) {

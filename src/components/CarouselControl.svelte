@@ -1,11 +1,19 @@
 <script lang="ts">
-	import { ChevronLeft, Dices, ChevronRight } from "lucide-svelte";
+	import {
+		ChevronsLeft,
+		ChevronLeft,
+		Dices,
+		ChevronRight,
+		ChevronsRight,
+	} from "lucide-svelte";
 	import CarouselPositionIndicator from "./CarouselPositionIndicator.svelte";
 
 	let {
+		previousSection,
 		previousCard,
 		randomCard,
 		nextCard,
+		nextSection,
 		positionIndicator,
 		sectionIndicator,
 	} = $props();
@@ -13,11 +21,17 @@
 
 <div class="carousel-controls">
 	<div class="controls-buttons">
+		<button onclick={previousSection} title="Previous Section"
+			><ChevronsLeft /></button
+		>
 		<button onclick={previousCard} title="Previous card"
 			><ChevronLeft /></button
 		>
 		<button onclick={randomCard} title="Random card"><Dices /></button>
 		<button onclick={nextCard} title="Next card"><ChevronRight /></button>
+		<button onclick={nextSection} title="Next section"
+			><ChevronsRight /></button
+		>
 	</div>
 	<CarouselPositionIndicator pos={positionIndicator} />
 	<div><p>{sectionIndicator}</p></div>
