@@ -11,7 +11,7 @@
 	id={String(index)}
 >
 	<img
-		src={`/cards/small/${card.image}`}
+		src={`/cards/regular/${card.image}`}
 		alt="Playing card"
 		width="100"
 		draggable="false"
