@@ -126,9 +126,10 @@ export class Carousel {
 	}
 
 	private handleScrollEvent(delta: number) {
+		let scalar = 1.5;
 		if (this.ignoringScrollEvent())
 			return;
-		this.updateScrollPos(delta);
+		this.updateScrollPos(delta * scalar);
 		this.updateAllItemPositions();
 	}
 

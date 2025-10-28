@@ -76,12 +76,14 @@
 	}
 
 	:global(.card-selected) {
-		box-shadow: 6px 10px 89px -10px rgb(42, 140, 231);
+		box-shadow: 6px 10px 89px -10px rgb(255, 255, 255);
 		transition: box-shadow 0.2s ease;
 	}
 
 	:global(.card-active) {
-		box-shadow: 6px 10px 89px 0px rgb(255, 204, 0);
+		box-shadow:
+			0px 0px 6px 1px rgba(246, 245, 244, 0.81),
+			6px 10px 60px 0px rgb(255, 204, 0);
 		transition: box-shadow 0.2 ease;
 	}
 
