@@ -20,8 +20,11 @@
 </script>
 
 <svelte:head>
-	<title>ApTarot</title>
-	<meta name="description" content="A tarot card digital compendium" />
+	<title>Tarot Card Index | ApTarot</title>
+	<meta
+		name="description"
+		content="A digital tarot card compendium for study on Tarot cards and their Zodiac and Kabbalah associations."
+	/>
 </svelte:head>
 
 <section class="lg:items-center justify-center">
