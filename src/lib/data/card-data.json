@@ -88,8 +88,8 @@
         "suit_element": "",
         "division_of_creation": "",
         "tree_of_life_path": {
-            "id": 28,
-            "sefirot": ["Netzach", "Yesod"]
+            "id": 15,
+            "sefirot": ["Chokmah", "Tiphareth"]
         },
         "tree_of_life_sefira": "",
         "birthday_examples": []
@@ -335,8 +335,8 @@
         "suit_element": "",
         "division_of_creation": "",
         "tree_of_life_path": {
-            "id": 15,
-            "sefirot": ["Chokmah", "Tiphareth"]
+            "id": 28,
+            "sefirot": ["Netzach", "Yesod"]
         },
         "tree_of_life_sefira": "",
         "birthday_examples": []
