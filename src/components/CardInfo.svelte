@@ -32,8 +32,8 @@
     pb-22
     "
 >
-	<div class="col-span-2 lg:col-span-5">
-		<div class="card-face-container justify-left md:justify-end">
+	<div class="col-span-12 mt-18">
+		<div class="card-face-container justify-center">
 			<img
 				class="card-face"
 				src={`/cards/regular/${card.image}`}
@@ -42,10 +42,13 @@
 			/>
 		</div>
 	</div>
-	<div class="col-span-3 lg:col-span-7 mx-2 lg:ml-8 mt-2">
+	<div class="col-span-12 mt-4">
 		<div class="card-heading">
-			<p class="tarot-card-name dark:text-gray-100">
+			<p class="tarot-card-name text-center dark:text-gray-100">
 				{card.name || "Welcome to ApTarot"}
+			</p>
+			<p class="text-center">
+				Select a card (drag up or use buttons) to see its meaning.
 			</p>
 			<div class="grid grid-cols-12">
 				<div class="col-span-2 md:col-span-1 tree-of-life-mini">
@@ -62,13 +65,10 @@
 					</p>
 				</div>
 			</div>
-			<div class="hidden lg:block">
+			<div>
 				<CardDetails {card} />
 			</div>
 		</div>
-	</div>
-	<div class="col-span-5 mx-1 lg:hidden">
-		<CardDetails {card} />
 	</div>
 </div>
 
@@ -97,8 +97,6 @@
 	}
 
 	.card-face-container {
-		/* padding-top:2.5vh; */
-		max-width: 400px;
 		width: 100%;
 		display: flex;
 		align-items: center;
